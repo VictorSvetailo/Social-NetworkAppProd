@@ -1,0 +1,30 @@
+
+.container{
+    background-color: pink;
+    width: 10%;
+    min-width: 100px;
+    /*top: 0;*/
+    /*left: 0;*/
+    /*position: absolute;*/
+    /*z-index: 1;*/
+}
+
+.items{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: fixed;
+    top: 70px;
+    left: 20px;
+    color: white;
+}
+
+.link.active{
+    color: black;
+}
+
+.item{
+    margin-top: 30px;
+    color: teal;
+    font-weight: 700;
+}

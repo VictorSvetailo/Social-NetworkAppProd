@@ -1,0 +1,33 @@
+.posts{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.image{
+    max-width: 70px;
+    max-height: 70px;
+    border-radius: 50%;
+    border: 5px solid pink;
+}
+
+.image img{
+    max-width: 100%;
+    border-radius: 50%;
+}
+.items{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item{
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.like{
+    color: red;
+}
