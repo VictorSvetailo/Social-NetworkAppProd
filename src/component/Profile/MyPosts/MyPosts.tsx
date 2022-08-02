@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './MyPosts.module.css'
 // import {Post} from './Post/Post';
-import state from '../../redux/state';
 import {Post} from './Post/Post';
+
 
 export function MyPosts() {
     return (

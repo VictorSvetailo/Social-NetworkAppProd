@@ -1,6 +1,11 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;0,900;1,100&display=swap');
+
 .blocks{
     width: 90%;
     margin-left: 10px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .block{

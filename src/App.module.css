@@ -1,3 +1,7 @@
+
+
+
+
 .App {
   position: relative;
 }
@@ -6,5 +10,4 @@
 .items{
   padding-top: 10px;
   display: flex;
-
 }

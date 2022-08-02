@@ -1,8 +1,12 @@
 
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;0,900;1,100&display=swap');
+
 .container{
     background-color: pink;
     width: 10%;
     min-width: 100px;
+    font-family: 'Roboto', sans-serif;
     /*top: 0;*/
     /*left: 0;*/
     /*position: absolute;*/
@@ -18,13 +22,32 @@
     left: 20px;
     color: white;
 }
-
-.link.active{
-    color: black;
+.link a{
+    color: white;
+    text-decoration: none;
 }
 
-.item{
+.link:hover{
+    text-decoration: underline;
+}
+
+.link a.active{
+    color: black;
+    text-decoration: underline;
+}
+
+.item {
     margin-top: 30px;
     color: teal;
     font-weight: 700;
+
+}
+
+
+.item a{
+    letter-spacing: .1rem;
+    text-decoration: none;
+}
+.item a.active{
+    color: red;
 }

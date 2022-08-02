@@ -1,14 +1,17 @@
 import React, {FC} from 'react';
 import logo from './logo.svg';
 import styles from './App.module.css';
-import {Messages} from './component/Messages/Messages';
+import {News} from './component/News/News';
 import {Header} from './component/Header/Header';
 import {Sidebar} from './component/Sidebar/Sidebar';
 import {Profile} from './component/Profile/Profile';
 import {stringify} from 'querystring';
 import {v1} from 'uuid';
-import state from './component/redux/state'
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Dialogs} from './component/Dialogs/Dialogs';
+import {Sittings} from './component/Sittings/Sittings';
+import {Music} from './component/Music/Music';
+
 
 // type messageType = {
 //     message: string
@@ -17,6 +20,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 // type stateType = {
 //     state: any
 // }
+
 
 function App() {
 
@@ -27,19 +31,23 @@ function App() {
 
     console.log()
     return (
-        // <BrowserRouter>
+        <BrowserRouter>
             <div className="App">
-                {/*<Routes>*/}
-                    {/*<Route path='/profile' element={<Profile/>}/>*/}
-                    {/*<Route path='/messages' element={<Messages/>}/>*/}
-                    <Header/>
-                    <div className={styles.items}>
-                        <Sidebar/>
-                        <Profile/>
-                    </div>
-                {/*</Routes>*/}
+                <Header/>
+                <Sidebar/>
+                <div className={styles.items}>
+                    <Sidebar/>
+                    <Routes>
+                        <Route path="/profile" element={<Profile/>}/>
+                        <Route path="/dialogs" element={<Dialogs/>}/>
+                        <Route path="/news" element={<News/>}/>
+                        <Route path="/music" element={<Music/>}/>
+                        <Route path="/sittings" element={<Sittings/>}/>
+                    </Routes>
+                </div>
+
             </div>
-        // </BrowserRouter>
+        </BrowserRouter>
 
     );
 }

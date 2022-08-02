@@ -3,9 +3,6 @@ import styles from './Profile.module.css'
 import {MyPosts} from './MyPosts/MyPosts';
 
 
-// type messageType = {
-//     message: string
-// }
 
 export function Profile() {
     return (
@@ -17,10 +14,10 @@ export function Profile() {
             </div>
             <div className={styles.block}>
                 <h1>Hello Lorem ipsum dolor sit amet. </h1>
-                <div><i>Hello</i></div>
+                <div><i>Hello Victor</i></div>
                 <MyPosts/>
             </div>
         </div>
 
-    );
+    )
 };
