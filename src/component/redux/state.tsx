@@ -40,7 +40,6 @@ let state: RootStateType = {
             {id: 2, message: 'It\'s my first post', likesCount: 5},
             {id: 3, message: 'I will succeed!', likesCount: 21},
             {id: 4, message: 'I\'m Victor', likesCount: 13},
-
         ]
     },
     dialogsPage: {
