@@ -1,0 +1,49 @@
+.dialogs {
+    width: 90%;
+    margin-left: 10px;
+    background-color: #999;
+    color: white;
+}
+
+.dialogs__items{
+    display: flex;
+    justify-content: space-between;
+}
+.names{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+    border-right: solid 1px white;
+}
+
+.names .active{
+    color: pink;
+}
+
+.messages{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+}
+
+.message{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.image{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 5px solid pink;
+}
+
+.image img{
+    width: 100%;
+    border-radius: 50%;
+}

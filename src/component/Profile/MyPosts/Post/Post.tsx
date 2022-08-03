@@ -1,18 +1,23 @@
 import React from 'react';
 import styles from './Post.module.css'
-import state from '../../../redux/state'
+import {PostsType} from '../../../redux/state'
 
-export function Post(){
+type PropsType = {
+    posts: Array<PostsType>
+}
+
+export function Post(props: PropsType){
     return (
             <div className={styles.items}>
                 {
-                    state.profilePage.posts.map((p, index) => {
+                    props.posts.map((p) => {
                         return (
-                            <div key={index} className={styles.item}>
+                            <div key={p.id} className={styles.item}>
                                 <div className={styles.image}>
                                     <img src="https://inlnk.ru/G6y07y" alt=""/>
                                 </div>
                                 <p>{p.message}</p>
+                                <p>{p.likesCount}</p>
                             </div>
                         )
                     })
