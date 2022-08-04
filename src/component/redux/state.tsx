@@ -1,3 +1,5 @@
+import React from 'react';
+import {v1} from 'uuid';
 
 export type RootStateType = {
     profilePage: ProfilePageType
@@ -7,7 +9,7 @@ export type RootStateType = {
 
 
 export type PostsType = {
-    id: number
+    id: string
     message: string
     likesCount: number
 }
@@ -34,12 +36,13 @@ type SidebarType = {}
 
 
 let state: RootStateType = {
+
     profilePage: {
         posts: [
-            {id: 1, message: 'Hi, how are you?', likesCount: 12},
-            {id: 2, message: 'It\'s my first post', likesCount: 5},
-            {id: 3, message: 'I will succeed!', likesCount: 21},
-            {id: 4, message: 'I\'m Victor', likesCount: 13},
+            {id: v1(), message: 'Hi, how are you?', likesCount: 12},
+            {id: v1(), message: 'It\'s my first post', likesCount: 5},
+            {id: v1(), message: 'I will succeed!', likesCount: 21},
+            {id: v1(), message: 'I\'m Victor', likesCount: 13},
 
         ]
     },

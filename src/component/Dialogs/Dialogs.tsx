@@ -9,12 +9,6 @@ type DialogsPageAllType = {
     message: Array<MessagesType>
 }
 
-// type DialogsType = {
-//     dialogsPage: Array<DialogsType>
-// }
-// type MessagePropsType = {
-//     message: Array<MessagesType>
-// }
 
 export function Dialogs(props: DialogsPageAllType) {
     return (

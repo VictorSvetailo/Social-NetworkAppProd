@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './Post.module.css'
-import {PostsType} from '../../../redux/state'
+import {PostsType} from '../../../redux/state';
+// import {PostsType} from '../../../redux/state'
 
-type PropsType = {
-    posts: Array<PostsType>
+type PostsAllType = {
+    posts: Array<PostsType>;
 }
 
-export function Post(props: PropsType){
+export function Post(props: PostsAllType){
     return (
             <div className={styles.items}>
                 {
