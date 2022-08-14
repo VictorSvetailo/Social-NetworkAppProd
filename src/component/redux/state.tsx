@@ -1,6 +1,8 @@
 import React from 'react';
 import {v1} from 'uuid';
 import {renderTree} from '../../render';
+import * as url from 'url';
+
 
 export type RootStateType = {
     profilePage: ProfilePageType
@@ -33,12 +35,32 @@ export type DialogsPageType = {
     messages: Array<MessagesType>
 }
 
-type SidebarType = {}
+// ---------- stateMy ----------
 
+
+export type SidebarType = {
+    title: string
+    adminData: Array<AdminDataItemsType>
+    menuTitle: Array<MenuTitleItemsType>
+}
+type AdminDataItemsType = {
+    id: string
+    photo: any
+    name: string
+    role: string
+    status: boolean
+}
+export type MenuTitleItemsType = {
+    id: string
+    url: string
+    title: string
+    status: boolean
+}
+// ---------- stateMy ----------
 
 export let state: RootStateType = {
     profilePage: {
-        messageForNewPost: 'Victor',
+        messageForNewPost: '',
         posts: [
             {id: v1(), message: 'Hi, how are you?', likesCount: 12},
             {id: v1(), message: 'It\'s my first post', likesCount: 5},
@@ -65,7 +87,24 @@ export let state: RootStateType = {
             {id: 6, message: 'Hi Yo'},
         ],
     },
-    sidebar: {},
+    // ---------- stateMy ----------
+    sidebar: {
+        title: 'Personal account',
+        adminData: [
+            {id: v1(), photo: 'https://ltdfoto.ru/images/2022/08/14/avaMini.png',
+                name: 'Tatiana Ivanova', role: 'Administrator', status: false}
+        ],
+        menuTitle: [
+            {id: v1(), url: '/profile', title: 'Profile', status: true},
+            {id: v1(), url: '/dialogs', title: 'Message', status: true},
+            {id: v1(), url: '/news', title: 'News', status: true},
+            {id: v1(), url: '/doctors', title: 'Doctors', status: true},
+            {id: v1(), url: '/patients', title: 'Patients', status: true},
+            {id: v1(), url: '/services', title: 'Services', status: true},
+        ]
+    }
+
+// ---------- stateMy ----------
 }
 
 export const addPost = (postText: string) => {
@@ -84,4 +123,8 @@ export const changeNewText = (newText: string) => {
     renderTree(state)
 }
 
-export default state;
+// export default state;
+
+
+
+

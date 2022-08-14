@@ -10,8 +10,7 @@ import {Dialogs} from './component/Dialogs/Dialogs';
 import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
 import {addPost, changeNewText, RootStateType} from './component/redux/state';
-import {log} from 'util';
-import {v1} from 'uuid';
+
 
 type PropsType = {
     state: RootStateType
@@ -22,15 +21,15 @@ function App(props: PropsType) {
     let messageAdd = props.state.profilePage.messageForNewPost
     let posts = props.state.profilePage.posts
     let dialogsPage = props.state.dialogsPage.dialogs
+    let sidebar = props.state.sidebar
     return (
         <BrowserRouter>
             <div className="App">
                 <Header/>
-                <Sidebar/>
                 <div className={styles.items}>
-                    <Sidebar/>
+                    <Sidebar sidebar={sidebar}/>
                     <Routes>
-                        {/*<Route path="/" element={<Profile/>}/>*/}
+                        <Route path="/" element={<Profile addPostCallback={addPostCallback} changeNewTextCallback={changeNewText} messageAdd={messageAdd} posts={posts}/>}/>
                         <Route path="/profile" element={<Profile addPostCallback={addPostCallback} changeNewTextCallback={changeNewText} messageAdd={messageAdd} posts={posts}/>}/>
                         <Route path="/dialogs/*" element={<Dialogs dialogsPage={dialogsPage}
                                                                    message={props.state.dialogsPage.messages}/>}/>

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import state, {RootStateType} from './component/redux/state'
+import {state, RootStateType} from './component/redux/state';
 
 
 export const renderTree = (state: RootStateType) => {
