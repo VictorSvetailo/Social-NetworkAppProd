@@ -1,7 +1,6 @@
 import React from 'react';
 import {v1} from 'uuid';
 import {renderTree} from '../../render';
-import * as url from 'url';
 
 
 export type RootStateType = {
@@ -42,6 +41,7 @@ export type SidebarType = {
     title: string
     adminData: Array<AdminDataItemsType>
     menuTitle: Array<MenuTitleItemsType>
+    companyEmployees: Array<CompanyEmployeesType>
 }
 type AdminDataItemsType = {
     id: string
@@ -55,6 +55,13 @@ export type MenuTitleItemsType = {
     url: string
     title: string
     status: boolean
+}
+
+export type CompanyEmployeesType = {
+    id: string
+    name: string
+    photo: string
+    position: string
 }
 // ---------- stateMy ----------
 
@@ -91,8 +98,10 @@ export let state: RootStateType = {
     sidebar: {
         title: 'Personal account',
         adminData: [
-            {id: v1(), photo: 'https://ltdfoto.ru/images/2022/08/14/avaMini.png',
-                name: 'Tatiana Ivanova', role: 'Administrator', status: false}
+            {
+                id: v1(), photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                name: 'Tatiana Ivanova', role: 'Administrator', status: false
+            }
         ],
         menuTitle: [
             {id: v1(), url: '/profile', title: 'Profile', status: true},
@@ -101,6 +110,44 @@ export let state: RootStateType = {
             {id: v1(), url: '/doctors', title: 'Doctors', status: true},
             {id: v1(), url: '/patients', title: 'Patients', status: true},
             {id: v1(), url: '/services', title: 'Services', status: true},
+        ],
+        companyEmployees: [
+            {
+                id: v1(),
+                name: 'Victor',
+                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                position: 'Boss'
+            },
+            {
+                id: v1(),
+                name: 'Roma',
+                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                position: 'Boss'
+            },
+            {
+                id: v1(),
+                name: 'Max',
+                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                position: 'Boss'
+            },
+            {
+                id: v1(),
+                name: 'Valera',
+                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                position: 'Boss'
+            },
+            {
+                id: v1(),
+                name: 'Sasha',
+                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                position: 'Boss'
+            },
+            {
+                id: v1(),
+                name: 'Nastya',
+                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                position: 'Boss'
+            },
         ]
     }
 

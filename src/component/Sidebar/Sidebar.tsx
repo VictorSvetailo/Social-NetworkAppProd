@@ -8,38 +8,51 @@ type DataSidebarType = {
 }
 
 export function Sidebar(props: DataSidebarType) {
-    let admin = props.sidebar.adminData
+
+    // function map
+    let admin = props.sidebar.adminData.map((a) => {
+        return (
+            <div key={a.id}>
+                <img src={a.photo} width="50px" alt=""/>
+                <div>{a.name}</div>
+                <div>{a.role}</div>
+            </div>
+        )
+    })
+    let menuTitle = props.sidebar.menuTitle.map((m) => {
+        return (
+            <div key={m.id} className={`${styles.link}`}>
+                <NavLink to={m.url}
+                         className={navData => navData.isActive ? styles.active : styles.link}>
+                    {m.title}
+                </NavLink>
+            </div>
+        )
+    })
+    let companyEmployees = props.sidebar.companyEmployees.map((em) => {
+        return (
+            <div key={em.id} className={`${styles.link}`}>
+                <div>
+                    <div>
+                        <img src={em.photo} width="50px" alt=""/>
+                    </div>
+                    <span>{em.name} - </span>
+                    <span>{em.position}</span>
+                </div>
+            </div>
+        )
+    })
+    //
+
     return (
         <div className={styles.container}>
             <div className={styles.items}>
                 <h4>{props.sidebar.title}</h4>
-                {
-                    admin.map((a)=>{
-                        return (
-                            <div key={a.id}>
-                                <img src={a.photo} width='50px' alt=""/>
-                                <div>{a.name}</div>
-                                <div>{a.role}</div>
-                            </div>
-                        )
-                    })
-                }
-
-                {
-                    props.sidebar.menuTitle.map((m) => {
-                        return (
-                            <div key={m.id} className={`${styles.link}`}>
-                                <NavLink to={m.url}
-                                         className={navData => navData.isActive ? styles.active : styles.link}>
-                                    {m.title}
-                                </NavLink>
-                            </div>
-                        )
-                    })
-                }
+                {admin}
+                {menuTitle}
+                {companyEmployees}
             </div>
         </div>
-
     );
 }
 
