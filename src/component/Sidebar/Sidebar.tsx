@@ -56,7 +56,7 @@ export function Sidebar(props: DataSidebarType) {
     );
 }
 
-// <div className={styles.items}>
+// <div class Name={styles.items}>
 //     <div className={`${styles.link}`}><NavLink to="/profile" className={ navData => navData.isActive ? styles.active : styles.link} >Profile</NavLink></div>
 //     <div className={`${styles.link} ${styles.active}`}><NavLink to="/dialogs" className={ navData => navData.isActive ? styles.active : styles.link}>Message</NavLink></div>
 //     <div className={`${styles.link} ${styles.active}`}><NavLink to="/news" className={ navData => navData.isActive ? styles.active : styles.link}>News</NavLink></div>
