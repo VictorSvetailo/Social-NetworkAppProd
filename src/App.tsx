@@ -9,20 +9,21 @@ import {Route, Routes} from 'react-router-dom';
 import {Dialogs} from './component/Dialogs/Dialogs';
 import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
-import {addPost, changeNewText, RootStateType} from './component/redux/state';
+import {StoreType} from './component/redux/state';
 import {Error} from './component/Error/Error';
 
 
 type PropsType = {
-    state: RootStateType
+    store: StoreType
 }
 
-function App(props: PropsType) {
-    let addPostCallback = addPost
-    let messageAdd = props.state.profilePage.messageForNewPost
-    let posts = props.state.profilePage.posts
-    let dialogsPage = props.state.dialogsPage.dialogs
-    let sidebar = props.state.sidebar
+const App: React.FC<PropsType> = (props) => {
+    const state = props.store.getState()
+    let addPostCallback = props.store.addPost.bind(props.store)
+    let messageAdd = props.store._state.profilePage.messageForNewPost
+    let posts = props.store._state.profilePage.posts
+    let dialogsPage = props.store._state.dialogsPage.dialogs
+    let sidebar = props.store._state.sidebar
     return (
 
         <div className="App">
@@ -31,10 +32,10 @@ function App(props: PropsType) {
                 <Sidebar sidebar={sidebar}/>
                 <Routes>
                     <Route path="/"
-                           element={<Profile addPostCallback={addPostCallback} changeNewTextCallback={changeNewText}
+                           element={<Profile addPostCallback={addPostCallback} changeNewTextCallback={props.store.changeNewText.bind(props.store)}
                                              messageAdd={messageAdd} posts={posts}/>}/>
                     <Route path="/dialogs/*" element={<Dialogs dialogsPage={dialogsPage}
-                                                               message={props.state.dialogsPage.messages}/>}/>
+                                                               message={props.store._state.dialogsPage.messages}/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/sittings" element={<Sittings/>}/>

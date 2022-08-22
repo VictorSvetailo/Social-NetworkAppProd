@@ -1,13 +1,5 @@
 import {v1} from 'uuid';
 
-let onChange = () => {
-    console.log('State is changed')
-}
-export const subscribe = (callback: () => void) => {
-    onChange = callback
-}
-
-
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
@@ -70,117 +62,158 @@ export type CompanyEmployeesType = {
 }
 // ---------- stateMy ----------
 
-export let state: RootStateType = {
-    profilePage: {
-        messageForNewPost: '',
-        posts: [
-            {id: v1(), message: 'Hi, how are you?', likesCount: 12},
-            {id: v1(), message: 'It\'s my first post', likesCount: 5},
-            {id: v1(), message: 'I will succeed!', likesCount: 21},
-            {id: v1(), message: 'I\'m Victor', likesCount: 13},
 
-        ]
-    },
-    dialogsPage: {
-        dialogs: [
-            {id: 1, name: 'Victor'},
-            {id: 2, name: 'Roma'},
-            {id: 3, name: 'Max'},
-            {id: 4, name: 'Valera'},
-            {id: 5, name: 'Sasha'},
-            {id: 6, name: 'Nastya'},
-        ],
-        messages: [
-            {id: 1, message: 'My name is Victor'},
-            {id: 2, message: 'How are you?'},
-            {id: 3, message: 'Hello'},
-            {id: 4, message: 'From Russia with love'},
-            {id: 5, message: 'Whats new?'},
-            {id: 6, message: 'Hi Yo'},
-        ],
-    },
-    // ---------- stateMy ----------
-    sidebar: {
-        title: 'Personal account',
-        adminData: [
-            {
-                id: v1(), photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
-                name: 'Tatiana Ivanova', role: 'Administrator', status: false
-            }
-        ],
-        menuTitle: [
-            {id: v1(), url: '/', title: 'Profile', status: true},
-            {id: v1(), url: '/dialogs', title: 'Message', status: true},
-            {id: v1(), url: '/news', title: 'News', status: true},
-            {id: v1(), url: '/doctors', title: 'Doctors', status: true},
-            {id: v1(), url: '/patients', title: 'Patients', status: true},
-            {id: v1(), url: '/services', title: 'Services', status: true},
-        ],
-        companyEmployees: [
-            {
-                id: v1(),
-                name: 'Victor',
-                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
-                position: 'Boss'
-            },
-            {
-                id: v1(),
-                name: 'Roma',
-                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
-                position: 'Boss'
-            },
-            {
-                id: v1(),
-                name: 'Max',
-                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
-                position: 'Boss'
-            },
-            {
-                id: v1(),
-                name: 'Valera',
-                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
-                position: 'Boss'
-            },
-            {
-                id: v1(),
-                name: 'Sasha',
-                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
-                position: 'Boss'
-            },
-            {
-                id: v1(),
-                name: 'Nastya',
-                photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
-                position: 'Boss'
-            },
-        ]
-    }
+// export const addPost = (postText: string) => {
+//     if (postText.trim() !== '') {
+//         const newPost: PostsType = {
+//             id: v1(),
+//             message: state.profilePage.messageForNewPost,
+//             //message: postText,
+//             likesCount: 0
+//         }
+//         state.profilePage.posts.push(newPost)
+//         state.profilePage.messageForNewPost = ''
+//         renderTree()
+//     }
+// }
+
+//
+// export const changeNewText = (newText: string) => {
+//     state.profilePage.messageForNewPost = newText
+//     renderTree()
+// }
+
+
+
+export type StoreType = {
+    _state: RootStateType
+    changeNewText: (newText: string) => void
+    addPost: (postText: string) => void
+    _callSubscribe: () => void
+    subscribe: (observer: any) => void
+    getState: () => RootStateType
+}
+
+const store: StoreType = {
+    _state: {
+        profilePage: {
+            messageForNewPost: '',
+            posts: [
+                {id: v1(), message: 'Hi, how are you?', likesCount: 12},
+                {id: v1(), message: 'It\'s my first post', likesCount: 5},
+                {id: v1(), message: 'I will succeed!', likesCount: 21},
+                {id: v1(), message: 'I\'m Victor', likesCount: 13},
+
+            ]
+        },
+        dialogsPage: {
+            dialogs: [
+                {id: 1, name: 'Victor'},
+                {id: 2, name: 'Roma'},
+                {id: 3, name: 'Max'},
+                {id: 4, name: 'Valera'},
+                {id: 5, name: 'Sasha'},
+                {id: 6, name: 'Nastya'},
+            ],
+            messages: [
+                {id: 1, message: 'My name is Victor'},
+                {id: 2, message: 'How are you?'},
+                {id: 3, message: 'Hello'},
+                {id: 4, message: 'From Russia with love'},
+                {id: 5, message: 'Whats new?'},
+                {id: 6, message: 'Hi Yo'},
+            ],
+        },
+        // ---------- stateMy ----------
+        sidebar: {
+            title: 'Personal account',
+            adminData: [
+                {
+                    id: v1(), photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                    name: 'Tatiana Ivanova', role: 'Administrator', status: false
+                }
+            ],
+            menuTitle: [
+                {id: v1(), url: '/', title: 'Profile', status: true},
+                {id: v1(), url: '/dialogs', title: 'Message', status: true},
+                {id: v1(), url: '/news', title: 'News', status: true},
+                {id: v1(), url: '/doctors', title: 'Doctors', status: true},
+                {id: v1(), url: '/patients', title: 'Patients', status: true},
+                {id: v1(), url: '/services', title: 'Services', status: true},
+            ],
+            companyEmployees: [
+                {
+                    id: v1(),
+                    name: 'Victor',
+                    photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                    position: 'Boss'
+                },
+                {
+                    id: v1(),
+                    name: 'Roma',
+                    photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                    position: 'Boss'
+                },
+                {
+                    id: v1(),
+                    name: 'Max',
+                    photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                    position: 'Boss'
+                },
+                {
+                    id: v1(),
+                    name: 'Valera',
+                    photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                    position: 'Boss'
+                },
+                {
+                    id: v1(),
+                    name: 'Sasha',
+                    photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                    position: 'Boss'
+                },
+                {
+                    id: v1(),
+                    name: 'Nastya',
+                    photo: 'https://imageup.ru/img238/4000211/1-4d137341-2db8-49c6-83de-e8ef75519d43.jpg',
+                    position: 'Boss'
+                },
+            ]
+        }
 
 // ---------- stateMy ----------
-}
-
-export const addPost = (postText: string) => {
-    if (postText.trim() !== '') {
-        const newPost: PostsType = {
-            id: v1(),
-            message: state.profilePage.messageForNewPost,
-            //message: postText,
-            likesCount: 0
+    },
+    _callSubscribe(){
+        console.log('State is changed')
+    },
+    changeNewText(newText: string) {
+        this._state.profilePage.messageForNewPost = newText
+        this._callSubscribe()
+    },
+    addPost(postText: string){
+        if (postText.trim() !== '') {
+            const newPost: PostsType = {
+                id: v1(),
+                message: this._state.profilePage.messageForNewPost,
+                //message: postText,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.messageForNewPost = ''
+            this._callSubscribe()
         }
-        state.profilePage.posts.push(newPost)
-        state.profilePage.messageForNewPost = ''
-        onChange()
-    }
+    },
+
+    subscribe(observer: any){
+        this._callSubscribe = observer
+    },
+    getState(){
+        return this._state;
+    },
+
 }
 
-
-export const changeNewText = (newText: string) => {
-    state.profilePage.messageForNewPost = newText
-    onChange()
-}
-
-
-// export default state;
+export default store
 
 
 
