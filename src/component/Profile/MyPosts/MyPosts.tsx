@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import styles from './MyPosts.module.css'
-import {PostsType} from '../../redux/state';
+import {ActionsTypes, PostsType} from '../../redux/state';
 import {Post} from './Post/Post';
 
 type PropsType = {
@@ -8,17 +8,20 @@ type PropsType = {
     addPostCallback: (postText: string) => void
     messageAdd: string
     changeNewTextCallback: (newText: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 export function MyPosts(props: PropsType) {
 
     const onChangeAddPostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.changeNewTextCallback(e.currentTarget.value);
+        //props.changeNewTextCallback(e.currentTarget.value);
+        props.dispatch({type: 'CHANGE-NEW-TEXT', newText: e.currentTarget.value});
 
     }
 
     const onClickAddPostHandler = () => {
-        props.addPostCallback(props.messageAdd)
+        //props.addPostCallback(props.messageAdd)
+        props.dispatch({type: 'ADD-POST', postText: props.messageAdd})
     }
 
     return (

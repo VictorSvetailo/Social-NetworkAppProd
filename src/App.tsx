@@ -18,6 +18,7 @@ type PropsType = {
 }
 
 const App: React.FC<PropsType> = (props) => {
+    //const store = props.store
     const state = props.store.getState()
     let addPostCallback = props.store.addPost.bind(props.store)
     let messageAdd = props.store._state.profilePage.messageForNewPost
@@ -25,15 +26,18 @@ const App: React.FC<PropsType> = (props) => {
     let dialogsPage = props.store._state.dialogsPage.dialogs
     let sidebar = props.store._state.sidebar
     return (
-
         <div className="App">
             <Header/>
             <div className={styles.items}>
                 <Sidebar sidebar={sidebar}/>
                 <Routes>
                     <Route path="/"
-                           element={<Profile addPostCallback={addPostCallback} changeNewTextCallback={props.store.changeNewText.bind(props.store)}
-                                             messageAdd={messageAdd} posts={posts}/>}/>
+                           element={<Profile
+                               //addPostCallback={addPostCallback}
+                               //changeNewTextCallback={props.store.changeNewText.bind(props.store)}
+                               dispatch={props.store.dispatch.bind(props.store)}
+                               messageAdd={messageAdd}
+                               posts={posts}/>}/>
                     <Route path="/dialogs/*" element={<Dialogs dialogsPage={dialogsPage}
                                                                message={props.store._state.dialogsPage.messages}/>}/>
                     <Route path="/news" element={<News/>}/>

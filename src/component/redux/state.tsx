@@ -84,7 +84,6 @@ export type CompanyEmployeesType = {
 // }
 
 
-
 export type StoreType = {
     _state: RootStateType
     changeNewText: (newText: string) => void
@@ -92,7 +91,20 @@ export type StoreType = {
     _callSubscribe: () => void
     subscribe: (observer: any) => void
     getState: () => RootStateType
+    dispatch: (action: ActionsTypes) => void
 }
+
+
+type AddPostActionType = {
+    type: 'ADD-POST'
+    postText: string
+}
+type ChangeNewTextActionType = {
+    type: 'CHANGE-NEW-TEXT'
+    newText: string
+}
+
+export type ActionsTypes =  AddPostActionType | ChangeNewTextActionType
 
 const store: StoreType = {
     _state: {
@@ -180,36 +192,51 @@ const store: StoreType = {
                 },
             ]
         }
-
-// ---------- stateMy ----------
     },
-    _callSubscribe(){
+    _callSubscribe() {
         console.log('State is changed')
     },
-    changeNewText(newText: string) {
-        this._state.profilePage.messageForNewPost = newText
-        this._callSubscribe()
-    },
-    addPost(postText: string){
-        if (postText.trim() !== '') {
-            const newPost: PostsType = {
-                id: v1(),
-                message: this._state.profilePage.messageForNewPost,
-                //message: postText,
-                likesCount: 0
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.messageForNewPost = ''
-            this._callSubscribe()
-        }
-    },
-
-    subscribe(observer: any){
+    // changeNewText(newText: string) {
+    //     this._state.profilePage.messageForNewPost = newText
+    //     this._callSubscribe()
+    // },
+    // addPost(postText: string) {
+    //     if (postText.trim() !== '') {
+    //         const newPost: PostsType = {
+    //             id: v1(),
+    //             message: this._state.profilePage.messageForNewPost,
+    //             //message: postText,
+    //             likesCount: 0
+    //         }
+    //         this._state.profilePage.posts.push(newPost)
+    //         this._state.profilePage.messageForNewPost = ''
+    //         this._callSubscribe()
+    //     }
+    // },
+    subscribe(observer: any) {
         this._callSubscribe = observer
     },
-    getState(){
+    getState() {
         return this._state;
     },
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            if (action.postText.trim() !== '') {
+                const newPost: PostsType = {
+                    id: v1(),
+                    // message: this._state.profilePage.messageForNewPost,
+                    message: action.postText,
+                    likesCount: 0
+                }
+                this._state.profilePage.posts.push(newPost)
+                this._state.profilePage.messageForNewPost = ''
+                this._callSubscribe()
+            }
+        }else if(action.type === 'CHANGE-NEW-TEXT'){
+            this._state.profilePage.messageForNewPost = action.newText
+            this._callSubscribe()
+        }
+    }
 
 }
 
