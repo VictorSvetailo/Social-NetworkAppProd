@@ -1,6 +1,11 @@
-import React from 'react';
 import {v1} from 'uuid';
-import {renderTree} from '../../render';
+
+let onChange = () => {
+    console.log('State is changed')
+}
+export const subscribe = (callback: () => void) => {
+    onChange = callback
+}
 
 
 export type RootStateType = {
@@ -155,7 +160,7 @@ export let state: RootStateType = {
 }
 
 export const addPost = (postText: string) => {
-    if (postText.trim() !== ''){
+    if (postText.trim() !== '') {
         const newPost: PostsType = {
             id: v1(),
             message: state.profilePage.messageForNewPost,
@@ -164,17 +169,19 @@ export const addPost = (postText: string) => {
         }
         state.profilePage.posts.push(newPost)
         state.profilePage.messageForNewPost = ''
-        renderTree(state)
+        onChange()
     }
 }
 
 
 export const changeNewText = (newText: string) => {
     state.profilePage.messageForNewPost = newText
-    renderTree(state)
+    onChange()
 }
 
+
 // export default state;
+
 
 
 
