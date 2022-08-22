@@ -14,18 +14,17 @@ export function MyPosts(props: PropsType) {
 
     const onChangeAddPostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.changeNewTextCallback(e.currentTarget.value);
+
     }
 
     const onClickAddPostHandler = () => {
         props.addPostCallback(props.messageAdd)
-        console.log(props.messageAdd)
     }
-
 
     return (
         <div>
             <h3>My post</h3>
-            <h4>{props.messageAdd}</h4>
+            <h4>-{props.messageAdd}-</h4>
             <textarea value={props.messageAdd} onChange={onChangeAddPostHandler}></textarea>
             <div>
                 <button onClick={onClickAddPostHandler}>Add post</button>

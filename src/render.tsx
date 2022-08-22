@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {state, RootStateType} from './component/redux/state';
+import {RootStateType} from './component/redux/state';
+import {BrowserRouter} from 'react-router-dom';
 
 
 export const renderTree = (state: RootStateType) => {
     ReactDOM.render(
         <React.StrictMode>
-            <App state={state}/>
+            <BrowserRouter>
+                <App state={state}/>
+            </BrowserRouter>
         </React.StrictMode>,
         document.getElementById('root')
     )

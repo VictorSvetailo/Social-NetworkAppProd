@@ -104,7 +104,7 @@ export let state: RootStateType = {
             }
         ],
         menuTitle: [
-            {id: v1(), url: '/profile', title: 'Profile', status: true},
+            {id: v1(), url: '/', title: 'Profile', status: true},
             {id: v1(), url: '/dialogs', title: 'Message', status: true},
             {id: v1(), url: '/news', title: 'News', status: true},
             {id: v1(), url: '/doctors', title: 'Doctors', status: true},
@@ -155,13 +155,17 @@ export let state: RootStateType = {
 }
 
 export const addPost = (postText: string) => {
-    const newPost: PostsType = {
-        id: v1(),
-        message: postText,
-        likesCount: 0
+    if (postText.trim() !== ''){
+        const newPost: PostsType = {
+            id: v1(),
+            message: state.profilePage.messageForNewPost,
+            //message: postText,
+            likesCount: 0
+        }
+        state.profilePage.posts.push(newPost)
+        state.profilePage.messageForNewPost = ''
+        renderTree(state)
     }
-    state.profilePage.posts.push(newPost)
-    renderTree(state)
 }
 
 
