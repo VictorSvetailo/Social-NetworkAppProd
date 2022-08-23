@@ -1,5 +1,9 @@
 import {v1} from 'uuid';
 
+const ADD_POST = 'ADD-POST';
+const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
+
+
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
@@ -12,6 +16,12 @@ export type PostsType = {
     message: string
     likesCount: number
 }
+
+export type PostsType2 = {
+    id: string
+    message: string
+}
+
 type ProfilePageType = {
     messageForNewPost: string
     posts: Array<PostsType>
@@ -23,11 +33,12 @@ export type DialogsType = {
     name: string
 }
 export type MessagesType = {
-    id: number
+    id: string
     message: string
 }
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
+    messageForCB: string
     messages: Array<MessagesType>
 }
 
@@ -86,8 +97,8 @@ export type CompanyEmployeesType = {
 
 export type StoreType = {
     _state: RootStateType
-    changeNewText: (newText: string) => void
-    addPost: (postText: string) => void
+    addPostCB: (postTextCB: string) => void
+    addNewTextCB: (postText: string) => void
     _callSubscribe: () => void
     subscribe: (observer: any) => void
     getState: () => RootStateType
@@ -95,16 +106,22 @@ export type StoreType = {
 }
 
 
-type AddPostActionType = {
-    type: 'ADD-POST'
-    postText: string
-}
-type ChangeNewTextActionType = {
-    type: 'CHANGE-NEW-TEXT'
-    newText: string
-}
+// type AddPostActionType = {
+//     type: 'ADD-POST'
+//     postText: string
+// }
 
-export type ActionsTypes =  AddPostActionType | ChangeNewTextActionType
+export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changedNewTextAC>
+
+export const addPostAC = (postText: string) => {
+    return {
+        type: ADD_POST,
+        postText: postText
+    } as const
+}
+export const changedNewTextAC = (newText: string) =>
+    ({type: CHANGE_NEW_TEXT, newText: newText}) as const
+
 
 const store: StoreType = {
     _state: {
@@ -127,13 +144,14 @@ const store: StoreType = {
                 {id: 5, name: 'Sasha'},
                 {id: 6, name: 'Nastya'},
             ],
+            messageForCB: '',
             messages: [
-                {id: 1, message: 'My name is Victor'},
-                {id: 2, message: 'How are you?'},
-                {id: 3, message: 'Hello'},
-                {id: 4, message: 'From Russia with love'},
-                {id: 5, message: 'Whats new?'},
-                {id: 6, message: 'Hi Yo'},
+                {id: v1(), message: 'My name is Victor'},
+                {id: v1(), message: 'How are you?'},
+                {id: v1(), message: 'Hello'},
+                {id: v1(), message: 'From Russia with love'},
+                {id: v1(), message: 'Whats new?'},
+                {id: v1(), message: '--Hi Yo'},
             ],
         },
         // ---------- stateMy ----------
@@ -196,6 +214,31 @@ const store: StoreType = {
     _callSubscribe() {
         console.log('State is changed')
     },
+
+    subscribe(observer: any) {
+        this._callSubscribe = observer
+    },
+    getState() {
+        return this._state;
+    },
+    dispatch(action) {
+        if (action.type === ADD_POST) {
+            if (action.postText.trim() !== '') {
+                const newPost: PostsType = {
+                    id: v1(),
+                    // message: this._state.profilePage.messageForNewPost,
+                    message: action.postText,
+                    likesCount: 0
+                }
+                this._state.profilePage.posts.push(newPost)
+                this._state.profilePage.messageForNewPost = ''
+                this._callSubscribe()
+            }
+        } else if (action.type === CHANGE_NEW_TEXT) {
+            this._state.profilePage.messageForNewPost = action.newText
+            this._callSubscribe()
+        }
+    },
     // changeNewText(newText: string) {
     //     this._state.profilePage.messageForNewPost = newText
     //     this._callSubscribe()
@@ -213,31 +256,24 @@ const store: StoreType = {
     //         this._callSubscribe()
     //     }
     // },
-    subscribe(observer: any) {
-        this._callSubscribe = observer
-    },
-    getState() {
-        return this._state;
-    },
-    dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            if (action.postText.trim() !== '') {
-                const newPost: PostsType = {
-                    id: v1(),
-                    // message: this._state.profilePage.messageForNewPost,
-                    message: action.postText,
-                    likesCount: 0
-                }
-                this._state.profilePage.posts.push(newPost)
-                this._state.profilePage.messageForNewPost = ''
-                this._callSubscribe()
-            }
-        }else if(action.type === 'CHANGE-NEW-TEXT'){
-            this._state.profilePage.messageForNewPost = action.newText
-            this._callSubscribe()
-        }
-    }
+    addNewTextCB(text: string) {
+        console.log(text)
+        store._state.dialogsPage.messageForCB = text
+        store._callSubscribe()
 
+    },
+    addPostCB(postTextCB: string) {
+        if (postTextCB.trim() !== '') {
+            const newPostText: PostsType2 = {
+                id: v1(),
+                // message: postTextCB,
+                message: store._state.dialogsPage.messageForCB,
+            }
+            store._state.dialogsPage.messages.push(newPostText)
+            store._state.dialogsPage.messageForCB = ''
+            store._callSubscribe()
+        }
+    },
 }
 
 export default store

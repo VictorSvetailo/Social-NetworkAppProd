@@ -19,9 +19,10 @@ type PropsType = {
 
 const App: React.FC<PropsType> = (props) => {
     //const store = props.store
-    const state = props.store.getState()
-    let addPostCallback = props.store.addPost.bind(props.store)
+    //const state = props.store.getState()
+    //let addPostCallback = props.store.addPost.bind(props.store)
     let messageAdd = props.store._state.profilePage.messageForNewPost
+    let messageForCB = props.store._state.dialogsPage.messageForCB
     let posts = props.store._state.profilePage.posts
     let dialogsPage = props.store._state.dialogsPage.dialogs
     let sidebar = props.store._state.sidebar
@@ -38,8 +39,12 @@ const App: React.FC<PropsType> = (props) => {
                                dispatch={props.store.dispatch.bind(props.store)}
                                messageAdd={messageAdd}
                                posts={posts}/>}/>
-                    <Route path="/dialogs/*" element={<Dialogs dialogsPage={dialogsPage}
-                                                               message={props.store._state.dialogsPage.messages}/>}/>
+                    <Route path="/dialogs/*"
+                           element={<Dialogs dialogsPage={dialogsPage}
+                                             message={props.store._state.dialogsPage.messages}
+                                             addNewTextCB={props.store.addNewTextCB}
+                                             addPostCB={props.store.addPostCB}
+                                             messageForCB={props.store._state.dialogsPage.messageForCB}/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/sittings" element={<Sittings/>}/>

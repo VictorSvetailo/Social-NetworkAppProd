@@ -7,6 +7,9 @@ import {DialogsType, MessagesType} from '../redux/state';
 type DialogsPageAllType = {
     dialogsPage: Array<DialogsType>
     message: Array<MessagesType>
+    addNewTextCB: (text: string) => void
+    addPostCB: (postTextCB: string) => void
+    messageForCB: string
 }
 
 
@@ -17,7 +20,10 @@ export function Dialogs(props: DialogsPageAllType) {
                 <div className={styles.names}>
                     <DialogsItem dialogs={props.dialogsPage}/>
                 </div>
-                <Message messages={props.message}/>
+                <Message messages={props.message}
+                         addNewTextCB={props.addNewTextCB}
+                         addPostCB={props.addPostCB}
+                         messageForCB={props.messageForCB}/>
             </div>
         </div>
     );

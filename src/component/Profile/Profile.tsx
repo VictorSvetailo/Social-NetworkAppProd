@@ -6,9 +6,9 @@ import {ActionsTypes, PostsType} from '../redux/state';
 
 type PropsType = {
     posts: Array<PostsType>
-    addPostCallback: (postText: string) => void
+   // addPostCallback: (postText: string) => void
     messageAdd: string
-    changeNewTextCallback: (newText: string) => void
+    //changeNewTextCallback: (newText: string) => void
     dispatch: (action: ActionsTypes) => void
 }
 
