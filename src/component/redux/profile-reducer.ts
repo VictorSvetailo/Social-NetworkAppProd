@@ -1,10 +1,21 @@
 import {v1} from 'uuid';
-import {PostsType, PostsType2, RootStateType} from './state';
+import {PostsType, PostsType2, RootStateType} from './store';
 
 const ADD_POST = 'ADD-POST';
 const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
 
-export const profileReducer = (state: any, action: any) => {
+const initialState = {
+    messageForNewPost: '',
+    posts: [
+        {id: v1(), message: 'Hi, how are you?', likesCount: 12},
+        {id: v1(), message: 'It\'s my first post', likesCount: 5},
+        {id: v1(), message: 'I will succeed!', likesCount: 21},
+        {id: v1(), message: 'I\'m Victor', likesCount: 13},
+
+    ]
+}
+
+export const profileReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case ADD_POST:
             if (action.postText.trim() !== '') {
@@ -21,8 +32,7 @@ export const profileReducer = (state: any, action: any) => {
             return state;
 
         case CHANGE_NEW_TEXT:
-            state.messageForNewPost = action.newText;
-            return state;
+            return {...state,messageForNewPost: action.newText};
         default:
             return state;
     }

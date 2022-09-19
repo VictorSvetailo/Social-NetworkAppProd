@@ -1,6 +1,6 @@
 import React, {ChangeEvent, MouseEvent} from 'react';
 import styles from '../Message/Message.module.css';
-import {ActionsTypes, MessagesType} from '../../redux/state';
+import {ActionsTypes, MessagesType} from '../../redux/store';
 import {addNewTextCBAC, postTextCBAC} from '../../redux/dialogs-reducer';
 
 type MessagesPropsType = {

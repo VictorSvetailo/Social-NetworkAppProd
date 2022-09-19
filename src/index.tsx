@@ -1,10 +1,12 @@
 import React from 'react';
-import store from './component/redux/state';
+// import store from './component/redux/store';
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom';
+import store from './component/redux/redux-store';
+
 
 
 
@@ -18,8 +20,15 @@ const renderTree = () => {
         document.getElementById('root')
     )
     ;
+
 }
 // renderTree(state)
 renderTree();
 store.subscribe(renderTree);
 reportWebVitals();
+
+//
+// store.subscribe(()=>{
+//     let state = store.getState();
+//     renderTree(state);
+// });

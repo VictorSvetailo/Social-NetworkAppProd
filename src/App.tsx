@@ -9,23 +9,24 @@ import {Route, Routes} from 'react-router-dom';
 import {Dialogs} from './component/Dialogs/Dialogs';
 import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
-import {StoreType} from './component/redux/state';
+import {ActionsTypes, RootStateType, StoreType} from './component/redux/store';
 import {Error} from './component/Error/Error';
 
 
 type PropsType = {
-    store: StoreType
+    store: any
 }
 
 const App: React.FC<PropsType> = (props) => {
-    //const store = props.store
-    //const state = props.store.getState()
+    const store = props.store
+    const state = props.store.getState()
+    const dispatch = props.store.dispatch.bind(props.store)
     //let addPostCallback = props.store.addPost.bind(props.store)
-    let messageAdd = props.store._state.profilePage.messageForNewPost
-    let messageForCB = props.store._state.dialogsPage.messageForCB
-    let posts = props.store._state.profilePage.posts
-    let dialogsPage = props.store._state.dialogsPage.dialogs
-    let sidebar = props.store._state.sidebar
+    let messageAdd = state.profilePage.messageForNewPost
+    let messageForCB = state.dialogsPage.messageForCB
+    let posts = state.profilePage.posts
+    let dialogsPage = state.dialogsPage.dialogs
+    let sidebar = state.sidebar
     return (
         <div className="App">
             <Header/>
@@ -41,11 +42,11 @@ const App: React.FC<PropsType> = (props) => {
                                posts={posts}/>}/>
                     <Route path="/dialogs/*"
                            element={<Dialogs dialogsPage={dialogsPage}
-                                             message={props.store._state.dialogsPage.messages}
-                                             dispatch={props.store.dispatch.bind(props.store)}
+                                             message={state.dialogsPage.messages}
+                                             dispatch={dispatch}
                                             // addNewTextCB={props.store.addNewTextCB}
                                              //addPostCB={props.store.addPostCB}
-                                             messageForCB={props.store._state.dialogsPage.messageForCB}/>}/>
+                                             messageForCB={state.dialogsPage.messageForCB}/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/sittings" element={<Sittings/>}/>
