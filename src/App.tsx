@@ -42,8 +42,9 @@ const App: React.FC<PropsType> = (props) => {
                     <Route path="/dialogs/*"
                            element={<Dialogs dialogsPage={dialogsPage}
                                              message={props.store._state.dialogsPage.messages}
-                                             addNewTextCB={props.store.addNewTextCB}
-                                             addPostCB={props.store.addPostCB}
+                                             dispatch={props.store.dispatch.bind(props.store)}
+                                            // addNewTextCB={props.store.addNewTextCB}
+                                             //addPostCB={props.store.addPostCB}
                                              messageForCB={props.store._state.dialogsPage.messageForCB}/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>

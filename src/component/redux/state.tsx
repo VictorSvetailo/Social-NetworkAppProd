@@ -1,7 +1,11 @@
 import {v1} from 'uuid';
+import {addNewTextCBAC, dialogsReducer, postTextCBAC} from './dialogs-reducer';
+import {addPostAC, changedNewTextAC, profileReducer} from './profile-reducer';
 
-const ADD_POST = 'ADD-POST';
-const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
+// const ADD_POST = 'ADD-POST';
+// const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
+// const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
+// const SEND_MESSAGE = 'SEND-MESSAGE';
 
 
 export type RootStateType = {
@@ -97,8 +101,8 @@ export type CompanyEmployeesType = {
 
 export type StoreType = {
     _state: RootStateType
-    addPostCB: (postTextCB: string) => void
-    addNewTextCB: (postText: string) => void
+    //addPostCB: (postTextCB: string) => void
+    //addNewTextCB: (postText: string) => void
     _callSubscribe: () => void
     subscribe: (observer: any) => void
     getState: () => RootStateType
@@ -111,16 +115,28 @@ export type StoreType = {
 //     postText: string
 // }
 
-export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof changedNewTextAC>
+export type ActionsTypes = ReturnType<typeof addPostAC>
+    | ReturnType<typeof changedNewTextAC>
+    | ReturnType<typeof addNewTextCBAC>
+    | ReturnType<typeof postTextCBAC>
 
-export const addPostAC = (postText: string) => {
-    return {
-        type: ADD_POST,
-        postText: postText
-    } as const
-}
-export const changedNewTextAC = (newText: string) =>
-    ({type: CHANGE_NEW_TEXT, newText: newText}) as const
+// export const addPostAC = (postText: string) => {
+//     return {
+//         type: ADD_POST,
+//         postText: postText
+//     } as const
+// }
+// export const changedNewTextAC = (newText: string) =>
+//     ({type: CHANGE_NEW_TEXT, newText: newText}) as const
+//
+// export const addNewTextCBAC = (text: string) => {
+//     return {
+//         type: UPDATE_NEW_MESSAGE_BODY,
+//         text: text
+//     } as const
+// }
+// export const postTextCBAC = (postTextCB: string) =>
+//     ({type: SEND_MESSAGE, postTextCB: postTextCB}) as const
 
 
 const store: StoreType = {
@@ -222,58 +238,74 @@ const store: StoreType = {
         return this._state;
     },
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            if (action.postText.trim() !== '') {
-                const newPost: PostsType = {
-                    id: v1(),
-                    // message: this._state.profilePage.messageForNewPost,
-                    message: action.postText,
-                    likesCount: 0
-                }
-                this._state.profilePage.posts.push(newPost)
-                this._state.profilePage.messageForNewPost = ''
-                this._callSubscribe()
-            }
-        } else if (action.type === CHANGE_NEW_TEXT) {
-            this._state.profilePage.messageForNewPost = action.newText
-            this._callSubscribe()
-        }
-    },
-    // changeNewText(newText: string) {
-    //     this._state.profilePage.messageForNewPost = newText
-    //     this._callSubscribe()
-    // },
-    // addPost(postText: string) {
-    //     if (postText.trim() !== '') {
-    //         const newPost: PostsType = {
-    //             id: v1(),
-    //             message: this._state.profilePage.messageForNewPost,
-    //             //message: postText,
-    //             likesCount: 0
-    //         }
-    //         this._state.profilePage.posts.push(newPost)
-    //         this._state.profilePage.messageForNewPost = ''
-    //         this._callSubscribe()
-    //     }
-    // },
-    addNewTextCB(text: string) {
-        console.log(text)
-        store._state.dialogsPage.messageForCB = text
-        store._callSubscribe()
-
-    },
-    addPostCB(postTextCB: string) {
-        if (postTextCB.trim() !== '') {
-            const newPostText: PostsType2 = {
-                id: v1(),
-                // message: postTextCB,
-                message: store._state.dialogsPage.messageForCB,
-            }
-            store._state.dialogsPage.messages.push(newPostText)
-            store._state.dialogsPage.messageForCB = ''
-            store._callSubscribe()
-        }
-    },
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        // this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+        this._callSubscribe()
+        // if (action.type === ADD_POST) {
+        //     if (action.postText.trim() !== '') {
+        //         const newPost: PostsType = {
+        //             id: v1(),
+        //             // message: this._state.profilePage.messageForNewPost,
+        //             message: action.postText,
+        //             likesCount: 0
+        //         }
+        //         this._state.profilePage.posts.push(newPost)
+        //         this._state.profilePage.messageForNewPost = ''
+        //         this._callSubscribe()
+        //     }
+        // } else if (action.type === CHANGE_NEW_TEXT) {
+        //     this._state.profilePage.messageForNewPost = action.newText
+        //     this._callSubscribe()
+        // } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+        //     this._state.dialogsPage.messageForCB = action.text
+        //     this._callSubscribe()
+        // } else if (action.type === SEND_MESSAGE) {
+        //     const newPostText: PostsType2 = {
+        //         id: v1(),
+        //         // message: postTextCB,
+        //         message: this._state.dialogsPage.messageForCB,
+        //     }
+        //     this._state.dialogsPage.messages.push(newPostText)
+        //     this._state.dialogsPage.messageForCB = ''
+        //     this._callSubscribe()
+        // }
+        // changeNewText(newText: string) {
+        //     this._state.profilePage.messageForNewPost = newText
+        //     this._callSubscribe()
+        // },
+        // addPost(postText: string) {
+        //     if (postText.trim() !== '') {
+        //         const newPost: PostsType = {
+        //             id: v1(),
+        //             message: this._state.profilePage.messageForNewPost,
+        //             //message: postText,
+        //             likesCount: 0
+        //         }
+        //         this._state.profilePage.posts.push(newPost)
+        //         this._state.profilePage.messageForNewPost = ''
+        //         this._callSubscribe()
+        //     }
+        // },
+        // addNewTextCB(text: string) {
+        //     console.log(text)
+        //     store._state.dialogsPage.messageForCB = text
+        //     store._callSubscribe()
+        //
+        // },
+        // addPostCB(postTextCB: string) {
+        //     if (postTextCB.trim() !== '') {
+        //         const newPostText: PostsType2 = {
+        //             id: v1(),
+        //             // message: postTextCB,
+        //             message: store._state.dialogsPage.messageForCB,
+        //         }
+        //         store._state.dialogsPage.messages.push(newPostText)
+        //         store._state.dialogsPage.messageForCB = ''
+        //         store._callSubscribe()
+        //     }
+        // },
+    }
 }
 
 export default store
