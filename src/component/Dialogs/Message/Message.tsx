@@ -1,28 +1,28 @@
 import React, {ChangeEvent, MouseEvent} from 'react';
 import styles from '../Message/Message.module.css';
-import {ActionsTypes, MessagesType} from '../../redux/store';
-import {addNewTextCBAC, postTextCBAC} from '../../redux/dialogs-reducer';
+import {addNewTextCBAC, MessagesType, postTextCBAC} from '../../redux/dialogs-reducer';
+import {log} from 'util';
 
 type MessagesPropsType = {
     messages: Array<MessagesType>
     //addNewTextCB: (text: string) => void
     //addPostCB: (postTextCB: string) => void
     messageForCB: string
-    dispatch: (action: ActionsTypes) => void
+    // dispatch: (action: ActionsTypes) => void
+    onChangeAddTextCB: (value: string) => void
+    onClickAddPostCB: (text: string) => void
 }
 
 
 export function Message(props: MessagesPropsType) {
 
-    let text;
-    //const [addText, setAddText] = useState('')
-
     let onChangeAddTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(addNewTextCBAC(e.currentTarget.value))
+        props.onChangeAddTextCB(e.currentTarget.value)
+
         // props.addNewTextCB(e.currentTarget.value)
     }
     const onClickAddPostHandler = (e: MouseEvent<HTMLButtonElement>) => {
-      props.dispatch(postTextCBAC(props.messageForCB))
+      props.onClickAddPostCB(props.messageForCB)
       // props.addPostCB(props.messageForCB)
     }
 

@@ -32,15 +32,15 @@ type ProfilePageType = {
 }
 
 
-export type DialogsType = {
+type DialogsType = {
     id: number
     name: string
 }
-export type MessagesType = {
+type MessagesType = {
     id: string
     message: string
 }
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: Array<DialogsType>
     messageForCB: string
     messages: Array<MessagesType>
