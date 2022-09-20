@@ -16,12 +16,13 @@ const initialState = {
     ],
     messageForCB: '',
     messages: [
+        {id: v1(), message: '--Hi Yo'},
         {id: v1(), message: 'My name is Victor'},
         {id: v1(), message: 'How are you?'},
         {id: v1(), message: 'Hello'},
         {id: v1(), message: 'From Russia with love'},
         {id: v1(), message: 'Whats new?'},
-        {id: v1(), message: '--Hi Yo'},
+
     ],
 }
 

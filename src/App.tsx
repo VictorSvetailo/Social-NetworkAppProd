@@ -11,6 +11,7 @@ import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
 import {ActionsTypes, RootStateType, StoreType} from './component/redux/store';
 import {Error} from './component/Error/Error';
+import {DialogsContainer} from './component/Dialogs/DialogsContainer';
 
 
 type PropsType = {
@@ -27,6 +28,7 @@ const App: React.FC<PropsType> = (props) => {
     let posts = state.profilePage.posts
     let dialogsPage = state.dialogsPage.dialogs
     let sidebar = state.sidebar
+    // @ts-ignore
     return (
         <div className="App">
             <Header/>
@@ -37,16 +39,19 @@ const App: React.FC<PropsType> = (props) => {
                            element={<Profile
                                //addPostCallback={addPostCallback}
                                //changeNewTextCallback={props.store.changeNewText.bind(props.store)}
-                               dispatch={props.store.dispatch.bind(props.store)}
-                               messageAdd={messageAdd}
-                               posts={posts}/>}/>
+                               //dispatch={props.store.dispatch.bind(props.store)}
+                               // messageAdd={messageAdd}
+                               //posts={posts}
+                           />}/>
                     <Route path="/dialogs/*"
-                           element={<Dialogs dialogsPage={dialogsPage}
-                                             message={state.dialogsPage.messages}
-                                             dispatch={dispatch}
-                                            // addNewTextCB={props.store.addNewTextCB}
-                                             //addPostCB={props.store.addPostCB}
-                                             messageForCB={state.dialogsPage.messageForCB}/>}/>
+                           element={<DialogsContainer
+                               //dialogsPage={dialogsPage}
+                               //message={state.dialogsPage.messages}
+                               // dispatch={dispatch}
+                               // addNewTextCB={props.store.addNewTextCB}
+                               //addPostCB={props.store.addPostCB}
+                               //messageForCB={state.dialogsPage.messageForCB}
+                           />}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/sittings" element={<Sittings/>}/>

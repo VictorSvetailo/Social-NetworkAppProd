@@ -1,15 +1,16 @@
 import React from 'react'
 import styles from './Profile.module.css'
-import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {ActionsTypes, PostsType} from '../redux/store';
+import {MyPostsContainer} from './MyPosts/MyPostsContainer';
+import store from '../redux/redux-store';
 
 type PropsType = {
-    posts: Array<PostsType>
+   // posts: Array<PostsType>
    // addPostCallback: (postText: string) => void
-    messageAdd: string
+    //messageAdd: string
     //changeNewTextCallback: (newText: string) => void
-    dispatch: (action: ActionsTypes) => void
+   // dispatch: (action: ActionsTypes) => void
 }
 
 
@@ -18,12 +19,13 @@ export function Profile(props: PropsType) {
     return (
         <div className={styles.blocks}>
             <ProfileInfo/>
-            <MyPosts
-                dispatch={props.dispatch}
+            <MyPostsContainer store={store}
+                //dispatch={props.dispatch}
                 //addPostCallback={props.addPostCallback}
                 //changeNewTextCallback={props.changeNewTextCallback}
-                messageAdd={props.messageAdd}
-                posts={props.posts}/>
+                //messageAdd={props.messageAdd}
+               //posts={props.posts}
+            />
         </div>
     )
 }

@@ -19,11 +19,11 @@ export function Message(props: MessagesPropsType) {
 
     let onChangeAddTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.dispatch(addNewTextCBAC(e.currentTarget.value))
-        //props.addNewTextCB(e.currentTarget.value)
+        // props.addNewTextCB(e.currentTarget.value)
     }
     const onClickAddPostHandler = (e: MouseEvent<HTMLButtonElement>) => {
       props.dispatch(postTextCBAC(props.messageForCB))
-      //props.addPostCB(props.messageForCB)
+      // props.addPostCB(props.messageForCB)
     }
 
 

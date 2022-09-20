@@ -4,12 +4,12 @@ import {DialogsType} from '../../redux/store'
 import {NavLink} from 'react-router-dom';
 
 type PropsType = {
-    dialogs: Array<DialogsType>
+    dialogs: Array<any>
+    // dialogs: Array<DialogsType>
 }
 
 
 export function DialogsItem(props: PropsType) {
-
     return (
         <div className={styles.names}>
             {props.dialogs.map((i)=>{
