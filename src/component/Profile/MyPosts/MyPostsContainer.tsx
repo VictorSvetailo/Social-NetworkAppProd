@@ -5,24 +5,47 @@ import {MyPosts} from './MyPosts';
 import store from '../../redux/redux-store';
 
 
-
 type PropsType = {
     store: any
 }
 
 export function MyPostsContainer(props: PropsType) {
+
     const state = store.getState()
 
     const onClickAddPost = () => {
-       props.store.dispatch(addPostAC(state.profilePage.messageForNewPost))
+        props.store.dispatch(addPostAC(state.profilePage.messageForNewPost))
     }
     const onChangeAddPost = (value: string) => {
         props.store.dispatch(changedNewTextAC(value));
     }
+
     return (
-       <MyPosts posts={state.profilePage.posts}
-                messageForNewPost={state.profilePage.messageForNewPost}
-                onClickAddPost={onClickAddPost}
-                onChangeAddPost={onChangeAddPost}/>
+        <MyPosts posts={state.profilePage.posts}
+                     messageForNewPost={state.profilePage.messageForNewPost}
+                     onClickAddPost={onClickAddPost}
+                     onChangeAddPost={onChangeAddPost}/>
+
     )
 };
+
+
+// <StoreContext.Consumer>
+//     {
+//         (store) => {
+//             const state = store.getState()
+//
+//             const onClickAddPost = () => {
+//                 props.store.dispatch(addPostAC(state.profilePage.messageForNewPost))
+//             }
+//             const onChangeAddPost = (value: string) => {
+//                 props.store.dispatch(changedNewTextAC(value));
+//             }
+//
+//             return  <MyPosts posts={state.profilePage.posts}
+//                              messageForNewPost={state.profilePage.messageForNewPost}
+//                              onClickAddPost={onClickAddPost}
+//                              onChangeAddPost={onChangeAddPost}/>
+//         }
+//     }
+// </StoreContext.Consumer>

@@ -1,5 +1,5 @@
 import React from 'react';
-// import store from './component/redux/store';
+
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -14,7 +14,9 @@ const renderTree = () => {
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
-                <App store={store}/>
+                {/*<Provider store={store}>*/}
+                    <App store={store}/>
+                {/*</Provider>*/}
             </BrowserRouter>
         </React.StrictMode>,
         document.getElementById('root')

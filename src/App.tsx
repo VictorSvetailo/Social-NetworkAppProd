@@ -22,13 +22,12 @@ const App: React.FC<PropsType> = (props) => {
     const store = props.store
     const state = props.store.getState()
     const dispatch = props.store.dispatch.bind(props.store)
-    //let addPostCallback = props.store.addPost.bind(props.store)
+    // let addPostCallback = props.store.addPost.bind(props.store)
     let messageAdd = state.profilePage.messageForNewPost
     let messageForCB = state.dialogsPage.messageForCB
     let posts = state.profilePage.posts
     let dialogsPage = state.dialogsPage.dialogs
     let sidebar = state.sidebar
-    // @ts-ignore
     return (
         <div className="App">
             <Header/>
