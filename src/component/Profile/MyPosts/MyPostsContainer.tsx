@@ -6,32 +6,6 @@ import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 
 
-// type PropsType = {
-//     store: any
-// }
-
-// export function MyPostsContainer(props: PropsType) {
-//
-//     const state = store.getState()
-//
-//     const onClickAddPost = (value: string) => {
-//         props.store.dispatch(addPostAC(value))
-//         console.log(props.store.dispatch)
-//     }
-//     const onChangeAddPost = (text: string) => {
-//         props.store.dispatch(changedNewTextAC(text));
-//     }
-//
-//     return (
-//         <MyPosts posts={state.profilePage.posts}
-//                      messageForNewPost={state.profilePage.messageForNewPost}
-//                      onClickAddPost={onClickAddPost}
-//                      onChangeAddPost={onChangeAddPost}/>
-//
-//     )
-// };
-
-
 type MapStatePropsType = {
     posts: Array<PostsType>
     messageForNewPost: string
@@ -65,3 +39,32 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
 
 export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
 
+
+
+
+
+
+// type PropsType = {
+//     store: any
+// }
+
+// export function MyPostsContainer(props: PropsType) {
+//
+//     const state = store.getState()
+//
+//     const onClickAddPost = (value: string) => {
+//         props.store.dispatch(addPostAC(value))
+//         console.log(props.store.dispatch)
+//     }
+//     const onChangeAddPost = (text: string) => {
+//         props.store.dispatch(changedNewTextAC(text));
+//     }
+//
+//     return (
+//         <MyPosts posts={state.profilePage.posts}
+//                      messageForNewPost={state.profilePage.messageForNewPost}
+//                      onClickAddPost={onClickAddPost}
+//                      onChangeAddPost={onChangeAddPost}/>
+//
+//     )
+// };

@@ -11,6 +11,7 @@ import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
 import {Error} from './component/Error/Error';
 import {DialogsContainer} from './component/Dialogs/DialogsContainer';
+import {Users} from './component/Users/Users';
 
 
 type PropsType = {
@@ -18,38 +19,17 @@ type PropsType = {
 }
 
 const App: React.FC<PropsType> = (props) => {
-    const store = props.store
-    const state = props.store.getState()
-    const dispatch = props.store.dispatch.bind(props.store)
-    // let addPostCallback = props.store.addPost.bind(props.store)
-    let messageAdd = state.profilePage.messageForNewPost
-    // let messageForCB = state.dialogsPage.messageForCB
-    let posts = state.profilePage.posts
-    let dialogsPage = state.dialogsPage.dialogs
-    let sidebar = state.sidebar
+    let sidebar = props.store.getState().sidebar
+
     return (
         <div className="App">
             <Header/>
             <div className={styles.items}>
                 <Sidebar sidebar={sidebar}/>
                 <Routes>
-                    <Route path="/"
-                           element={<Profile
-                               //addPostCallback={addPostCallback}
-                               //changeNewTextCallback={props.store.changeNewText.bind(props.store)}
-                               //dispatch={props.store.dispatch.bind(props.store)}
-                               // messageAdd={messageAdd}
-                               //posts={posts}
-                           />}/>
-                    <Route path="/dialogs/*"
-                           element={<DialogsContainer
-                               //dialogsPage={dialogsPage}
-                               //message={state.dialogsPage.messages}
-                               // dispatch={dispatch}
-                               // addNewTextCB={props.store.addNewTextCB}
-                               //addPostCB={props.store.addPostCB}
-                               //messageForCB={state.dialogsPage.messageForCB}
-                           />}/>
+                    <Route path="/" element={<Profile/>}/>
+                    <Route path="/dialogs/*" element={<DialogsContainer/>}/>
+                    <Route path="/users" element={<Users/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/sittings" element={<Sittings/>}/>
