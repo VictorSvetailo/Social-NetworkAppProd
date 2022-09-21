@@ -9,7 +9,6 @@ import {Route, Routes} from 'react-router-dom';
 import {Dialogs} from './component/Dialogs/Dialogs';
 import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
-import {ActionsTypes, RootStateType, StoreType} from './component/redux/store';
 import {Error} from './component/Error/Error';
 import {DialogsContainer} from './component/Dialogs/DialogsContainer';
 

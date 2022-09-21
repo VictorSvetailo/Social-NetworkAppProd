@@ -1,20 +1,14 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, MouseEvent, useState} from 'react';
 import styles from './MyPosts.module.css'
-import {PostsType} from '../../redux/store';
 import {Post} from './Post/Post';
+import {DialogsPropsType} from './MyPostsContainer';
 
 
-
-type PropsType = {
-    posts: Array<PostsType>
-    messageForNewPost: string
-    onClickAddPost: () => void
-    onChangeAddPost: (value: string) => void
-}
-
-export function MyPosts(props: PropsType) {
-    const onClickAddPostHandler = () => {
-        props.onClickAddPost()
+export function MyPosts(props: DialogsPropsType) {
+    const onClickAddPostHandler = (e: MouseEvent<HTMLButtonElement>) => {
+        if (props.messageForNewPost.trim() !== '') {
+            props.onClickAddPost(props.messageForNewPost.trim())
+        }
     }
 
     const onChangeAddPostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {

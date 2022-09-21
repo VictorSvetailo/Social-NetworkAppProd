@@ -1,5 +1,4 @@
 import {v1} from 'uuid';
-import {PostsType, PostsType2} from './store';
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
@@ -46,16 +45,14 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: an
     switch (action.type){
         case UPDATE_NEW_MESSAGE_BODY:
             state.messageForCB = action.text
-            return state;
+            return {...state};
         case SEND_MESSAGE:
-            const newPostText: PostsType2 = {
-                id: v1(),
-                // message: postTextCB,
-                message: state.messageForCB,
-            }
-            state.messages.push(newPostText)
-            state.messageForCB = ''
-            return state;
+            const newPostText = {id: v1(), message: state.messageForCB}
+            const copyState = {...state}
+            copyState.messages = [...state.messages];
+            copyState.messages.push(newPostText);
+            copyState.messageForCB = ''
+            return copyState;
         default:
             return state
     }

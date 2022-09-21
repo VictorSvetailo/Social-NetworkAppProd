@@ -8,20 +8,20 @@ import {addPostAC, changedNewTextAC, profileReducer} from './profile-reducer';
 // const SEND_MESSAGE = 'SEND-MESSAGE';
 
 
-export type RootStateType = {
+type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: SidebarType
 }
 
 
-export type PostsType = {
+type PostsType = {
     id: string
     message: string
     likesCount: number
 }
 
-export type PostsType2 = {
+type PostsType2 = {
     id: string
     message: string
 }
@@ -62,14 +62,15 @@ type AdminDataItemsType = {
     role: string
     status: boolean
 }
-export type MenuTitleItemsType = {
+
+type MenuTitleItemsType = {
     id: string
     url: string
     title: string
     status: boolean
 }
 
-export type CompanyEmployeesType = {
+type CompanyEmployeesType = {
     id: string
     name: string
     photo: string
@@ -99,7 +100,7 @@ export type CompanyEmployeesType = {
 // }
 
 
-export type StoreType = {
+type StoreType = {
     _state: RootStateType
     //addPostCB: (postTextCB: string) => void
     //addNewTextCB: (postText: string) => void

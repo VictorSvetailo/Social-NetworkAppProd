@@ -89,24 +89,3 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
 }
 
 export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
-
-
-// export default connect(DialogsContainer)
-
-
-// <StoreContext.Consumer>
-//     {
-//         (store) => {
-//             const state = store.getState()
-//
-//             let dialogs = state.dialogsPage.dialogs
-//             const dispatch = store.dispatch.bind(store)
-//
-//             return  <Dialogs dialogs={dialogs}
-//                              message={state.dialogsPage.messages}
-//                              messageForCB={state.dialogsPage.messageForCB}
-//                              dispatch={dispatch}
-//             />
-//         }
-//     }
-// </StoreContext.Consumer>

@@ -11,7 +11,8 @@ import {Provider} from 'react-redux';
 
 
 
-const renderTree = () => {
+// const renderTree = () => {
+
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
@@ -22,12 +23,10 @@ const renderTree = () => {
         </React.StrictMode>,
         document.getElementById('root')
     )
-    ;
 
-}
 // renderTree(state)
-renderTree();
-store.subscribe(renderTree);
+// renderTree();
+// store.subscribe(renderTree);
 reportWebVitals();
 
 //

@@ -1,8 +1,15 @@
 import {v1} from 'uuid';
-import {PostsType, PostsType2, RootStateType} from './store';
+
 
 const ADD_POST = 'ADD-POST';
 const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
+
+
+export type PostsType = {
+    id: string
+    message: string
+    likesCount: number
+}
 
 const initialState = {
     messageForNewPost: '',
@@ -12,27 +19,22 @@ const initialState = {
         {id: v1(), message: 'I will succeed!', likesCount: 21},
         {id: v1(), message: 'I\'m Victor', likesCount: 13},
 
-    ]
+    ] as Array<PostsType>,
 }
 
-export const profileReducer = (state = initialState, action: any) => {
+export type InitialStateType = typeof initialState
+
+export const profileReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
-            if (action.postText.trim() !== '') {
-                let newPost: PostsType = {
-                    id: v1(),
-                    // message: this._state.profilePage.messageForNewPost,
-                    message: action.postText,
-                    likesCount: 0
-                };
-
-                state.posts.push(newPost);
-                state.messageForNewPost = '';
-            }
-            return state;
-
+            let newPost = {id: v1(), message: action.postText, likesCount: 0};
+            const copyState = {...state}
+            copyState.posts = [...state.posts]
+            copyState.posts.push(newPost);
+            copyState.messageForNewPost = '';
+            return copyState;
         case CHANGE_NEW_TEXT:
-            return {...state,messageForNewPost: action.newText};
+            return {...state, messageForNewPost: action.newText};
         default:
             return state;
     }

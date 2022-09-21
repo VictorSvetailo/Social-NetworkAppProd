@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from './Post.module.css'
-import {PostsType} from '../../../redux/store';
 
 type PostsAllType = {
-    posts: Array<PostsType>;
+    posts: Array<any>;
 }
 
 export function Post(props: PostsAllType){
