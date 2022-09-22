@@ -7,17 +7,19 @@ const SET_USERS = 'SET_USERS';
 
 export type UsersType = {
     id: string
-    image: string
-    fullName: string
+    photos: {small: string, large: string}
+    name: string
     followed: boolean
     status: string
-    location: UsersLocationType
+    //location: UsersLocationType
 }
 
-type UsersLocationType = {
-    city: string
-    country: string
-}
+
+
+// type UsersLocationType = {
+//     city: string
+//     country: string
+// }
 
 const initialState = {
     users: [] as Array<UsersType>,
