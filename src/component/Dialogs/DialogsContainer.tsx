@@ -1,11 +1,6 @@
 import React, {ChangeEvent, MouseEvent} from 'react';
-import styles from '../Dialogs/Dialogs.module.css';
-import {DialogsItem} from './DialogsItem/DialogsItem';
-import {Message} from './Message/Message';
 import {Dialogs} from './Dialogs';
-import store, {AppStateType} from '../redux/redux-store';
-import {addPostAC, changedNewTextAC} from '../redux/profile-reducer';
-import {MyPosts} from '../Profile/MyPosts/MyPosts';
+import {AppStateType} from '../redux/redux-store';
 import {connect} from 'react-redux';
 import {addNewTextCBAC, DialogsType, MessagesType, postTextCBAC} from '../redux/dialogs-reducer';
 import {Dispatch} from 'redux';

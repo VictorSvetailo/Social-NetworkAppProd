@@ -12,7 +12,7 @@ export function MyPosts(props: DialogsPropsType) {
     }
 
     const onChangeAddPostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.onChangeAddPost(e.currentTarget.value);
+        props.onChangeAddPost(e.currentTarget.name);
     }
 
     return (

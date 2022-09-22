@@ -11,7 +11,7 @@ import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
 import {Error} from './component/Error/Error';
 import {DialogsContainer} from './component/Dialogs/DialogsContainer';
-import {Users} from './component/Users/Users';
+import {UsersContainer} from './component/Users/UsersContainer';
 
 
 type PropsType = {
@@ -29,7 +29,7 @@ const App: React.FC<PropsType> = (props) => {
                 <Routes>
                     <Route path="/" element={<Profile/>}/>
                     <Route path="/dialogs/*" element={<DialogsContainer/>}/>
-                    <Route path="/users" element={<Users/>}/>
+                    <Route path="/users" element={<UsersContainer/>}/>
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/sittings" element={<Sittings/>}/>

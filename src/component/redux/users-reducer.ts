@@ -1,68 +1,65 @@
 import {v1} from 'uuid';
 
 
-const ADD_POST = 'ADD-POST';
-const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
+const FOLLOW_CHANGE = 'FOLLOW_CHANGE';
+const SET_USERS = 'SET_USERS';
 
 
-// export type PostsType = {
-//     id: string
-//     message: string
-//     likesCount: number
-// }
-//
-// const initialState = {
-//     messageForNewPost: '',
-//     posts: [
-//         {id: v1(), message: 'Hi, how are you?', likesCount: 12},
-//         {id: v1(), message: 'It\'s my first post', likesCount: 5},
-//         {id: v1(), message: 'I will succeed!', likesCount: 21},
-//         {id: v1(), message: 'I\'m Victor', likesCount: 13},
-//
-//     ] as Array<PostsType>,
-// }
-//
-// export type InitialStateType = typeof initialState
+export type UsersType = {
+    id: string
+    image: string
+    fullName: string
+    followed: boolean
+    status: string
+    location: UsersLocationType
+}
 
-// export const profileReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
-//     switch (action.type) {
-//         case ADD_POST:
-//             return {
-//                 ...state,
-//                 messageForNewPost: '',
-//                 posts: [{id: v1(), message: action.postText, likesCount: 0}, ...state.posts],
-//             };
-//         case CHANGE_NEW_TEXT:
-//             return {...state, messageForNewPost: action.newText};
-//         default:
-//             return state;
-//     }
-//
+type UsersLocationType = {
+    city: string
+    country: string
+}
 
-// Условие 2 вариант
-//     if (action.type === ADD_POST) {
-//         debugger
-//         if (action.postText.trim() !== '') {
-//             const newPost: PostsType = {
-//                 id: v1(),
-//                 // message: this._state.profilePage.messageForNewPost,
-//                 message: action.postText,
-//                 likesCount: 0
-//             }
-//             state.posts.push(newPost)
-//             state.messageForNewPost = ''
-//         }
-//     } else if (action.type === CHANGE_NEW_TEXT) {
-//         state.messageForNewPost = action.newText
-//     }
-//     return state;
-// }
-// export const addPostAC = (postText: string) => {
-//     return {
-//         type: ADD_POST,
-//         postText: postText
-//     } as const
-// }
-// export const changedNewTextAC = (newText: string) =>
-//     ({type: CHANGE_NEW_TEXT, newText: newText}) as const
+const initialState = {
+    users: [] as Array<UsersType>,
+}
+
+export type InitialStateType = typeof initialState
+
+export const usersReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
+    switch (action.type) {
+        case FOLLOW_CHANGE:
+            return {
+                ...state,
+                users: state.users.map(u => {
+                    if (u.id === action.userID) {
+                        return {...u, followed: !u.followed}
+                    }
+                    return u
+                })
+            }
+        case SET_USERS: {
+            return {...state, users: [...state.users, ...action.users]}
+        }
+
+        default:
+            return {...state};
+    }
+
+}
+export const followChangeAC = (userID: string) => {
+    return {
+        type: FOLLOW_CHANGE,
+        userID: userID
+    } as const
+}
+
+export const setUsersAC = (users: Array<UsersType>) => {
+    return {
+        type: SET_USERS,
+        users: users
+    } as const
+}
+// export const changedNewTextAC = (newText: string) => {
 //
+// }
+
