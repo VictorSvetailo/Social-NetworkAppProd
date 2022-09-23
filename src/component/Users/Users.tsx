@@ -8,6 +8,7 @@ type PropsType = {
     currentPage: any
     onClickCurrentPage: (currentPage: number) => void
     onClickFollow:  (userID: string) => void
+    //preloaderTest: any
 
 }
 

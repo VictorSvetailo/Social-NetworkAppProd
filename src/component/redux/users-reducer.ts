@@ -5,6 +5,7 @@ const FOLLOW_CHANGE = 'FOLLOW_CHANGE';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE ';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 
 export type UsersType = {
@@ -25,9 +26,10 @@ export type UsersType = {
 
 const initialState = {
     users: [] as Array<UsersType>,
-    pageSize: 5,
+    pageSize: 10,
     totalUsersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false,
 }
 
 export type InitialStateType = typeof initialState
@@ -53,36 +55,45 @@ export const usersReducer = (state: InitialStateType = initialState, action: any
         case SET_TOTAL_USERS_COUNT : {
             return {...state, totalUsersCount: action.totalCount}
         }
+        case TOGGLE_IS_FETCHING : {
+            return {...state, isFetching: action.isFetching}
+        }
         default:
             return {...state};
     }
 
 }
-export const followChangeAC = (userID: string) => {
+export const followChange = (userID: string) => {
     return {
         type: FOLLOW_CHANGE,
         userID: userID
     } as const
 }
 
-export const setUsersAC = (users: Array<UsersType>) => {
+export const setUsers = (users: Array<UsersType>) => {
     return {
         type: SET_USERS,
         users: users
     } as const
 }
 
-export const currentPageAC = (currentPage: number) => {
+export const setCurrentPage = (currentPage: number) => {
     return {
         type: SET_CURRENT_PAGE,
         currentPage: currentPage
     } as const
 }
 
-export const pagesAC = (totalCount: number) => {
+export const pages = (totalCount: number) => {
     return {
         type: SET_TOTAL_USERS_COUNT,
         totalCount: totalCount
+    } as const
+}
+export const setIsFetching = (isFetching: boolean) => {
+    return {
+        type: TOGGLE_IS_FETCHING,
+        isFetching: isFetching
     } as const
 }
 // export const changedNewTextAC = (newText: string) => {

@@ -2,35 +2,41 @@ import React from 'react';
 import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
 import {AppStateType} from '../redux/redux-store';
-import {currentPageAC, followChangeAC, pagesAC, setUsersAC, UsersType} from '../redux/users-reducer';
+import {
+    followChange,
+    pages,
+    setCurrentPage,
+    setIsFetching,
+    setUsers,
+    UsersType
+} from '../redux/users-reducer';
 import axios from 'axios';
 import {Users} from './Users';
-
+import {Preloader} from '../common/Preloader/Preloader';
 
 
 export class UsersContainer extends React.Component<UsersPropsType, any> {
 
-    // constructor(){
-    //     super (props);
-    //     alert("new object")
-    //
-    // }
-
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.setCurrentPage}&count=${this.props.pageSize}`)
+        this.props.setIsFetching(true)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
+                this.props.setIsFetching(false)
                 this.props.setUsers(response.data.items)
-                this.props.setTotalUsersCount(response.data.totalCount)
+                this.props.pages(response.data.totalCount)
             })
     }
 
     onClickCurrentPage = (currentPage: number) => {
+        this.props.setIsFetching(true)
         this.props.setCurrentPage(currentPage)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`)
             .then(response => {
+                this.props.setIsFetching(false)
                 this.props.setUsers(response.data.items)
             })
     }
+
 
     render() {
         const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
@@ -39,12 +45,23 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
             pages.push(i)
         }
         const onClickFollowHandler = (userID: string) => {
-            this.props.onClickFollowChange(userID)
+            this.props.followChange(userID)
         }
 
-
         return (
-            <Users currentPage={this.props.currentPage} usersData={this.props.users} pages={pages} onClickCurrentPage={this.onClickCurrentPage} onClickFollow={onClickFollowHandler}/>
+            <>
+                {this.props.isFetching ? <Preloader/> : null}
+                <Users
+                    currentPage={this.props.currentPage}
+                    usersData={this.props.users}
+                    pages={pages}
+                    onClickCurrentPage={this.onClickCurrentPage}
+                    onClickFollow={onClickFollowHandler}
+                    //preloaderTest={this.preloaderTest}
+                    // isFetching={this.props.isFetching}
+                />
+            </>
+
         );
     }
 }
@@ -52,16 +69,17 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
 type MapStatePropsType = {
     users: Array<UsersType>
     pageSize: number
-    totalUsersCount: number
+    totalUsersCount: any
     currentPage: number
-    // messageForNewPost: string
+    isFetching: boolean
 }
 //
 type MapDispatchPropsType = {
-    onClickFollowChange: (userID: string) => void
+    followChange: (userID: string) => void
     setUsers: (users: Array<UsersType>) => void
     setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalCount: number) => void
+    pages: (totalCount: number) => void
+    setIsFetching: (isFetching: boolean) => void
 }
 export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
 
@@ -72,25 +90,36 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching,
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-    return {
-        onClickFollowChange: (userID: string) => {
-            dispatch(followChangeAC(userID))
-        },
-        setUsers: (users: Array<UsersType>) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (currentPage: number) => {
-            dispatch(currentPageAC(currentPage))
-        },
-        setTotalUsersCount: (totalCount: number) => {
-            dispatch(pagesAC(totalCount))
-        },
-    }
-}
+export default connect(mapStateToProps, {
+    followChange,
+    setUsers,
+    setCurrentPage,
+    pages,
+    setIsFetching,
+})(UsersContainer);
+// Старый вариант!
+// const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+//     return {
+//         onClickFollowChange: (userID: string) => {
+//             dispatch(followChangeAC(userID))
+//         },
+//         setUsers: (users: Array<UsersType>) => {
+//             dispatch(setUsersAC(users))
+//         },
+//         setCurrentPage: (currentPage: number) => {
+//             dispatch(currentPageAC(currentPage))
+//         },
+//         setTotalUsersCount: (totalCount: number) => {
+//             dispatch(pagesAC(totalCount))
+//         },
+//         isFetchingCB: (isFetching: boolean) => {
+//             dispatch(setIsFetchingAC(isFetching))
+//         },
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
 
