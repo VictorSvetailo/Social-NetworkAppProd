@@ -17,7 +17,7 @@ type MessagesPropsType = {
 export function Message(props: MessagesPropsType) {
 
     let onChangeAddTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.onChangeAddTextCB(e.currentTarget.name)
+        props.onChangeAddTextCB(e.currentTarget.value)
 
         // props.addNewTextCB(e.currentTarget.value)
     }

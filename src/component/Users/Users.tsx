@@ -1,60 +1,28 @@
-import React, {MouseEvent, useState} from 'react';
-import {UsersPropsType} from './UsersContainer';
-import axios from 'axios';
-import {v1} from 'uuid';
-import {UsersType} from '../redux/users-reducer';
+import React, {MouseEvent} from 'react';
+import styles from './Users.module.css'
 
 
-export function Users(props: UsersPropsType) {
-    console.log('Rerender User')
-    const getUsers = () => {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users')
-            .then(response => {
-                props.setUsers(response.data.items)
-            })
-    }
+type PropsType = {
+    pages: Array<any>
+    usersData: Array<any>
+    currentPage: any
+    onClickCurrentPage: (currentPage: number) => void
+    onClickFollow:  (userID: string) => void
 
+}
 
-    // if (props.users.length === 0) {
-    //     props.setUsers([
-    //         {
-    //             id: v1(),
-    //             image: 'https://cutt.ly/4Vc1Wmz',
-    //             followed: true,
-    //             fullName: 'Victor',
-    //             status: 'I\'m work in Alfa Bank.',
-    //             location: {city: 'Moscow', country: 'Russia'}
-    //         },
-    //         {
-    //             id: v1(),
-    //             image: 'https://cutt.ly/4Vc1Wmz',
-    //             followed: true,
-    //             fullName: 'Dima',
-    //             status: 'I\'m work in Alfa Bank.',
-    //             location: {city: 'Moscow', country: 'Russia'}
-    //         },
-    //         {
-    //             id: v1(),
-    //             image: 'https://cutt.ly/4Vc1Wmz',
-    //             followed: false,
-    //             fullName: 'Sergei',
-    //             status: 'I\'m work in Alfa Bank.',
-    //             location: {city: 'Moscow', country: 'Russia'}
-    //         },
-    //         {
-    //             id: v1(),
-    //             image: 'https://cutt.ly/4Vc1Wmz',
-    //             followed: true,
-    //             fullName: 'Andrew',
-    //             status: 'I\'m work in Alfa Bank.',
-    //             location: {city: 'Moscow', country: 'Russia'}
-    //         },
-    //     ])
-    // }
+export function Users(props: PropsType) {
 
-    const usersData = props.users.map(u => {
+    const page = props.pages.map( (p,i) =>  {
+        return <span key={i} className={props.currentPage === p ? `${styles.active__value}` : `${styles.span__value}`}
+                     onClick={(e) => {
+                         props.onClickCurrentPage(p)}}
+        >{p}</span>
+    })
+
+    const usersData = props.usersData.map(u => {
         const onClickFollowHandler = (e: MouseEvent<HTMLButtonElement>) => {
-            props.onClickFollowChange(u.id)
+            props.onClickFollow(u.id)
         }
         return (
             <div key={u.id}>
@@ -62,16 +30,22 @@ export function Users(props: UsersPropsType) {
                 <button onClick={onClickFollowHandler}>{u.followed ? 'follow' : 'unfollow'}</button>
                 <span> {u.name}</span>
                 <span> {u.status}</span>
-                {/*<span> {u.location.country} {u.location.city}</span>*/}
             </div>
         )
     })
 
+
     return (
-        <div>
+        <div className={styles.container}>
             users will be here
+            <br/>
+            <hr/>
+            <div>
+                <span>{page}</span>
+            </div>
+            <hr/>
+            <br/>
             {usersData}
-            <button onClick={getUsers}>Get Users</button>
         </div>
     );
-};
+}

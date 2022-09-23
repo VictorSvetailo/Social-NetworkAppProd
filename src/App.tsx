@@ -6,12 +6,11 @@ import {Header} from './component/Header/Header';
 import {Sidebar} from './component/Sidebar/Sidebar';
 import {Profile} from './component/Profile/Profile';
 import {Route, Routes} from 'react-router-dom';
-import {Dialogs} from './component/Dialogs/Dialogs';
 import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
 import {Error} from './component/Error/Error';
 import {DialogsContainer} from './component/Dialogs/DialogsContainer';
-import {UsersContainer} from './component/Users/UsersContainer';
+import UsersContainer from './component/Users/UsersContainer';
 
 
 type PropsType = {

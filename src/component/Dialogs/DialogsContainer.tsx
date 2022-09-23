@@ -76,6 +76,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
         onChangeAddTextCB: (value: string) => {
             dispatch(addNewTextCBAC(value))
+
         },
         onClickAddPostCB: (text: string) => {
             dispatch(postTextCBAC(text))

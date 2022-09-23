@@ -45,6 +45,7 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: an
 
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
+            console.log('Hello')
             return {...state, messageForCB: action.text};
         case SEND_MESSAGE:
             return {
