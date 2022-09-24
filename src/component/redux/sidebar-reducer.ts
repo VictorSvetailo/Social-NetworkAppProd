@@ -9,7 +9,7 @@ const initialState = {
         }
     ],
     menuTitle: [
-        {id: v1(), url: '/', title: 'Profile', status: true},
+        {id: v1(), url: '/profile', title: 'Profile', status: true},
         {id: v1(), url: '/dialogs', title: 'Message', status: true},
         {id: v1(), url: '/users', title: 'Users', status: true},
         {id: v1(), url: '/news', title: 'News', status: true},

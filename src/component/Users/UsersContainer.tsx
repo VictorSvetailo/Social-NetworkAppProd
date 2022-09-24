@@ -101,6 +101,11 @@ export default connect(mapStateToProps, {
     pages,
     setIsFetching,
 })(UsersContainer);
+
+
+
+
+
 // Старый вариант!
 // const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
 //     return {

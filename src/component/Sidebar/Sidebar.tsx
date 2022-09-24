@@ -8,7 +8,6 @@ type DataSidebarType = {
 }
 
 export function Sidebar(props: DataSidebarType) {
-
     let admin = props.sidebar.adminData.map((a) => {
         return (
             <div key={a.id}>

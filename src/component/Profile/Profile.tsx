@@ -2,12 +2,13 @@ import React from 'react'
 import styles from './Profile.module.css'
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from './MyPosts/MyPostsContainer';
+import {ProfilePropsType} from './ProfileContainer';
 
-export function Profile() {
+export function Profile(props: ProfilePropsType) {
 
     return (
         <div className={styles.blocks}>
-            <ProfileInfo/>
+            <ProfileInfo profile={props.profile} setUserProfile={props.setUserProfile}/>
             <MyPostsContainer/>
         </div>
     )

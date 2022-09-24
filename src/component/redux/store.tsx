@@ -181,7 +181,7 @@ const store: StoreType = {
                 }
             ],
             menuTitle: [
-                {id: v1(), url: '/', title: 'Profile', status: true},
+                {id: v1(), url: '/profile', title: 'Profile', status: true},
                 {id: v1(), url: '/dialogs', title: 'Message', status: true},
                 {id: v1(), url: '/users', title: 'Users', status: true},
                 {id: v1(), url: '/news', title: 'News', status: true},
@@ -240,10 +240,10 @@ const store: StoreType = {
         return this._state;
     },
     dispatch(action) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        // this._state.profilePage = profileReducer(this._state.profilePage, action)
+        // this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         // this._state.sidebar = sidebarReducer(this._state.sidebar, action)
-        this._callSubscribe()
+        // this._callSubscribe()
         // if (action.type === ADD_POST) {
         //     if (action.postText.trim() !== '') {
         //         const newPost: PostsType = {

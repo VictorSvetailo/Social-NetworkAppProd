@@ -1,5 +1,6 @@
 import React, {MouseEvent} from 'react';
 import styles from './Users.module.css'
+import {NavLink} from 'react-router-dom';
 
 
 type PropsType = {
@@ -27,7 +28,9 @@ export function Users(props: PropsType) {
         }
         return (
             <div key={u.id}>
-                <img src={u.photos.small ? u.photos.small : 'https://cutt.ly/4Vc1Wmz'} alt="" width="50px"/>
+                <NavLink to={'/profile/' + u.id}>
+                    <img src={u.photos.small ? u.photos.small : 'https://cutt.ly/4Vc1Wmz'} alt="" width="50px"/>
+                </NavLink>
                 <button onClick={onClickFollowHandler}>{u.followed ? 'follow' : 'unfollow'}</button>
                 <span> {u.name}</span>
                 <span> {u.status}</span>

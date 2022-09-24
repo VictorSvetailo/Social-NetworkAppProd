@@ -22,3 +22,8 @@
 .image img{
     width: 100%;
 }
+
+.loginBlock{
+    float: right;
+    font-weight: 900;
+}

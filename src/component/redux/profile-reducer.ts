@@ -1,8 +1,10 @@
 import {v1} from 'uuid';
+import {log} from 'util';
 
 
 const ADD_POST = 'ADD-POST';
 const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 
 export type PostsType = {
@@ -20,6 +22,7 @@ const initialState = {
         {id: v1(), message: 'I\'m Victor', likesCount: 13},
 
     ] as Array<PostsType>,
+    profile: null
 }
 
 export type InitialStateType = typeof initialState
@@ -34,30 +37,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: a
                 posts: [{id: v1(), message: action.postText, likesCount: 0}, ...state.posts],
             };
         case CHANGE_NEW_TEXT:
-            console.log('Hello')
             return {...state, messageForNewPost: action.newText};
+        case SET_USER_PROFILE:
+            return {...state, profile: action.profile};
         default:
             return state;
     }
-
-
-// Условие 2 вариант
-//     if (action.type === ADD_POST) {
-//         debugger
-//         if (action.postText.trim() !== '') {
-//             const newPost: PostsType = {
-//                 id: v1(),
-//                 // message: this._state.profilePage.messageForNewPost,
-//                 message: action.postText,
-//                 likesCount: 0
-//             }
-//             state.posts.push(newPost)
-//             state.messageForNewPost = ''
-//         }
-//     } else if (action.type === CHANGE_NEW_TEXT) {
-//         state.messageForNewPost = action.newText
-//     }
-//     return state;
 }
 export const addPostAC = (postText: string) => {
     return {
@@ -67,4 +52,10 @@ export const addPostAC = (postText: string) => {
 }
 export const changedNewTextAC = (newText: string) =>
     ({type: CHANGE_NEW_TEXT, newText: newText}) as const
+export const setUserProfile = (profile: any) => {
+    return {
+        type: SET_USER_PROFILE,
+        profile: profile
+    } as const
+}
 

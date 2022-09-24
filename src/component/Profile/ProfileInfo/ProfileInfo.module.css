@@ -12,3 +12,14 @@
     width: 300px;
     height: 150px;
 }
+
+.profile__image{
+    width: 200px;
+    height: 200px;
+    /*background-color: hotpink;*/
+    border: 2px solid #000;
+}
+
+.profile__image img{
+    width: 100%;
+}
