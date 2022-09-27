@@ -1,8 +1,8 @@
 import React, {ChangeEvent, MouseEvent} from 'react';
 import {Dialogs} from './Dialogs';
-import {AppStateType} from '../redux/redux-store';
+import {AppStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
-import {addNewTextCBAC, DialogsType, MessagesType, postTextCBAC} from '../redux/dialogs-reducer';
+import {addNewTextCBAC, DialogsType, MessagesType, postTextCBAC} from '../../redux/dialogs-reducer';
 import {Dispatch} from 'redux';
 
 type DialogsPageAllType = {

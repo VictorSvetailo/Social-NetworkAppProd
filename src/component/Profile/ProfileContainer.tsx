@@ -2,8 +2,8 @@ import React from 'react'
 import styles from './Profile.module.css'
 import {Profile} from './Profile';
 import axios from 'axios';
-import {setUserProfile} from '../redux/profile-reducer';
-import {AppStateType} from '../redux/redux-store';
+import {setUserProfile} from '../../redux/profile-reducer';
+import {AppStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
 
 // import {withRouter} from 'react-router-dom';

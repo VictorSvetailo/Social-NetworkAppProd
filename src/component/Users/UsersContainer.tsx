@@ -1,39 +1,38 @@
 import React from 'react';
 import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
-import {AppStateType} from '../redux/redux-store';
+import {AppStateType} from '../../redux/redux-store';
 import {
     followChange,
     pages,
     setCurrentPage,
     setIsFetching,
-    setUsers,
+    setUsers, unFollowChange,
     UsersType
-} from '../redux/users-reducer';
+} from '../../redux/users-reducer';
 import axios from 'axios';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
+import {usersAPI} from '../../api/api';
 
 
 export class UsersContainer extends React.Component<UsersPropsType, any> {
 
     componentDidMount() {
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(response => {
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
                 this.props.setIsFetching(false)
-                this.props.setUsers(response.data.items)
-                this.props.pages(response.data.totalCount)
+                this.props.setUsers(data.items)
+                this.props.pages(data.totalCount)
             })
     }
 
     onClickCurrentPage = (currentPage: number) => {
         this.props.setIsFetching(true)
         this.props.setCurrentPage(currentPage)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`)
-            .then(response => {
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
                 this.props.setIsFetching(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(data.items)
             })
     }
 
@@ -47,6 +46,9 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
         const onClickFollowHandler = (userID: string) => {
             this.props.followChange(userID)
         }
+        const onClickUnFollowHandler = (userID: string) => {
+            this.props.unFollowChange(userID)
+        }
 
         return (
             <>
@@ -57,6 +59,7 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
                     pages={pages}
                     onClickCurrentPage={this.onClickCurrentPage}
                     onClickFollow={onClickFollowHandler}
+                    onClickUnFollow={onClickUnFollowHandler}
                     //preloaderTest={this.preloaderTest}
                     // isFetching={this.props.isFetching}
                 />
@@ -76,6 +79,7 @@ type MapStatePropsType = {
 //
 type MapDispatchPropsType = {
     followChange: (userID: string) => void
+    unFollowChange: (userID: string) => void
     setUsers: (users: Array<UsersType>) => void
     setCurrentPage: (currentPage: number) => void
     pages: (totalCount: number) => void
@@ -96,6 +100,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 export default connect(mapStateToProps, {
     followChange,
+    unFollowChange,
     setUsers,
     setCurrentPage,
     pages,

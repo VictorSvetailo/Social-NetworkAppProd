@@ -2,6 +2,7 @@ import {v1} from 'uuid';
 
 
 const FOLLOW_CHANGE = 'FOLLOW_CHANGE';
+const UN_FOLLOW_CHANGE = 'UN_FOLLOW_CHANGE';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE ';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
@@ -10,13 +11,12 @@ const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 export type UsersType = {
     id: string
-    photos: {small: string, large: string}
+    photos: { small: string, large: string }
     name: string
     followed: boolean
     status: string
     //location: UsersLocationType
 }
-
 
 
 // type UsersLocationType = {
@@ -41,7 +41,17 @@ export const usersReducer = (state: InitialStateType = initialState, action: any
                 ...state,
                 users: state.users.map(u => {
                     if (u.id === action.userID) {
-                        return {...u, followed: !u.followed}
+                        return {...u, followed: true}
+                    }
+                    return u
+                })
+            }
+        case UN_FOLLOW_CHANGE:
+            return {
+                ...state,
+                users: state.users.map(u => {
+                    if (u.id === action.userID) {
+                        return {...u, followed: false}
                     }
                     return u
                 })
@@ -66,6 +76,12 @@ export const usersReducer = (state: InitialStateType = initialState, action: any
 export const followChange = (userID: string) => {
     return {
         type: FOLLOW_CHANGE,
+        userID: userID
+    } as const
+}
+export const unFollowChange = (userID: string) => {
+    return {
+        type: UN_FOLLOW_CHANGE,
         userID: userID
     } as const
 }

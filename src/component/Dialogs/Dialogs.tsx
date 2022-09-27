@@ -3,8 +3,8 @@ import styles from '../Dialogs/Dialogs.module.css';
 import {DialogsItem} from './DialogsItem/DialogsItem';
 import {Message} from './Message/Message';
 
-import store from '../redux/redux-store';
-import {addNewTextCBAC, MessagesType, postTextCBAC} from '../redux/dialogs-reducer';
+import store from '../../redux/redux-store';
+import {addNewTextCBAC, MessagesType, postTextCBAC} from '../../redux/dialogs-reducer';
 import {DialogsPropsType} from './DialogsContainer';
 
 // type DialogsPageAllType = {
