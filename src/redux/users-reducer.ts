@@ -7,6 +7,7 @@ const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE ';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
 
 
 export type UsersType = {
@@ -19,18 +20,25 @@ export type UsersType = {
 }
 
 
-// type UsersLocationType = {
-//     city: string
-//     country: string
-// }
-
 const initialState = {
     users: [] as Array<UsersType>,
     pageSize: 10,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false,
+    isFetching: true,
+    followingInProgress: [] as Array<FollowingInProgress>
 }
+
+export type FollowingInProgress = {
+    id: number
+}
+// }
+
+// export type FollowingInProgress = {
+//     id: number
+//     followingInProgress: boolean
+//
+// }
 
 export type InitialStateType = typeof initialState
 
@@ -67,6 +75,13 @@ export const usersReducer = (state: InitialStateType = initialState, action: any
         }
         case TOGGLE_IS_FETCHING : {
             return {...state, isFetching: action.isFetching}
+        }
+        case TOGGLE_IS_FOLLOWING_PROGRESS : {
+            return {...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userID]
+                    : state.followingInProgress.filter(id => id != action.userID)
+            }
         }
         default:
             return {...state};
@@ -112,7 +127,13 @@ export const setIsFetching = (isFetching: boolean) => {
         isFetching: isFetching
     } as const
 }
-// export const changedNewTextAC = (newText: string) => {
-//
-// }
+
+export const toggleFollowingInProgress = (userID: any, isFetching: any) => {
+    return {
+        type: TOGGLE_IS_FOLLOWING_PROGRESS,
+        userID: userID,
+        isFetching: isFetching
+    } as const
+}
+
 

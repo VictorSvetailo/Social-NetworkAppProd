@@ -5,6 +5,7 @@ import {log} from 'util';
 const ADD_POST = 'ADD-POST';
 const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_USER_id_PAGE = 'SET_USER_id_PAGE';
 
 
 export type PostsType = {
@@ -22,7 +23,8 @@ const initialState = {
         {id: v1(), message: 'I\'m Victor', likesCount: 13},
 
     ] as Array<PostsType>,
-    profile: null
+    profile: null,
+    idPageCurrent: 1,
 }
 
 export type InitialStateType = typeof initialState
@@ -40,6 +42,8 @@ export const profileReducer = (state: InitialStateType = initialState, action: a
             return {...state, messageForNewPost: action.newText};
         case SET_USER_PROFILE:
             return {...state, profile: action.profile};
+        // case SET_USER_id_PAGE:
+        //     return {...state, idPageCurrent: action.idPageCurrent}
         default:
             return state;
     }
@@ -52,6 +56,7 @@ export const addPostAC = (postText: string) => {
 }
 export const changedNewTextAC = (newText: string) =>
     ({type: CHANGE_NEW_TEXT, newText: newText}) as const
+
 export const setUserProfile = (profile: any) => {
     return {
         type: SET_USER_PROFILE,
@@ -59,3 +64,16 @@ export const setUserProfile = (profile: any) => {
     } as const
 }
 
+
+
+// export const idPage = (idPageCurrent: any) => {
+//
+// }
+
+// export const idPageHandler2 = (idPageCurrent: any) => {
+//     // console.log(params)
+//     return {
+//         // type: SET_USER_id_PAGE,
+//         idPageCurrent: {...state, idPageCurrent: action.idPageCurrent}
+//     } as const
+// }

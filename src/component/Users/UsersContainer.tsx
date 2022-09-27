@@ -1,5 +1,4 @@
 import React from 'react';
-import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
@@ -7,10 +6,9 @@ import {
     pages,
     setCurrentPage,
     setIsFetching,
-    setUsers, unFollowChange,
+    setUsers, toggleFollowingInProgress, unFollowChange,
     UsersType
 } from '../../redux/users-reducer';
-import axios from 'axios';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
 import {usersAPI} from '../../api/api';
@@ -60,8 +58,8 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
                     onClickCurrentPage={this.onClickCurrentPage}
                     onClickFollow={onClickFollowHandler}
                     onClickUnFollow={onClickUnFollowHandler}
-                    //preloaderTest={this.preloaderTest}
-                    // isFetching={this.props.isFetching}
+                    toggleFollowingInProgress={this.props.toggleFollowingInProgress}
+                    followingInProgress={this.props.followingInProgress}
                 />
             </>
 
@@ -75,6 +73,7 @@ type MapStatePropsType = {
     totalUsersCount: any
     currentPage: number
     isFetching: boolean
+    followingInProgress: any
 }
 //
 type MapDispatchPropsType = {
@@ -84,6 +83,7 @@ type MapDispatchPropsType = {
     setCurrentPage: (currentPage: number) => void
     pages: (totalCount: number) => void
     setIsFetching: (isFetching: boolean) => void
+    toggleFollowingInProgress: (userID: string, isFetching: any) => void
 }
 export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
 
@@ -95,6 +95,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -105,6 +106,7 @@ export default connect(mapStateToProps, {
     setCurrentPage,
     pages,
     setIsFetching,
+    toggleFollowingInProgress,
 })(UsersContainer);
 
 
