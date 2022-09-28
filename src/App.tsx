@@ -11,7 +11,6 @@ import {DialogsContainer} from './component/Dialogs/DialogsContainer';
 import UsersContainer from './component/Users/UsersContainer';
 import ProfileContainer from './component/Profile/ProfileContainer';
 import HeaderContainer from './component/Header/HeaderContainer';
-import {ProfileFC} from './component/Profile/ProfileFC';
 
 
 
