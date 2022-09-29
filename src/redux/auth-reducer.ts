@@ -1,5 +1,7 @@
 import {v1} from 'uuid';
 import {log} from 'util';
+import {authAPI, usersAPI} from '../api/api';
+import {setUserProfile} from './profile-reducer';
 
 
 const SET_USER_DATA = 'SET_USER_DATA';
@@ -37,4 +39,13 @@ export const setAuthUserData = (id: string, email: string, login: string) => {
         type: SET_USER_DATA,
         data: {id, email, login}
     } as const
+}
+export const getAuthMe = () => (dispatch: any) => {
+    authAPI.getMe()
+        .then(response => {
+        if (response.data.resultCode === 0) {
+            let {id, email, login} = response.data.data;
+            dispatch(setAuthUserData(id, email, login))
+        }
+    })
 }

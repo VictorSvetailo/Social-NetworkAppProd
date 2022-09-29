@@ -1,5 +1,6 @@
 import {v1} from 'uuid';
 import {log} from 'util';
+import {usersAPI} from '../api/api';
 
 
 const ADD_POST = 'ADD-POST';
@@ -32,7 +33,6 @@ export type InitialStateType = typeof initialState
 export const profileReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
-
             return {
                 ...state,
                 messageForNewPost: '',
@@ -42,8 +42,6 @@ export const profileReducer = (state: InitialStateType = initialState, action: a
             return {...state, messageForNewPost: action.newText};
         case SET_USER_PROFILE:
             return {...state, profile: action.profile};
-        // case SET_USER_id_PAGE:
-        //     return {...state, idPageCurrent: action.idPageCurrent}
         default:
             return state;
     }
@@ -62,6 +60,13 @@ export const setUserProfile = (profile: any) => {
         type: SET_USER_PROFILE,
         profile: profile
     } as const
+}
+export const getUserProfile = (userID: any) => (dispatch: any) => {
+    if (userID) {
+        usersAPI.getProfile(userID).then(response => {
+            dispatch(setUserProfile(response.data))
+        })
+    }
 }
 
 

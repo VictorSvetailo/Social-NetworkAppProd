@@ -4,7 +4,6 @@ import {Preloader} from '../../common/Preloader/Preloader';
 
 type PropsType = {
     profile: any
-    setUserProfile: (profile: string) => void
 }
 
 export function ProfileInfo(props: PropsType) {
@@ -20,7 +19,7 @@ export function ProfileInfo(props: PropsType) {
                     alt=""/>
             </div>
             <div className={styles.profile__image}>
-                <img src={props.profile.photos.large} alt=""/>
+                <img src={props.profile.photos.large || 'https://inlnk.ru/4y0VkP'} alt=""/>
             </div>
             <h2>{props.profile.fullName}</h2>
             <div>{props.profile.aboutMe}</div>
