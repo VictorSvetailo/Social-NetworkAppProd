@@ -12,15 +12,3 @@ export const ProfileFC = <T extends unknown>(Component: ComponentType<T>): Profi
     }
     return ReturnedComponent
 };
-
-const Div = (props: {name: number}) => {
-    return (
-        <div></div>
-    )
-}
-
-const WrappedDiv = ProfileFC(Div)
-
-const Component = () => {
-    return <WrappedDiv name={3}/>
-}

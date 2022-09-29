@@ -1,4 +1,5 @@
 import React from 'react';
+import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 
 export function News() {
     return (
@@ -10,3 +11,5 @@ export function News() {
         </div>
     );
 };
+
+export let WithNewsRedirect = WithAuthRedirect(News)

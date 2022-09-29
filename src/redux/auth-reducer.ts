@@ -1,17 +1,6 @@
-import {v1} from 'uuid';
-import {log} from 'util';
-import {authAPI, usersAPI} from '../api/api';
-import {setUserProfile} from './profile-reducer';
-
+import {authAPI} from '../api/api';
 
 const SET_USER_DATA = 'SET_USER_DATA';
-
-
-// export type PostsType = {
-//     id: string
-//     message: string
-//     likesCount: number
-// }
 
 const initialState = {
     id: null,

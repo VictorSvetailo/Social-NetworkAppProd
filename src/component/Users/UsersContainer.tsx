@@ -10,6 +10,10 @@ import {
 } from '../../redux/users-reducer';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
+import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
+import {compose} from 'redux';
+import {getUserProfile} from '../../redux/profile-reducer';
+import {ProfileFC} from '../Profile/ProfileFC';
 
 
 export class UsersContainer extends React.Component<UsersPropsType, any> {
@@ -41,7 +45,6 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
         const onClickUnFollowHandler = (userID: string) => {
             this.props.unFollow(userID)
         }
-
         return (
             <>
                 {this.props.isFetching ? <Preloader/> : null}
@@ -50,9 +53,6 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
                     usersData={this.props.users}
                     pages={pages}
                     onClickCurrentPage={this.onClickCurrentPage}
-                    // onClickFollow={onClickFollowHandler}
-                    // onClickUnFollow={onClickUnFollowHandler}
-                    // toggleFollowingInProgress={this.props.toggleFollowingInProgress}
                     followingInProgress={this.props.followingInProgress}
                     follow={onClickFollowHandler}
                     unFollow={onClickUnFollowHandler}
@@ -62,6 +62,9 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
         );
     }
 }
+
+// let AuthRedirectComponent = WithAuthRedirect(UsersContainer)
+
 
 type MapStatePropsType = {
     users: Array<UsersType>
@@ -92,18 +95,25 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        followingInProgress: state.usersPage.followingInProgress,
     }
 }
 
 
-export default connect(mapStateToProps, {
-    follow,
-    unFollow,
-    setCurrentPage,
-    toggleFollowingInProgress,
-    getUsers,
-})(UsersContainer);
+// export default WithAuthRedirect(connect(mapStateToProps, {
+//     follow,
+//     unFollow,
+//     setCurrentPage,
+//     toggleFollowingInProgress,
+//     getUsers,
+// })(UsersContainer));
+
+
+export default compose<React.ComponentType>(
+    WithAuthRedirect,
+    connect(mapStateToProps, {follow, unFollow, setCurrentPage, toggleFollowingInProgress, getUsers}),
+)(UsersContainer)
+
 
 
 // Старый вариант!

@@ -7,10 +7,12 @@ import {Route, Routes, useParams} from 'react-router-dom';
 import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
 import {Error} from './component/Error/Error';
-import {DialogsContainer} from './component/Dialogs/DialogsContainer';
+import DialogsContainer from './component/Dialogs/DialogsContainer';
 import UsersContainer from './component/Users/UsersContainer';
 import ProfileContainer from './component/Profile/ProfileContainer';
 import HeaderContainer from './component/Header/HeaderContainer';
+import {Login} from './component/Login/Login';
+import {WithNewsRedirect} from './component/News/News';
 
 
 
@@ -32,9 +34,10 @@ const App: React.FC<PropsType> = (props) => {
                     <Route path="/profile/:id" element={<ProfileContainer/>}/>
                     <Route path="/dialogs/*" element={<DialogsContainer/>}/>
                     <Route path="/users" element={<UsersContainer/>}/>
-                    <Route path="/news" element={<News/>}/>
+                    <Route path="/news" element={<WithNewsRedirect/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/sittings" element={<Sittings/>}/>
+                    <Route path="/login" element={<Login/>}/>
                     <Route path="*" element={<Error/>}/>
                 </Routes>
             </div>

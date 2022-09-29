@@ -3,9 +3,8 @@ import styles from '../Dialogs/Dialogs.module.css';
 import {DialogsItem} from './DialogsItem/DialogsItem';
 import {Message} from './Message/Message';
 
-import store from '../../redux/redux-store';
-import {addNewTextCBAC, MessagesType, postTextCBAC} from '../../redux/dialogs-reducer';
 import {DialogsPropsType} from './DialogsContainer';
+import {Navigate} from 'react-router-dom';
 
 // type DialogsPageAllType = {
 //     dialogs: Array<any>
@@ -29,6 +28,8 @@ export function Dialogs(props: DialogsPropsType) {
     //     store.dispatch(postTextCBAC(props.messageForCB))
     //     // props.addPostCB(props.messageForCB)
     // }
+
+    // if (!props.isAuth) return <Navigate to={'/login'}/>
 
     return (
         <div className={styles.dialogs}>

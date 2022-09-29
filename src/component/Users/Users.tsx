@@ -1,9 +1,7 @@
 import React, {MouseEvent} from 'react';
 import styles from './Users.module.css'
 import {NavLink} from 'react-router-dom';
-import axios from 'axios';
-import {usersAPI} from '../../api/api';
-import {follow, unFollow} from '../../redux/users-reducer';
+
 
 
 type PropsType = {
