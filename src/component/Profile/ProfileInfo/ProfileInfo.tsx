@@ -1,15 +1,23 @@
 import React from 'react';
 import styles from './ProfileInfo.module.css';
 import {Preloader} from '../../common/Preloader/Preloader';
+import {Profile} from '../Profile';
+import {ProfileStatus} from './ProfileStatus';
 
 type PropsType = {
     profile: any
+    status: any
+    updateStatus: (status: any) => void
 }
+
 
 export function ProfileInfo(props: PropsType) {
     if (!props.profile) {
         return <Preloader/>
     }
+
+
+    // const statusText = 'Hello my friends'
     return (
         <div>
 
@@ -18,13 +26,16 @@ export function ProfileInfo(props: PropsType) {
                     src="https://inlnk.ru/Pm5348"
                     alt=""/>
             </div>
-            <div className={styles.profile__image}>
-                <img src={props.profile.photos.large || 'https://inlnk.ru/4y0VkP'} alt=""/>
+            <div className={styles.block}>
+                <div className={styles.profile__image}>
+                    <img src={props.profile.photos.large || 'https://inlnk.ru/4y0VkP'} alt=""/>
+                </div>
+                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
             </div>
-            <h2>{props.profile.fullName}</h2>
-            <div>{props.profile.aboutMe}</div>
-            <div>{props.profile.lookingForAJobDescription}</div>
-            <a href='https://github.com'>{props.profile.contacts.github}</a>
+            {/*<h2>{props.profile.fullName}</h2>*/}
+            {/*<div>{props.profile.aboutMe}</div>*/}
+            {/*<div>{props.profile.lookingForAJobDescription}</div>*/}
+            <a href="https://github.com">{props.profile.contacts.github}</a>
             <h1>Hello Lorem ipsum dolor sit amet. </h1>
             <div><i>Hello Victor</i></div>
         </div>

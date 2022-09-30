@@ -1,7 +1,5 @@
 import React, {FC} from 'react';
 import styles from './App.module.css';
-import {News} from './component/News/News';
-import {Header} from './component/Header/Header';
 import {Sidebar} from './component/Sidebar/Sidebar';
 import {Route, Routes, useParams} from 'react-router-dom';
 import {Sittings} from './component/Sittings/Sittings';
@@ -31,6 +29,7 @@ const App: React.FC<PropsType> = (props) => {
             <div className={styles.items}>
                 <Sidebar sidebar={sidebar}/>
                 <Routes>
+                    <Route path="/profile" element={<ProfileContainer/>}/>
                     <Route path="/profile/:id" element={<ProfileContainer/>}/>
                     <Route path="/dialogs/*" element={<DialogsContainer/>}/>
                     <Route path="/users" element={<UsersContainer/>}/>

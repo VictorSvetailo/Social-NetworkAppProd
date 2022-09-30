@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Sidebar.module.css'
-import {NavLink} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import {SidebarType} from '../../redux/store';
 
 type DataSidebarType = {
@@ -20,10 +20,11 @@ export function Sidebar(props: DataSidebarType) {
     let menuTitle = props.sidebar.menuTitle.map((m) => {
         return (
             <div key={m.id} className={`${styles.link}`}>
-                <NavLink to={m.url}
-                         className={navData => navData.isActive ? styles.active : styles.link}>
+                <Link to={m.url}
+                     //    className={navData => navData.isActive ? styles.active : styles.link}
+                    >
                     {m.title}
-                </NavLink>
+                </Link>
             </div>
         )
     })

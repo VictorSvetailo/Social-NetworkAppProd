@@ -1,12 +1,13 @@
 import {v1} from 'uuid';
 import {log} from 'util';
-import {usersAPI} from '../api/api';
+import {profileAPI, usersAPI} from '../api/api';
+import {Dispatch} from 'redux';
 
 
 const ADD_POST = 'ADD-POST';
 const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_USER_id_PAGE = 'SET_USER_id_PAGE';
+const SET_STATUS = 'SET_STATUS';
 
 
 export type PostsType = {
@@ -26,6 +27,7 @@ const initialState = {
     ] as Array<PostsType>,
     profile: null,
     idPageCurrent: 1,
+    status: '',
 }
 
 export type InitialStateType = typeof initialState
@@ -42,6 +44,8 @@ export const profileReducer = (state: InitialStateType = initialState, action: a
             return {...state, messageForNewPost: action.newText};
         case SET_USER_PROFILE:
             return {...state, profile: action.profile};
+        case SET_STATUS:
+            return {...state, status: action.status};
         default:
             return state;
     }
@@ -54,6 +58,10 @@ export const addPostAC = (postText: string) => {
 }
 export const changedNewTextAC = (newText: string) =>
     ({type: CHANGE_NEW_TEXT, newText: newText}) as const
+
+export const setStatusAC = (status: string) =>
+    ({type: SET_STATUS, status: status}) as const
+
 
 export const setUserProfile = (profile: any) => {
     return {
@@ -69,6 +77,22 @@ export const getUserProfile = (userID: any) => (dispatch: any) => {
     }
 }
 
+export const getStatus = (userID: string) => (dispatch: Dispatch) => {
+    profileAPI.getStatus(userID)
+        .then(response => {
+            dispatch(setStatusAC(response.data))
+        })
+}
+
+export const updateStatus = (status: string) => (dispatch: Dispatch) => {
+    profileAPI.updateStatus(status)
+        .then(response => {
+
+            if (response.data.resultCode === 0) {
+                dispatch(setStatusAC(status))
+            }
+        })
+}
 
 
 // export const idPage = (idPageCurrent: any) => {
