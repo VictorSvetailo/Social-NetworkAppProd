@@ -16,6 +16,7 @@ const initialState = {
         {id: v1(), url: '/doctors', title: 'Doctors', status: true},
         {id: v1(), url: '/patients', title: 'Patients', status: true},
         {id: v1(), url: '/services', title: 'Services', status: true},
+        {id: v1(), url: '/login', title: 'Login', status: true},
     ],
     companyEmployees: [
         {

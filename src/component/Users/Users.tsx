@@ -1,7 +1,7 @@
-import React, {MouseEvent} from 'react';
+import React from 'react';
 import styles from './Users.module.css'
 import {NavLink} from 'react-router-dom';
-
+import {UsersSearchForm} from './UsersSearchForm';
 
 
 type PropsType = {
@@ -37,9 +37,13 @@ export function Users(props: PropsType) {
                 {
                     u.followed
                         ? <button disabled={props.followingInProgress.some((id: any) => id === u.id)}
-                                  onClick={() => { props.unFollow(u.id)}}>Unfollow</button>
+                                  onClick={() => {
+                                      props.unFollow(u.id)
+                                  }}>Unfollow</button>
                         : <button disabled={props.followingInProgress.some((id: any) => id === u.id)}
-                                  onClick={() => {props.follow(u.id) }}>Follow</button>
+                                  onClick={() => {
+                                      props.follow(u.id)
+                                  }}>Follow</button>
                 }
 
 
@@ -53,6 +57,7 @@ export function Users(props: PropsType) {
     return (
         <div className={styles.container}>
             users will be here
+            <UsersSearchForm/>
             <br/>
             <hr/>
             <div>
@@ -64,3 +69,9 @@ export function Users(props: PropsType) {
         </div>
     );
 }
+
+// setTimeout(() => {
+//     // alert(JSON.stringify(values));
+//     setSubmitting(false);
+// }, 400);
+

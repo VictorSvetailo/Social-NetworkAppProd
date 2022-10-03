@@ -83,7 +83,8 @@ type MapDispatchPropsType = {
     // pages: (totalCount: number) => void
     // setIsFetching: (isFetching: boolean) => void
     toggleFollowingInProgress: (userID: string, isFetching: any) => void
-    getUsers: any
+    getUsers: (currentPage: number, pageSize: number) => void
+    // getUsers: (currentPage: number, pageSize: number, term: string,) => void
 }
 export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
 
