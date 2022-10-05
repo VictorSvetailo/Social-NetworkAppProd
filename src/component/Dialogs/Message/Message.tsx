@@ -3,6 +3,8 @@ import styles from '../Message/Message.module.css';
 import {MessagesType, postTextCBAC} from '../../../redux/dialogs-reducer';
 import {log} from 'util';
 import {Field, reduxForm} from 'redux-form';
+import {Textarea} from '../../common/FormsControls/FormsControls';
+import {maxLengthCreator, required} from '../../../utils/validaters/validators';
 
 type MessagesPropsType = {
     messages: Array<MessagesType>
@@ -15,13 +17,13 @@ type MessagesPropsType = {
 }
 
 
-
+const maxLength20 = maxLengthCreator(20)
 
 export const MyMessageForm = (props: any) => {
 
     return (
         <form onSubmit={props.handleSubmit}>
-            <div><Field placeholder="Enter your message" name={'newDialogMessageBody'} component={'textarea'}/></div>
+            <div><Field placeholder="Enter your message" name={'newDialogMessageBody'} component={Textarea} validate={[required, maxLength20]}/></div>
             <div>
                 <button>Send Message</button>
             </div>
@@ -62,8 +64,6 @@ export function Message(props: MessagesPropsType) {
                 <hr/>
             </h1>
             <MyMessageFormRedux onSubmit={onClickAddPost}/>
-            {/*<textarea value={props.messageForCB} onChange={onChangeAddTextHandler}></textarea>*/}
-            {/*<button onClick={onClickAddPostHandler}>Add Post</button>*/}
         </div>
     );
 };

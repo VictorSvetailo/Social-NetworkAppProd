@@ -3,12 +3,19 @@ import styles from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {DialogsPropsType} from './MyPostsContainer';
 import {Field, reduxForm} from 'redux-form';
+import {maxLengthCreator, required} from '../../../utils/validaters/validators';
+import {Textarea} from '../../common/FormsControls/FormsControls';
+
+
+const maxLength10 = maxLengthCreator(10)
 
 
 export const MyPostForm = (props: any) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <div><Field placeholder="Enter your message" name={'newProfileMessageBody'} component={'textarea'}/></div>
+            <div>
+                <Field validate={[required, maxLength10]} placeholder="Enter your message" name={'newProfileMessageBody'} component={Textarea}/>
+            </div>
             <div>
                 <button>Add post</button>
             </div>
