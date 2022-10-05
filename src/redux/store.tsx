@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
-import {addNewTextCBAC, dialogsReducer, postTextCBAC} from './dialogs-reducer';
-import {addPostAC, changedNewTextAC, profileReducer} from './profile-reducer';
+import { dialogsReducer, postTextCBAC} from './dialogs-reducer';
+import {addPostAC} from './profile-reducer';
 
 // const ADD_POST = 'ADD-POST';
 // const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
@@ -102,8 +102,6 @@ type CompanyEmployeesType = {
 
 type StoreType = {
     _state: RootStateType
-    //addPostCB: (postTextCB: string) => void
-    //addNewTextCB: (postText: string) => void
     _callSubscribe: () => void
     subscribe: (observer: any) => void
     getState: () => RootStateType
@@ -117,8 +115,7 @@ type StoreType = {
 // }
 
 export type ActionsTypes = ReturnType<typeof addPostAC>
-    | ReturnType<typeof changedNewTextAC>
-    | ReturnType<typeof addNewTextCBAC>
+    // | ReturnType<typeof addNewTextCBAC>
     | ReturnType<typeof postTextCBAC>
 
 // export const addPostAC = (postText: string) => {

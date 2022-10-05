@@ -1,29 +1,46 @@
 import React, {ChangeEvent, MouseEvent} from 'react';
 import styles from '../Message/Message.module.css';
-import {addNewTextCBAC, MessagesType, postTextCBAC} from '../../../redux/dialogs-reducer';
+import {MessagesType, postTextCBAC} from '../../../redux/dialogs-reducer';
 import {log} from 'util';
+import {Field, reduxForm} from 'redux-form';
 
 type MessagesPropsType = {
     messages: Array<MessagesType>
     //addNewTextCB: (text: string) => void
     //addPostCB: (postTextCB: string) => void
-    messageForCB: string
+    newDialogMessageBody: string
     // dispatch: (action: ActionsTypes) => void
-    onChangeAddTextCB: (value: string) => void
-    onClickAddPostCB: (text: string) => void
+    // onChangeAddTextCB: (value: string) => void
+    onClickAddPostCB: (values: any) => void
 }
 
 
+
+
+export const MyMessageForm = (props: any) => {
+
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div><Field placeholder="Enter your message" name={'newDialogMessageBody'} component={'textarea'}/></div>
+            <div>
+                <button>Send Message</button>
+            </div>
+        </form>
+    );
+};
+
+const MyMessageFormRedux = reduxForm({
+    // a unique name for the form
+    form: 'DialogMessageForm'
+})(MyMessageForm)
+
+
+
+
 export function Message(props: MessagesPropsType) {
-
-    let onChangeAddTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.onChangeAddTextCB(e.currentTarget.value)
-
-        // props.addNewTextCB(e.currentTarget.value)
-    }
-    const onClickAddPostHandler = (e: MouseEvent<HTMLButtonElement>) => {
-      props.onClickAddPostCB(props.messageForCB)
-      // props.addPostCB(props.messageForCB)
+    const onClickAddPost = (values: any) => {
+        console.log(values)
+      props.onClickAddPostCB(values.newDialogMessageBody)
     }
 
 
@@ -44,8 +61,9 @@ export function Message(props: MessagesPropsType) {
 
                 <hr/>
             </h1>
-            <textarea value={props.messageForCB} onChange={onChangeAddTextHandler}></textarea>
-            <button onClick={onClickAddPostHandler}>Add Post</button>
+            <MyMessageFormRedux onSubmit={onClickAddPost}/>
+            {/*<textarea value={props.messageForCB} onChange={onChangeAddTextHandler}></textarea>*/}
+            {/*<button onClick={onClickAddPostHandler}>Add Post</button>*/}
         </div>
     );
 };

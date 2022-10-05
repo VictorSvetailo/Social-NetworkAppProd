@@ -17,7 +17,6 @@ export type PostsType = {
 }
 
 const initialState = {
-    messageForNewPost: '',
     posts: [
         {id: v1(), message: 'Hi, how are you?', likesCount: 12},
         {id: v1(), message: 'It\'s my first post', likesCount: 5},
@@ -35,13 +34,13 @@ export type InitialStateType = typeof initialState
 export const profileReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
+
             return {
                 ...state,
-                messageForNewPost: '',
-                posts: [{id: v1(), message: action.postText, likesCount: 0}, ...state.posts],
+                posts: [{id: v1(), message: action.newProfileMessageBody, likesCount: 0}, ...state.posts],
             };
-        case CHANGE_NEW_TEXT:
-            return {...state, messageForNewPost: action.newText};
+        // case CHANGE_NEW_TEXT:
+        //     return {...state, messageForNewPost: action.newText};
         case SET_USER_PROFILE:
             return {...state, profile: action.profile};
         case SET_STATUS:
@@ -50,14 +49,14 @@ export const profileReducer = (state: InitialStateType = initialState, action: a
             return state;
     }
 }
-export const addPostAC = (postText: string) => {
+export const addPostAC = (newProfileMessageBody: string) => {
     return {
         type: ADD_POST,
-        postText: postText
+        newProfileMessageBody,
     } as const
 }
-export const changedNewTextAC = (newText: string) =>
-    ({type: CHANGE_NEW_TEXT, newText: newText}) as const
+// export const changedNewTextAC = (newText: string) =>
+//     ({type: CHANGE_NEW_TEXT, newText: newText}) as const
 
 export const setStatusAC = (status: string) =>
     ({type: SET_STATUS, status: status}) as const
@@ -93,16 +92,3 @@ export const updateStatus = (status: string) => (dispatch: Dispatch) => {
             }
         })
 }
-
-
-// export const idPage = (idPageCurrent: any) => {
-//
-// }
-
-// export const idPageHandler2 = (idPageCurrent: any) => {
-//     // console.log(params)
-//     return {
-//         // type: SET_USER_id_PAGE,
-//         idPageCurrent: {...state, idPageCurrent: action.idPageCurrent}
-//     } as const
-// }

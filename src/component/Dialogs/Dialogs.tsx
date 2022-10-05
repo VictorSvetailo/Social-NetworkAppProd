@@ -4,33 +4,13 @@ import {DialogsItem} from './DialogsItem/DialogsItem';
 import {Message} from './Message/Message';
 
 import {DialogsPropsType} from './DialogsContainer';
-import {Navigate} from 'react-router-dom';
-
-// type DialogsPageAllType = {
-//     dialogs: Array<any>
-//     messages: Array<MessagesType>
-//     messageForCB: string
-//     onChangeAddTextCB: (value: string) => void
-//     onClickAddPostCB: (text: string) => void
-// }
 
 
 export function Dialogs(props: DialogsPropsType) {
 
-
-    let onChangeAddTextCB = (value: string) => {
-        props.onChangeAddTextCB(value)
+    let onClickAddPostCB = (newDialogMessageBody: string) => {
+        props.onClickAddPostCB(newDialogMessageBody)
     }
-    let onClickAddPostCB = (text: string) => {
-        props.onClickAddPostCB(text)
-    }
-    // const onClickAddPostCB = (e: MouseEvent<HTMLButtonElement>) => {
-    //     store.dispatch(postTextCBAC(props.messageForCB))
-    //     // props.addPostCB(props.messageForCB)
-    // }
-
-    // if (!props.isAuth) return <Navigate to={'/login'}/>
-
     return (
         <div className={styles.dialogs}>
             <div className={styles.dialogs__items}>
@@ -39,11 +19,7 @@ export function Dialogs(props: DialogsPropsType) {
                 </div>
                 <Message
                     messages={props.messages}
-                    //dispatch={props.dispatch}
-                    //addNewTextCB={props.addNewTextCB}
-                    //addPostCB={props.addPostCB}
-                    messageForCB={props.messageForCB}
-                    onChangeAddTextCB={onChangeAddTextCB}
+                    newDialogMessageBody={props.newDialogMessageBody}
                     onClickAddPostCB={onClickAddPostCB}
                 />
             </div>
