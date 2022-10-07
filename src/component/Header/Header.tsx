@@ -12,8 +12,10 @@ export function Header(props: ProfilePropsType) {
                     <img  src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Aperture_Science.svg" alt=""/>
                 </div>
                 <div className={styles.loginBlock}>
+
+
                     {props.isAuth
-                        ? props.login
+                        ? <div>{props.login} - <button onClick={props.logout}>Log out</button></div>
                         : <NavLink to={'./login'}>Login</NavLink>}
 
                 </div>
