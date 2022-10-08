@@ -5,17 +5,24 @@ import {getStatus, getUserProfile, updateStatus} from '../../redux/profile-reduc
 import {AppStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
 import {ProfileFC} from './ProfileFC';
-import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 import {compose} from 'redux';
+import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 
 
 class ProfileContainer extends React.Component<ProfilePropsType, any> {
     componentDidMount() {
         let userID = this.props.id || '24789'
-        this.props.getUserProfile(userID);
+        // if (!userID) {
+        // // userID = this.props.authorizedUserID
+        // //     if (!userID){
+        // //         this.props.history.push('/login')
+        // //     }
+        // // }
+
         // setTimeout(() => {
         // }, 10000)}
         //
+        this.props.getUserProfile(userID);
         this.props.getStatus(userID);
     }
 
@@ -67,7 +74,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
     ProfileFC,
-    // WithAuthRedirect
+    WithAuthRedirect
 )(ProfileContainer)
 
 

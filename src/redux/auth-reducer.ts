@@ -30,7 +30,7 @@ export const setAuthUserData = (id: any, email: any, login: any, isAuth: boolean
     } as const
 }
 export const getAuthMe = () => (dispatch: any) => {
-    authAPI.getMe()
+    return authAPI.getMe()
         .then(response => {
             if (response.data.resultCode === 0) {
                 let {id, email, login} = response.data.data;
@@ -45,7 +45,7 @@ export const login = (email: string, password: string, rememberMy: boolean) => (
             if (response.data.resultCode === 0) {
                 dispatch(getAuthMe())
             } else {
-                let message = response.data.messages.length > 0 ? response.data.messages[0] :  'Some error'
+                let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
                 dispatch(stopSubmit('login', {_error: message}))
             }
         })
