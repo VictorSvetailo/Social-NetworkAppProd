@@ -3,6 +3,7 @@ import styles from './ProfileInfo.module.css';
 import {Preloader} from '../../common/Preloader/Preloader';
 import {Profile} from '../Profile';
 import {ProfileStatus} from './ProfileStatus';
+import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
 
 type PropsType = {
     profile: any
@@ -30,7 +31,7 @@ export function ProfileInfo(props: PropsType) {
                 <div className={styles.profile__image}>
                     <img src={props.profile.photos.large || 'https://inlnk.ru/4y0VkP'} alt=""/>
                 </div>
-                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+                <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
             </div>
             {/*<h2>{props.profile.fullName}</h2>*/}
             {/*<div>{props.profile.aboutMe}</div>*/}
