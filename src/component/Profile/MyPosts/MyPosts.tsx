@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, MouseEvent, useState} from 'react';
+import React from 'react';
 import styles from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {DialogsPropsType} from './MyPostsContainer';
@@ -14,7 +14,8 @@ export const MyPostForm = (props: any) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field validate={[required, maxLength10]} placeholder="Enter your message" name={'newProfileMessageBody'} component={Textarea}/>
+                <Field validate={[required, maxLength10]} placeholder="Enter your message"
+                       name={'newProfileMessageBody'} component={Textarea}/>
             </div>
             <div>
                 <button>Add post</button>
@@ -29,7 +30,8 @@ const MyPostFormRedux = reduxForm({
 })(MyPostForm)
 
 
-export function MyPosts(props: DialogsPropsType) {
+export const MyPosts = React.memo((props: DialogsPropsType) => {
+    console.log('Render MyPosts YO')
     const addNewMessage = (values: any) => {
         props.onClickAddPost(values.newProfileMessageBody);
     }
@@ -46,4 +48,4 @@ export function MyPosts(props: DialogsPropsType) {
             </div>
         </div>
     );
-};
+});
