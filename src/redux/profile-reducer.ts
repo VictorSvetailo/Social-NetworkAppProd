@@ -8,6 +8,7 @@ const ADD_POST = 'ADD-POST';
 const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const DELETE_POST = 'DELETE_POST';
 
 
 export type PostsType = {
@@ -16,12 +17,18 @@ export type PostsType = {
     likesCount: number
 }
 
+export const postID1 = v1()
+export const postID2 = v1()
+export const postID3 = v1()
+export const postID4 = v1()
+export const postID5 = v1()
+
 const initialState = {
     posts: [
-        {id: v1(), message: 'Hi, how are you?', likesCount: 12},
-        {id: v1(), message: 'It\'s my first post', likesCount: 5},
-        {id: v1(), message: 'I will succeed!', likesCount: 21},
-        {id: v1(), message: 'I\'m Victor', likesCount: 13},
+        {id: postID1, message: 'Hi, how are you?', likesCount: 12},
+        {id: postID2, message: 'It\'s my first post', likesCount: 5},
+        {id: postID3, message: 'I will succeed!', likesCount: 21},
+        {id: postID4, message: 'I\'m Victor', likesCount: 13},
 
     ] as Array<PostsType>,
     profile: null,
@@ -34,17 +41,19 @@ export type InitialStateType = typeof initialState
 export const profileReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
-
             return {
                 ...state,
                 posts: [{id: v1(), message: action.newProfileMessageBody, likesCount: 0}, ...state.posts],
             };
-        // case CHANGE_NEW_TEXT:
-        //     return {...state, messageForNewPost: action.newText};
         case SET_USER_PROFILE:
             return {...state, profile: action.profile};
         case SET_STATUS:
             return {...state, status: action.status};
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id !== action.postID)
+            }
         default:
             return state;
     }
@@ -55,12 +64,9 @@ export const addPostAC = (newProfileMessageBody: string) => {
         newProfileMessageBody,
     } as const
 }
-// export const changedNewTextAC = (newText: string) =>
-//     ({type: CHANGE_NEW_TEXT, newText: newText}) as const
 
-export const setStatusAC = (status: string) =>
-    ({type: SET_STATUS, status: status}) as const
-
+export const setStatusAC = (status: string) => ({type: SET_STATUS, status: status}) as const
+export const deletePostAC = (postID: string) => ({type: DELETE_POST, postID}) as const
 
 export const setUserProfile = (profile: any) => {
     return {
@@ -76,19 +82,14 @@ export const getUserProfile = (userID: any) => (dispatch: any) => {
     }
 }
 
-export const getStatus = (userID: string) => (dispatch: Dispatch) => {
-    profileAPI.getStatus(userID)
-        .then(response => {
+export const getStatus = (userID: string) => async (dispatch: Dispatch) => {
+    const response = await profileAPI.getStatus(userID)
             dispatch(setStatusAC(response.data))
-        })
 }
 
-export const updateStatus = (status: string) => (dispatch: Dispatch) => {
-    profileAPI.updateStatus(status)
-        .then(response => {
-
-            if (response.data.resultCode === 0) {
-                dispatch(setStatusAC(status))
-            }
-        })
+export const updateStatus = (status: string) => async (dispatch: Dispatch) => {
+    const response = await profileAPI.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setStatusAC(status))
+    }
 }

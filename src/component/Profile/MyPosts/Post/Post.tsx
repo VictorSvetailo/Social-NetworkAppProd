@@ -9,7 +9,7 @@ export function Post(props: PostsAllType){
     return (
             <div className={styles.items}>
                 {
-                    props.posts.map((p) => {
+                    [...props.posts].reverse().map((p) => {
                         return (
                             <div key={p.id} className={styles.item}>
                                 <div className={styles.image}>

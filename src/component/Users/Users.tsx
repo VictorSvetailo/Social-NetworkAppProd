@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './Users.module.css'
 import {NavLink} from 'react-router-dom';
 import {UsersSearchForm} from './UsersSearchForm';
+import {Paginator} from '../common/Paginator/Paginator';
+import {User} from './User';
 
 
 type PropsType = {
@@ -9,49 +11,13 @@ type PropsType = {
     usersData: Array<any>
     currentPage: any
     onClickCurrentPage: (currentPage: number) => void
-    // onClickFollow: (userID: string) => void
-    // onClickUnFollow: (userID: string) => void
-    // toggleFollowingInProgress: (userID: string, isFetching: any) => void
     followingInProgress: any
     follow: (userID: string) => void
     unFollow: (userID: string) => void
 
 }
 
-export function Users(props: PropsType) {
-
-    const page = props.pages.map((p, i) => {
-        return <span key={i} className={props.currentPage === p ? `${styles.active__value}` : `${styles.span__value}`}
-                     onClick={(e) => {
-                         props.onClickCurrentPage(p)
-                     }}
-        >{p}</span>
-    })
-
-    const usersData = props.usersData.map(u => {
-        return (
-            <div key={u.id}>
-                <NavLink to={'/profile/' + u.id}>
-                    <img src={u.photos.small ? u.photos.small : 'https://cutt.ly/4Vc1Wmz'} alt="" width="50px"/>
-                </NavLink>
-                {
-                    u.followed
-                        ? <button disabled={props.followingInProgress.some((id: any) => id === u.id)}
-                                  onClick={() => {
-                                      props.unFollow(u.id)
-                                  }}>Unfollow</button>
-                        : <button disabled={props.followingInProgress.some((id: any) => id === u.id)}
-                                  onClick={() => {
-                                      props.follow(u.id)
-                                  }}>Follow</button>
-                }
-
-
-                <span> {u.name}</span>
-                <span> {u.status}</span>
-            </div>
-        )
-    })
+export const Users: React.FC<PropsType> = ({usersData, currentPage, pages, onClickCurrentPage, ...props}) => {
 
 
     return (
@@ -61,17 +27,21 @@ export function Users(props: PropsType) {
             <br/>
             <hr/>
             <div>
-                <span>{page}</span>
+                <Paginator
+                    currentPage={currentPage}
+                    pages={pages}
+                    onClickCurrentPage={onClickCurrentPage}/>
             </div>
             <hr/>
-            <br/>
-            {usersData}
+            {usersData.map(u =>
+                <User
+                    key={u.id}
+                    user={u}
+                    followingInProgress={props.followingInProgress}
+                    follow={props.follow}
+                    unFollow={props.unFollow}
+                />
+            )}
         </div>
     );
 }
-
-// setTimeout(() => {
-//     // alert(JSON.stringify(values));
-//     setSubmitting(false);
-// }, 400);
-

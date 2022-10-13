@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
+import React from 'react';
 import styles from './App.module.css';
 import {Sidebar} from './component/Sidebar/Sidebar';
-import {Route, Routes, useParams} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
 import {Error} from './component/Error/Error';
@@ -15,13 +15,7 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import store, {AppStateType} from './redux/redux-store';
 import {initializeApp} from './redux/app-reducer';
-import {initialize} from 'redux-form';
 import {Preloader} from './component/common/Preloader/Preloader';
-
-
-// type PropsType = {
-//     store: any
-// }
 
 class App extends React.Component<AppPropsType, any> {
 

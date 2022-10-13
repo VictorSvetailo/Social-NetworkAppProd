@@ -48,7 +48,7 @@ export function Message(props: MessagesPropsType) {
 
     return (
         <div className={styles.messages}>
-            {props.messages.map((m) => {
+            {[...props.messages].reverse().map((m) => {
                 return (
                     <div className={styles.message} key={m.id}>
                         <div className={styles.image}>

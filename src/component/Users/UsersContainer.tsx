@@ -12,8 +12,6 @@ import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
 import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 import {compose} from 'redux';
-import {getUserProfile} from '../../redux/profile-reducer';
-import {ProfileFC} from '../Profile/ProfileFC';
 import {
     getCurrentPage,
     getFollowingInProgress,
@@ -26,17 +24,13 @@ import {
 export class UsersContainer extends React.Component<UsersPropsType, any> {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.getUsers(currentPage, pageSize)
     }
 
     onClickCurrentPage = (currentPage: number,) => {
-        this.props.getUsers(currentPage, this.props.pageSize)
-        // this.props.setIsFetching(true)
-        // this.props.setCurrentPage(currentPage)
-        // usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-        //         this.props.setIsFetching(false)
-        //         this.props.setUsers(data.items)
-        //     })
+        const {pageSize} = this.props
+        this.props.getUsers(currentPage, pageSize)
     }
 
 
@@ -70,11 +64,8 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
     }
 }
 
-// let AuthRedirectComponent = WithAuthRedirect(UsersContainer)
-
 
 type MapStatePropsType = {
-    // users: Array<UsersType>
     users: any
     pageSize: number
     totalUsersCount: any
@@ -86,13 +77,9 @@ type MapStatePropsType = {
 type MapDispatchPropsType = {
     follow: (userID: string) => void
     unFollow: (userID: string) => void
-    // setUsers: (users: Array<UsersType>) => void
     setCurrentPage: (currentPage: number) => void
-    // pages: (totalCount: number) => void
-    // setIsFetching: (isFetching: boolean) => void
     toggleFollowingInProgress: (userID: string, isFetching: any) => void
     getUsers: (currentPage: number, pageSize: number) => void
-    // getUsers: (currentPage: number, pageSize: number, term: string,) => void
 }
 export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
 

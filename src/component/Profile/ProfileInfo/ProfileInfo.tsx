@@ -12,11 +12,10 @@ type PropsType = {
 }
 
 
-export function ProfileInfo(props: PropsType) {
-    if (!props.profile) {
+export const ProfileInfo: React.FC<PropsType> = ({profile,status,updateStatus, ...props}) => {
+    if (!profile) {
         return <Preloader/>
     }
-
 
     // const statusText = 'Hello my friends'
     return (
@@ -29,14 +28,14 @@ export function ProfileInfo(props: PropsType) {
             </div>
             <div className={styles.block}>
                 <div className={styles.profile__image}>
-                    <img src={props.profile.photos.large || 'https://inlnk.ru/4y0VkP'} alt=""/>
+                    <img src={profile.photos.large || 'https://inlnk.ru/4y0VkP'} alt=""/>
                 </div>
-                <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
+                <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
             </div>
             {/*<h2>{props.profile.fullName}</h2>*/}
             {/*<div>{props.profile.aboutMe}</div>*/}
             {/*<div>{props.profile.lookingForAJobDescription}</div>*/}
-            <a href="https://github.com">{props.profile.contacts.github}</a>
+            <a href="https://github.com">{profile.contacts.github}</a>
             <h1>Hello Lorem ipsum dolor sit amet. </h1>
             <div><i>Hello Victor</i></div>
         </div>
