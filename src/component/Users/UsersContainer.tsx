@@ -35,11 +35,11 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
 
 
     render() {
-        const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
-        const pages = []
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i)
-        }
+        // const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+        // const pages = []
+        // for (let i = 1; i <= pagesCount; i++) {
+        //     pages.push(i)
+        // }
         const onClickFollowHandler = (userID: string) => {
             this.props.follow(userID)
         }
@@ -52,11 +52,13 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
                 <Users
                     currentPage={this.props.currentPage}
                     usersData={this.props.users}
-                    pages={pages}
                     onClickCurrentPage={this.onClickCurrentPage}
                     followingInProgress={this.props.followingInProgress}
                     follow={onClickFollowHandler}
                     unFollow={onClickUnFollowHandler}
+                    pageSize={this.props.pageSize}
+                    totalUsersCount={this.props.totalUsersCount}
+                    // totalUsersCount={props.totalUsersCount}
                 />
             </>
 

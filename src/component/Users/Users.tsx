@@ -7,17 +7,21 @@ import {User} from './User';
 
 
 type PropsType = {
-    pages: Array<any>
+    // pages: Array<any>
     usersData: Array<any>
     currentPage: any
     onClickCurrentPage: (currentPage: number) => void
     followingInProgress: any
     follow: (userID: string) => void
     unFollow: (userID: string) => void
+    totalUsersCount: any
+    pageSize: any
+    // totalUsersCount: any
+
 
 }
 
-export const Users: React.FC<PropsType> = ({usersData, currentPage, pages, onClickCurrentPage, ...props}) => {
+export const Users: React.FC<PropsType> = ({usersData, currentPage, onClickCurrentPage, ...props}) => {
 
 
     return (
@@ -29,8 +33,11 @@ export const Users: React.FC<PropsType> = ({usersData, currentPage, pages, onCli
             <div>
                 <Paginator
                     currentPage={currentPage}
-                    pages={pages}
-                    onClickCurrentPage={onClickCurrentPage}/>
+                    onClickCurrentPage={onClickCurrentPage}
+                    totalUsersCount={props.totalUsersCount}
+                    pageSize={props.pageSize}
+                />
+
             </div>
             <hr/>
             {usersData.map(u =>

@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Profile.module.css'
 import {Profile} from './Profile';
-import {getStatus, getUserProfile, updateStatus} from '../../redux/profile-reducer';
+import {getStatus, getUserProfile, savePhoto, updateStatus} from '../../redux/profile-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
 import {ProfileFC} from './ProfileFC';
@@ -10,7 +10,7 @@ import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 
 
 class ProfileContainer extends React.Component<ProfilePropsType, any> {
-    componentDidMount() {
+    refreshProfile() {
         let userID = this.props.id || '24789'
         // if (!userID) {
         // // userID = this.props.authorizedUserID
@@ -18,12 +18,18 @@ class ProfileContainer extends React.Component<ProfilePropsType, any> {
         // //         this.props.history.push('/login')
         // //     }
         // // }
-
-        // setTimeout(() => {
-        // }, 10000)}
-        //
         this.props.getUserProfile(userID);
         this.props.getStatus(userID);
+    }
+
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfilePropsType>, prevState: Readonly<any>, snapshot?: any) {
+        if (this.props.id !== prevProps.id) {
+            this.refreshProfile()
+        }
     }
 
     render() {
@@ -31,9 +37,11 @@ class ProfileContainer extends React.Component<ProfilePropsType, any> {
             <div className={styles.blocks}>
                 <Profile
                     {...this.props}
+                    isOwner={!this.props.id}
                     profile={this.props.profile}
                     status={this.props.status}
                     updateStatus={this.props.updateStatus}
+                    savePhoto={this.props.savePhoto}
                 />
             </div>
         )
@@ -46,6 +54,7 @@ type MapStatePropsType = {
     status: any
     authorizedUserID: any
     isAuth: any
+    isOwner?: boolean
 
 }
 
@@ -53,6 +62,7 @@ type MapDispatchPropsType = {
     getUserProfile: (userID: any) => void
     getStatus: (userID: any) => void
     updateStatus: (status: string) => void
+    savePhoto: (file: any) => void
 
 }
 export type ProfilePropsType = MapStatePropsType & MapDispatchPropsType & { id?: string }
@@ -61,7 +71,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserID: state.auth.id,
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
 })
 
 
@@ -72,7 +82,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
+    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, savePhoto}),
     ProfileFC,
     WithAuthRedirect
 )(ProfileContainer)
