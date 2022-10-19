@@ -4,6 +4,8 @@ import {Preloader} from '../../common/Preloader/Preloader';
 import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
 import ProfileDataFormReduxForm, {ProfileDataForm} from './ProfileDataForm';
 import {saveProfile} from '../../../redux/profile-reducer';
+import {Simulate} from 'react-dom/test-utils';
+import error = Simulate.error;
 
 type PropsType = {
     profile: any
@@ -15,7 +17,15 @@ type PropsType = {
 }
 
 
-export const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile, ...props}) => {
+export const ProfileInfo: React.FC<PropsType> = ({
+                                                     profile,
+                                                     status,
+                                                     updateStatus,
+                                                     isOwner,
+                                                     savePhoto,
+                                                     saveProfile,
+                                                     ...props
+                                                 }) => {
     const [editMode, setEditMode] = useState(false)
 
 
@@ -32,10 +42,13 @@ export const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus,
     }
 
     const onSubmit = (formData: any) => {
-        saveProfile(formData)
-        setEditMode(false)
+        // @ts-ignore
+         saveProfile(formData).then(
+             ()=>{
+                 setEditMode(!editMode)
+             }
+         )
     }
-
 
     return (
         <div>
@@ -53,12 +66,14 @@ export const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus,
             </div>
             <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
 
-            { editMode
+            {editMode
                 ?
                 // @ts-ignore
                 <ProfileDataFormReduxForm initialValues={profile} profile={profile} onSubmit={onSubmit}/>
                 :
-                <ProfileData profile={profile} isOwner={isOwner} goToEditMode={()=>{setEditMode(!editMode)}}/>
+                <ProfileData profile={profile} isOwner={isOwner} goToEditMode={() => {
+                    setEditMode(!editMode)
+                }}/>
             }
             {/*<h2>{props.profile.fullName}</h2>*/}
             {/*<div>{props.profile.aboutMe}</div>*/}
