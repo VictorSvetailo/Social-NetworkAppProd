@@ -1,9 +1,9 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styles from './ProfileInfo.module.css';
 import {Preloader} from '../../common/Preloader/Preloader';
-import {Profile} from '../Profile';
-import {ProfileStatus} from './ProfileStatus';
 import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
+import ProfileDataFormReduxForm, {ProfileDataForm} from './ProfileDataForm';
+import {saveProfile} from '../../../redux/profile-reducer';
 
 type PropsType = {
     profile: any
@@ -11,12 +11,17 @@ type PropsType = {
     updateStatus: (status: any) => void
     isOwner: any
     savePhoto: (file: any) => void
+    saveProfile: (profileInfo: string) => void
 }
 
 
-export const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwner, savePhoto, ...props}) => {
+export const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile, ...props}) => {
+    const [editMode, setEditMode] = useState(false)
+
+
     if (!profile) {
         return <Preloader/>
+
     }
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +30,12 @@ export const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus,
         }
 
     }
+
+    const onSubmit = (formData: any) => {
+        saveProfile(formData)
+        setEditMode(false)
+    }
+
 
     return (
         <div>
@@ -38,9 +49,17 @@ export const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus,
                 <div className={styles.profile__image}>
                     <img src={profile.photos.large || 'https://inlnk.ru/4y0VkP'} alt=""/>
                 </div>
-                {isOwner && <input type="file" onChange={onMainPhotoSelected} />}
-                <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+                {isOwner && <input type="file" onChange={onMainPhotoSelected}/>}
             </div>
+            <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
+
+            { editMode
+                ?
+                // @ts-ignore
+                <ProfileDataFormReduxForm initialValues={profile} profile={profile} onSubmit={onSubmit}/>
+                :
+                <ProfileData profile={profile} isOwner={isOwner} goToEditMode={()=>{setEditMode(!editMode)}}/>
+            }
             {/*<h2>{props.profile.fullName}</h2>*/}
             {/*<div>{props.profile.aboutMe}</div>*/}
             {/*<div>{props.profile.lookingForAJobDescription}</div>*/}
@@ -50,4 +69,49 @@ export const ProfileInfo: React.FC<PropsType> = ({profile, status, updateStatus,
         </div>
     );
 };
+
+// @ts-ignore
+const ProfileData = ({profile, isOwner, goToEditMode}) => {
+    return (
+        <div>
+            {isOwner && <button onClick={goToEditMode}>Edit</button>}
+            <div>
+                <b>Full name:</b> {profile.fullName}
+            </div>
+            <div>
+                <b>Looking for a job:</b> {profile.lookingForAJob ? 'yes' : 'no'}
+            </div>
+            {profile.lokingForAJob &&
+                <div>
+                    <b>My professional skills:</b> {profile.lookingForAJobDescription}
+                </div>
+            }
+            <div>
+                <b>About me:</b> {profile.aboutMe}
+            </div>
+            <div>
+                <b>Contacts:</b>
+                {
+                    Object.keys(profile.contacts).map(key => {
+                        return (
+                            <div key={key}>
+                                <Contact contactTitle={key} contactValue={profile.contacts[key]}/>
+                            </div>
+                        )
+                    })}
+            </div>
+        </div>
+    );
+};
+
+
+// @ts-ignore
+const Contact = ({contactTitle, contactValue}, ...props: any) => {
+    return (
+        <div>
+            <b>{contactTitle}:</b> {contactValue}
+        </div>
+    );
+};
+
 

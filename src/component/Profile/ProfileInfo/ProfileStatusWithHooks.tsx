@@ -29,7 +29,7 @@ export const ProfileStatusWithHooks: FC<PropsStatusType> = (props) => {
     return (
         <div>
             {!active &&
-                <div><span onDoubleClick={activateEditMode}>{props.status || 'Введите статус'}</span></div>
+                <div><b>Status: </b> <span onDoubleClick={activateEditMode}>{props.status || 'Введите статус'}</span></div>
             }
             {active &&
                 <div><input autoFocus onChange={onStatusChange} onBlur={deactivateEditMode} value={text}/></div>

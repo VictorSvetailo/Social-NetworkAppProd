@@ -83,7 +83,7 @@ export const setUserProfile = (profile: any) => {
     return {
         type: SET_USER_PROFILE,
         profile: profile
-    } as const
+    }
 }
 export const getUserProfile = (userID: any) => (dispatch: any) => {
     if (userID) {
@@ -109,5 +109,14 @@ export const savePhoto = (file: any) => async (dispatch: Dispatch) => {
     const response = await profileAPI.savePhoto(file)
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccessAC(response.data.data.photo))
+    }
+}
+
+export const saveProfile = (profileInfo: string) => async (dispatch: Dispatch, getState: any) => {
+    const id = getState().auth.id
+    const response = await profileAPI.saveProfile(profileInfo)
+    if (response.data.resultCode === 0) {
+        // @ts-ignore
+        dispatch(getUserProfile(id))
     }
 }
