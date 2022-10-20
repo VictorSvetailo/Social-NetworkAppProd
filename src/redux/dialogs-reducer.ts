@@ -39,8 +39,6 @@ const initialState: DialogsPageType = {
 }
 
 export const dialogsReducer = (state: DialogsPageType = initialState, action: any): DialogsPageType => {
-
-
     switch (action.type) {
         case SEND_MESSAGE:
             return {

@@ -8,7 +8,7 @@ import store from './redux/redux-store';
 import {Provider} from 'react-redux';
 
 
-
+// просто сотка 20.10.22
 
 // const renderTree = () => {
 
