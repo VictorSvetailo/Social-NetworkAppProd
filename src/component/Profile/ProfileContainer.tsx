@@ -84,7 +84,8 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, savePhoto, saveProfile}),
+    connect(mapStateToProps,
+        {getUserProfile, getStatus, updateStatus, savePhoto, saveProfile}),
     ProfileFC,
     WithAuthRedirect
 )(ProfileContainer)
