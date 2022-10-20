@@ -8,7 +8,7 @@ const instance = axios.create({
     // baseURL свойство по умолчанию у instance забит базовый URL
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
-        'API-KEY': 'c6150b07-be78-48c2-be1a-83b0f879593c'
+        'API-KEY': 'c6150b07-be78-48c2-be1a-83b0f879593c_'
     }
 })
 

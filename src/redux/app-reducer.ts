@@ -5,6 +5,7 @@ const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
 
 const initialState = {
     initialized: false,
+    globalError: null,
 }
 
 export type InitialStateType = typeof initialState

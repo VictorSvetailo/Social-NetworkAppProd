@@ -1,7 +1,7 @@
 import React, {Suspense} from 'react';
 import styles from './App.module.css';
 import {Sidebar} from './component/Sidebar/Sidebar';
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
 import {Error} from './component/Error/Error';
@@ -18,20 +18,36 @@ import {initializeApp} from './redux/app-reducer';
 import {Preloader} from './component/common/Preloader/Preloader';
 import {withSuspense} from './HOC/WithSuspense';
 
-import DialogsContainer from './component/Dialogs/DialogsContainer';
-// const DialogsContainer = React.lazy(() => import('./component/Dialogs/DialogsContainer'));
-import ProfileContainer from './component/Profile/ProfileContainer';
-// const ProfileContainer = React.lazy(() => import('./component/Profile/ProfileContainer'));
+// import DialogsContainer from './component/Dialogs/DialogsContainer';
+const DialogsContainer = React.lazy(() => import('./component/Dialogs/DialogsContainer'));
+// import ProfileContainer from './component/Profile/ProfileContainer';
+const ProfileContainer = React.lazy(() => import('./component/Profile/ProfileContainer'));
 
 
 // 26116
 
 class App extends React.Component<AppPropsType, any> {
 
-    componentDidMount() {
-        this.props.initializeApp()
+    // перехват ошибки
+    //reason: any, promise: any
+    catchAllUnhandledErrors = (promiseRejectionEvent: any) => {
+        alert('Some error occurred')
+        // console.error(promiseRejectionEvent)
     }
 
+
+    componentDidMount() {
+        this.props.initializeApp()
+        // Ниже сделан side Effect. Мы оставили мусор за собой.
+        // после того как компонента будет умирать этот мусор нужно убрать
+        window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+    }
+    // Это метод который срабатывает при демонтировании компоненты
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
+    }
+
+    // если вдруг наше приложение не проинициализировалось, то мы показываем Preloader
     render() {
         if (!this.props.initialized) {
             return <Preloader/>
@@ -44,20 +60,20 @@ class App extends React.Component<AppPropsType, any> {
                     <Sidebar sidebar={sidebar}/>
                     <Routes>
                         <Route path="/profile" element={
-                            // <Suspense fallback={<Preloader/>}>
+                            <Suspense fallback={<Preloader/>}>
                                 <ProfileContainer/>
-                            // </Suspense>
+                            </Suspense>
                         }/>
                         <Route path="/profile/:id" element={
-                            // <Suspense fallback={<Preloader/>}>
+                            <Suspense fallback={<Preloader/>}>
                                 <ProfileContainer/>
-                            // </Suspense>
+                            </Suspense>
                         }/>
 
                         <Route path="/dialogs/*" element={
-                            // <Suspense fallback={<Preloader/>}>
+                            <Suspense fallback={<Preloader/>}>
                                 <DialogsContainer/>
-                            // </Suspense>
+                            </Suspense>
                         }/>
 
 
@@ -68,6 +84,7 @@ class App extends React.Component<AppPropsType, any> {
                         <Route path="/sittings" element={<Sittings/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="*" element={<Error/>}/>
+                        <Route path="/" element={<Navigate to="/profile"/>}/>
                     </Routes>
                 </div>
             </div>
