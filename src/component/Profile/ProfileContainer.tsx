@@ -1,7 +1,14 @@
 import React from 'react'
 import styles from './Profile.module.css'
 import {Profile} from './Profile';
-import {getStatus, getUserProfile, savePhoto, saveProfile, updateStatus} from '../../redux/profile-reducer';
+import {
+    getStatus,
+    getUserProfile,
+    ProfileType,
+    savePhoto,
+    saveProfile,
+    updateStatus
+} from '../../redux/profile-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
 import {ProfileFC} from './ProfileFC';
@@ -51,7 +58,7 @@ class ProfileContainer extends React.Component<ProfilePropsType, any> {
 
 
 type MapStatePropsType = {
-    profile: null
+    profile: ProfileType | null
     status: any
     authorizedUserID: any
     isAuth: any

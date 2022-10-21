@@ -10,7 +10,6 @@ type MessagesPropsType = {
     messages: Array<MessagesType>
     //addNewTextCB: (text: string) => void
     //addPostCB: (postTextCB: string) => void
-    newDialogMessageBody: string
     // dispatch: (action: ActionsTypes) => void
     // onChangeAddTextCB: (value: string) => void
     onClickAddPostCB: (values: any) => void
@@ -42,7 +41,7 @@ const MyMessageFormRedux = reduxForm({
 export function Message(props: MessagesPropsType) {
     const onClickAddPost = (values: any) => {
         console.log(values)
-      props.onClickAddPostCB(values.newDialogMessageBody)
+     props.onClickAddPostCB(values.newDialogMessageBody)
     }
 
 

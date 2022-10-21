@@ -1,16 +1,15 @@
 import React from 'react';
 import {createField, Input, Textarea} from '../../common/FormsControls/FormsControls';
-import {reduxForm} from 'redux-form';
+import {InjectedFormProps, reduxForm} from 'redux-form';
 import styles from '../../Login/Login.module.css';
 
+// проблема с типизацией
+type ProfileDataType = {
+    profile: Array<string>
+}
 
 // @ts-ignore
-export const ProfileDataForm = ({handleSubmit, profile, error}) => {
-
-    // const errorCB = (error: boolean)=>{
-    //     formError(error)
-    // }
-
+export const ProfileDataForm: React.FC<InjectedFormProps<ProfileDataType>> = ({handleSubmit, profile, error}) => {
     return (
         <form onSubmit={handleSubmit}>
             <button>Save</button>

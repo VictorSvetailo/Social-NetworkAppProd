@@ -1,4 +1,4 @@
-import React, {ChangeEvent, MouseEvent} from 'react';
+import React from 'react';
 import styles from '../Dialogs/Dialogs.module.css';
 import {DialogsItem} from './DialogsItem/DialogsItem';
 import {Message} from './Message/Message';
@@ -19,7 +19,6 @@ export function Dialogs(props: DialogsPropsType) {
                 </div>
                 <Message
                     messages={props.messages}
-                    newDialogMessageBody={props.newDialogMessageBody}
                     onClickAddPostCB={onClickAddPostCB}
                 />
             </div>

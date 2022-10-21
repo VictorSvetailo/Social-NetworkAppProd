@@ -9,12 +9,11 @@ import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 
 type MapStatePropsType = {
     dialogs: Array<DialogsType>
-    newDialogMessageBody: any
+    // newDialogMessageBody: string
     messages: Array<MessagesType>
 }
 
 type MapDispatchPropsType = {
-    // onChangeAddTextCB: (value: string) => void
     onClickAddPostCB: (values: string) => void
 }
 
@@ -25,7 +24,6 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages,
-        newDialogMessageBody: state.dialogsPage.newDialogMessageBody,
     }
 }
 

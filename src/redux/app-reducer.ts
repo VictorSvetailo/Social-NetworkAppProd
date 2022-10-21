@@ -1,5 +1,6 @@
 
-import {getAuthMe, setAuthUserData} from './auth-reducer';
+import {getAuthMe} from './auth-reducer';
+import {Dispatch} from 'redux';
 
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
 
@@ -10,7 +11,16 @@ const initialState = {
 
 export type InitialStateType = typeof initialState
 
-export const appReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
+
+type InitializedSuccessActionType = {
+    type: typeof INITIALIZED_SUCCESS // 'INITIALIZED_SUCCESS'
+}
+
+
+type ActionType = InitializedSuccessActionType
+
+
+export const appReducer = (state = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case INITIALIZED_SUCCESS:
             return {
@@ -21,10 +31,10 @@ export const appReducer = (state: InitialStateType = initialState, action: any):
             return state;
     }
 }
-export const initializedSuccess = () => ({type: INITIALIZED_SUCCESS})
+export const initializedSuccess = (): InitializedSuccessActionType => ({type: INITIALIZED_SUCCESS})
 
 
-export const initializeApp = () => (dispatch: any) => {
+export const initializeApp = () => (dispatch: Dispatch<any>) => {
     let promise = dispatch(getAuthMe())
     Promise.all([promise])
         .then(() => {
