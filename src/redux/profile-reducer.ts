@@ -4,6 +4,7 @@ import {profileAPI, usersAPI} from '../api/api';
 import {Dispatch} from 'redux';
 import {stopSubmit} from 'redux-form';
 import {PhotosType} from '../types/types';
+import {AppStateType} from './redux-store';
 
 
 const ADD_POST = 'ADD-POST';
@@ -62,13 +63,13 @@ const initialState = {
 
 export type InitialStateType = typeof initialState
 
-type ActionType = AddPostActionType
+type ActionsType = AddPostActionType
     | SetStatusActionType
     | DeletePostACActionType
     | SavePhotoSuccessActionType
     | SetUserProfileActionType
 
-export const profileReducer = (state = initialState, action: ActionType): InitialStateType => {
+export const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             return {
@@ -158,7 +159,7 @@ export const savePhoto = (file: any) => async (dispatch: Dispatch) => {
     }
 }
 
-export const saveProfile = (profileInfo: any) => async (dispatch: Dispatch, getState: any) => {
+export const saveProfile = (profileInfo: any) => async (dispatch: Dispatch, getState: () => AppStateType) => {
     const id = getState().auth.id
     const response = await profileAPI.saveProfile(profileInfo)
     if (response.data.resultCode === 0) {

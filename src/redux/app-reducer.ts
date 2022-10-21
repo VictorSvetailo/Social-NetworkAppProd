@@ -1,5 +1,5 @@
 
-import {getAuthMe} from './auth-reducer';
+import {getAuthMe, SetAuthUserDataActionType} from './auth-reducer';
 import {Dispatch} from 'redux';
 
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
@@ -17,10 +17,10 @@ type InitializedSuccessActionType = {
 }
 
 
-type ActionType = InitializedSuccessActionType
+type ActionsType = InitializedSuccessActionType | SetAuthUserDataActionType
 
 
-export const appReducer = (state = initialState, action: ActionType): InitialStateType => {
+export const appReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case INITIALIZED_SUCCESS:
             return {
