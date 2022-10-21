@@ -3,7 +3,7 @@ import React, {MouseEvent, FocusEvent, ChangeEvent, FC, useState, useEffect} fro
 
 type PropsStatusType = {
     status: string
-    updateStatus: (status: any) => void
+    updateStatus: (status: string) => void
 }
 
 export const ProfileStatusWithHooks: FC<PropsStatusType> = (props) => {

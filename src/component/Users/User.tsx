@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './Users.module.css'
 import {NavLink} from 'react-router-dom';
-import {UsersSearchForm} from './UsersSearchForm';
-import {Paginator} from '../common/Paginator/Paginator';
+import {FollowingInProgress} from '../../redux/users-reducer';
+import {UsersType} from '../../types/types';
 
 
 type PropsType = {
-    user: any
-    followingInProgress: any
+    user: UsersType
+    followingInProgress: Array<FollowingInProgress>
     follow: (userID: string) => void
     unFollow: (userID: string) => void
 

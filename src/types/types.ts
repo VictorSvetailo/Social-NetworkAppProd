@@ -3,7 +3,6 @@ export type PhotosType = {
     large: string | null
 }
 
-
 export type UsersType = {
     id: string
     photos: PhotosType

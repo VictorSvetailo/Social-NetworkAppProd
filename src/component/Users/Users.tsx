@@ -1,34 +1,28 @@
 import React from 'react';
 import styles from './Users.module.css'
-import {NavLink} from 'react-router-dom';
 import {UsersSearchForm} from './UsersSearchForm';
 import {Paginator} from '../common/Paginator/Paginator';
 import {User} from './User';
-
+import {UsersType} from '../../types/types';
+import {FollowingInProgress} from '../../redux/users-reducer';
 
 type PropsType = {
-    // pages: Array<any>
-    usersData: Array<any>
-    currentPage: any
+    usersData: Array<UsersType>
+    currentPage: number
     onClickCurrentPage: (currentPage: number) => void
-    followingInProgress: any
+    followingInProgress: Array<FollowingInProgress>
     follow: (userID: string) => void
     unFollow: (userID: string) => void
-    totalUsersCount: any
-    pageSize: any
-    // totalUsersCount: any
-
-
+    totalUsersCount: number
+    pageSize: number
 }
 
 export const Users: React.FC<PropsType> = ({usersData, currentPage, onClickCurrentPage, ...props}) => {
-
 
     return (
         <div className={styles.container}>
             users will be here
             <UsersSearchForm/>
-            <br/>
             <hr/>
             <div>
                 <Paginator
@@ -37,7 +31,6 @@ export const Users: React.FC<PropsType> = ({usersData, currentPage, onClickCurre
                     totalUsersCount={props.totalUsersCount}
                     pageSize={props.pageSize}
                 />
-
             </div>
             <hr/>
             {usersData.map(u =>

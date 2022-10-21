@@ -19,9 +19,10 @@ import {
     getPageSize,
     getTotalUsersCount, getUsers,
 } from '../../redux/users-selectors';
+import {UsersType} from '../../types/types';
 
 
-export class UsersContainer extends React.Component<UsersPropsType, any> {
+export class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         const {currentPage, pageSize} = this.props
@@ -33,13 +34,7 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
         this.props.getUsers(currentPage, pageSize)
     }
 
-
     render() {
-        // const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
-        // const pages = []
-        // for (let i = 1; i <= pagesCount; i++) {
-        //     pages.push(i)
-        // }
         const onClickFollowHandler = (userID: string) => {
             this.props.follow(userID)
         }
@@ -58,7 +53,6 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
                     unFollow={onClickUnFollowHandler}
                     pageSize={this.props.pageSize}
                     totalUsersCount={this.props.totalUsersCount}
-                    // totalUsersCount={props.totalUsersCount}
                 />
             </>
 
@@ -68,23 +62,23 @@ export class UsersContainer extends React.Component<UsersPropsType, any> {
 
 
 type MapStatePropsType = {
-    users: any
+    users: Array<UsersType>
     pageSize: number
-    totalUsersCount: any
+    totalUsersCount: number
     currentPage: number
     isFetching: boolean
-    followingInProgress: any
+    followingInProgress:  any // Array<FollowingInProgress>
 }
 
 type MapDispatchPropsType = {
     follow: (userID: string) => void
     unFollow: (userID: string) => void
     setCurrentPage: (currentPage: number) => void
-    toggleFollowingInProgress: (userID: string, isFetching: any) => void
+    toggleFollowingInProgress: (userID: string, isFetching: boolean) => void
     getUsers: (currentPage: number, pageSize: number) => void
 }
-export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
 
+export type UsersPropsType = MapStatePropsType & MapDispatchPropsType
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
@@ -97,31 +91,17 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-// const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-//     return {
-//         users: state.usersPage.users,
-//         pageSize: state.usersPage.pageSize,
-//         totalUsersCount: state.usersPage.totalUsersCount,
-//         currentPage: state.usersPage.currentPage,
-//         isFetching: state.usersPage.isFetching,
-//         followingInProgress: state.usersPage.followingInProgress,
-//     }
-// }
-
-
-// export default WithAuthRedirect(connect(mapStateToProps, {
-//     follow,
-//     unFollow,
-//     setCurrentPage,
-//     toggleFollowingInProgress,
-//     getUsers,
-// })(UsersContainer));
-
 
 export default compose<React.ComponentType>(
     WithAuthRedirect,
-    connect(mapStateToProps, {follow, unFollow, setCurrentPage, toggleFollowingInProgress, getUsers: requestUsers}),
-)(UsersContainer)
+    connect
+    (mapStateToProps, {follow, unFollow, setCurrentPage, toggleFollowingInProgress, getUsers: requestUsers}))(UsersContainer)
+
+
+
+
+
+
 
 
 // Старый вариант!
@@ -144,5 +124,30 @@ export default compose<React.ComponentType>(
 //         },
 //     }
 // }
+
+
+
+
+
+// const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+//     return {
+//         users: state.usersPage.users,
+//         pageSize: state.usersPage.pageSize,
+//         totalUsersCount: state.usersPage.totalUsersCount,
+//         currentPage: state.usersPage.currentPage,
+//         isFetching: state.usersPage.isFetching,
+//         followingInProgress: state.usersPage.followingInProgress,
+//     }
+// }
+
+
+// export default WithAuthRedirect(connect(mapStateToProps, {
+//     follow,
+//     unFollow,
+//     setCurrentPage,
+//     toggleFollowingInProgress,
+//     getUsers,
+// })(UsersContainer));
+
 
 

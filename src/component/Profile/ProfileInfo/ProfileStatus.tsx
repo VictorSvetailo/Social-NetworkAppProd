@@ -3,10 +3,10 @@ import React, {MouseEvent, FocusEvent, ChangeEvent} from 'react';
 
 type PropsStatusType = {
     status: string
-    updateStatus: (status: any) => void
+    updateStatus: (status: string) => void
 }
 
-export class ProfileStatus extends React.Component<PropsStatusType, any> {
+export class ProfileStatus extends React.Component<PropsStatusType> {
 
     state = {
         editMode: false,

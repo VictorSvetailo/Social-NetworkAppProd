@@ -18,20 +18,13 @@ const rootReducer = combineReducers({
         app: appReducer,
     })
 
+export type AppStateType = ReturnType<typeof rootReducer>
+
 // @ts-ignore
 const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose || compose;
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
-
-export type AppStateType = ReturnType<typeof rootReducer>
-
-// let store = createStore(rootReducers, applyMiddleware(thunkMiddleware))
 
 export default store
 
 // @ts-ignore
 window.store = store
-
-
-// type RootState = typeof reducers;
-//
-// export type ReduxStateType = ReturnType<RootState>
