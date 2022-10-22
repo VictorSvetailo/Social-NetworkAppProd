@@ -1,12 +1,13 @@
 import React from 'react';
-import {inspect} from 'util';
 import styles from './FormControls.module.css'
-import {required} from '../../../utils/validaters/validators';
-import {Field} from 'redux-form';
+import {Field, WrappedFieldMetaProps, WrappedFieldProps} from 'redux-form';
+import {FieldValidatorType} from '../../../utils/validaters/validators';
 
-
-// @ts-ignore
-const FormControl = ({input, meta: {touched, error}, children}) => {
+type FormControlPropsType = {
+    meta: WrappedFieldMetaProps
+    children: React.ReactNode  //JSX.Element
+}
+const FormControl: React.FC<FormControlPropsType> = ({meta: {touched, error}, children}) => {
     const errorMain = touched && error
     return (
         <div className={error && styles.formControl + ' ' + styles.error}>
@@ -17,23 +18,30 @@ const FormControl = ({input, meta: {touched, error}, children}) => {
         </div>
     );
 }
-// @ts-ignore
-export const Textarea = (props: any) => {
-    const {input, meta, child, ...restProps} = props
+
+export const Textarea: React.FC<WrappedFieldProps> = (props) => {
+    const {input, meta, ...restProps} = props
+    //const {input, meta, child, ...restProps} = props
     return <FormControl {...props}><textarea {...input} {...restProps}/></FormControl>
 };
-// @ts-ignore
-export const Input = (props: any) => {
-    const {input, meta, child, ...restProps} = props
+
+export const Input: React.FC<WrappedFieldProps> = (props) => {
+    const {input, meta, ...restProps} = props
     return <FormControl {...props}><input {...input} {...restProps}/></FormControl>
 };
 
 
-export const createField = (placeholder: any, name: any, validators: any, component: any, props = {}, text = '') => (
-    <div>
+
+export function createField<FormKeysType extends string>(placeholder: string | undefined,
+                            name: FormKeysType,
+                            validators: Array<FieldValidatorType>,
+                            component: React.FC<WrappedFieldProps>,
+                            props = {},
+                            text = '') {
+    return <div>
         <Field placeholder={placeholder} name={name} validate={validators} component={component} {...props}/>{text}
     </div>
-)
+}
 
 
 
