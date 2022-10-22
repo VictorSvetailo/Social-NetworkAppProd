@@ -16,7 +16,6 @@ import {
 import {UsersType} from '../../types/types';
 
 export class UsersContainer extends React.Component<UsersPropsType> {
-
     componentDidMount() {
         const {currentPage, pageSize} = this.props
         this.props.getUsers(currentPage, pageSize)
@@ -81,7 +80,6 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         followingInProgress: getFollowingInProgress(state),
     }
 }
-
 
 export default compose<React.ComponentType>(
     WithAuthRedirect,

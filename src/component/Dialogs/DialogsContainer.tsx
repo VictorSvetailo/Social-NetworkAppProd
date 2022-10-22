@@ -1,10 +1,9 @@
-import React, {ChangeEvent, MouseEvent} from 'react';
+import React from 'react';
 import {Dialogs} from './Dialogs';
 import {AppStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
-import {DialogsType, MessagesType, postTextCBAC} from '../../redux/dialogs-reducer';
+import {actions, DialogsType, MessagesType} from '../../redux/dialogs-reducer';
 import {compose, Dispatch} from 'redux';
-import {Navigate} from 'react-router-dom';
 import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 
 type MapStatePropsType = {
@@ -30,7 +29,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
         onClickAddPostCB: (newDialogMessageBody: string) => {
-            dispatch(postTextCBAC(newDialogMessageBody))
+            dispatch(actions.postTextCBAC(newDialogMessageBody))
         }
     }
 }

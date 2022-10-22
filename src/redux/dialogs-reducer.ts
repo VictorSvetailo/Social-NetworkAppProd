@@ -1,10 +1,5 @@
 import {v1} from 'uuid';
-
-const SEND_MESSAGE = 'SEND-MESSAGE';
-
-
-
-type ActionType = PostTextActionType
+import {InferActionsTypes} from './redux-store';
 
 export type DialogsType = {
     id: number
@@ -34,9 +29,9 @@ const initialState = {
 }
 export type initialStateDialogsType = typeof initialState
 
-export const dialogsReducer = (state= initialState, action: ActionType): initialStateDialogsType => {
+export const dialogsReducer = (state = initialState, action: ActionsType): initialStateDialogsType => {
     switch (action.type) {
-        case SEND_MESSAGE:
+        case 'SN/DIALOGS/SEND-MESSAGE':
             return {
                 ...state,
                 messages: [...state.messages,
@@ -47,8 +42,9 @@ export const dialogsReducer = (state= initialState, action: ActionType): initial
     }
 }
 
-type PostTextActionType = {
-    type: typeof SEND_MESSAGE
-    newDialogMessageBody: string
+export type ActionsType = InferActionsTypes<typeof actions>
+export const actions = {
+    postTextCBAC: (newDialogMessageBody: string) => ({type: 'SN/DIALOGS/SEND-MESSAGE', newDialogMessageBody} as const)
 }
-export const postTextCBAC = (newDialogMessageBody: string): PostTextActionType => ({type: SEND_MESSAGE, newDialogMessageBody})
+
+

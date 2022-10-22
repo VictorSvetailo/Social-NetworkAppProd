@@ -1,6 +1,5 @@
 import {v1} from 'uuid';
-import { dialogsReducer, postTextCBAC} from './dialogs-reducer';
-import {addPostAC} from './profile-reducer';
+import { dialogsReducer} from './dialogs-reducer';
 
 // const ADD_POST = 'ADD-POST';
 // const CHANGE_NEW_TEXT = 'CHANGE-NEW-TEXT';
@@ -100,23 +99,23 @@ type CompanyEmployeesType = {
 // }
 
 
-type StoreType = {
-    _state: RootStateType
-    _callSubscribe: () => void
-    subscribe: (observer: any) => void
-    getState: () => RootStateType
-    dispatch: (action: ActionsTypes) => void
-}
-
+// type StoreType = {
+//     _state: RootStateType
+//     _callSubscribe: () => void
+//     subscribe: (observer: any) => void
+//     getState: () => RootStateType
+//     dispatch: (action: ActionsTypes) => void
+// }
+//
 
 // type AddPostActionType = {
 //     type: 'ADD-POST'
 //     postText: string
 // }
 
-export type ActionsTypes = ReturnType<typeof addPostAC>
-    // | ReturnType<typeof addNewTextCBAC>
-    | ReturnType<typeof postTextCBAC>
+// export type ActionsTypes = ReturnType<typeof addPostAC>
+//     // | ReturnType<typeof addNewTextCBAC>
+//     | ReturnType<typeof postTextCBAC>
 
 // export const addPostAC = (postText: string) => {
 //     return {
@@ -137,7 +136,7 @@ export type ActionsTypes = ReturnType<typeof addPostAC>
 //     ({type: SEND_MESSAGE, postTextCB: postTextCB}) as const
 
 
-const store: StoreType = {
+const store = {
     _state: {
         profilePage: {
             messageForNewPost: '',
@@ -236,7 +235,7 @@ const store: StoreType = {
     getState() {
         return this._state;
     },
-    dispatch(action) {
+    dispatch() {
         // this._state.profilePage = profileReducer(this._state.profilePage, action)
         // this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         // this._state.sidebar = sidebarReducer(this._state.sidebar, action)

@@ -1,6 +1,6 @@
 import React, {ChangeEvent, MouseEvent} from 'react';
 import styles from '../Message/Message.module.css';
-import {MessagesType, postTextCBAC} from '../../../redux/dialogs-reducer';
+import {MessagesType} from '../../../redux/dialogs-reducer';
 import {log} from 'util';
 import {Field, reduxForm} from 'redux-form';
 import {Textarea} from '../../common/FormsControls/FormsControls';
