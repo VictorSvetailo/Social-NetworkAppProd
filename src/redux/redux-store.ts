@@ -9,16 +9,21 @@ import {reducer as formReducer} from 'redux-form'
 import {appReducer} from './app-reducer';
 
 const rootReducer = combineReducers({
-        profilePage: profileReducer,
-        dialogsPage: dialogsReducer,
-        usersPage: usersReducer,
-        sidebar: sidebarReducer,
-        auth: authReducer,
-        form: formReducer,
-        app: appReducer,
-    })
+    profilePage: profileReducer,
+    dialogsPage: dialogsReducer,
+    usersPage: usersReducer,
+    sidebar: sidebarReducer,
+    auth: authReducer,
+    form: formReducer,
+    app: appReducer,
+})
 
 export type AppStateType = ReturnType<typeof rootReducer>
+
+
+type PropertiesTypes<T> = T extends { [key: string]: infer U } ? U : never
+export type InferActionsType<T extends { [key: string]: (...args: any[]) => any }> = ReturnType<PropertiesTypes<T>>
+
 
 // @ts-ignore
 const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose || compose;
