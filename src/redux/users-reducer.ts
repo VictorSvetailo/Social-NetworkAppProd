@@ -3,6 +3,7 @@ import {Dispatch} from 'redux';
 import {UsersType} from '../types/types';
 import {BaseThunkType, InferActionsTypes} from './redux-store';
 import {usersAPI} from '../api/users-api';
+import {ResponseType, ResultCodeEnum} from '../api/api';
 
 const initialState = {
     users: [] as Array<UsersType>,
@@ -16,7 +17,7 @@ const initialState = {
 export type FollowingInProgress = {
     id: string
 }
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 export const usersReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -84,20 +85,22 @@ export const requestUsers = (page: number, pageSize: number): ThunkType => {
 }
 
 export const _followUnFollowFlow = async (dispatch: Dispatch<ActionsType>,
-                                          userID: string, apiMethod: any, actionCreator: (userID: string) => ActionsType) => {
+                                          userID: string,
+                                          apiMethod: (userID: string) => Promise<ResponseType>,
+                                          actionCreator: (userID: string) => ActionsType) => {
     dispatch(actions.toggleFollowingInProgress(userID, true))
-    const response = await apiMethod(userID)
-    if (response.data.resultCode == 0) {
+    const data = await apiMethod(userID)
+    if (data.resultCode == ResultCodeEnum.Success) {
         dispatch(actionCreator(userID))
     }
     dispatch(actions.toggleFollowingInProgress(userID, false))
 }
 
+
+// follow это thunk creator
 export const follow = (userID: string): ThunkType => {
     return async (dispatch) => {
-        const apiMethod = usersAPI.follow.bind(usersAPI)
-        const actionCreator = actions.followSuccess
-        await _followUnFollowFlow(dispatch, userID, apiMethod, actionCreator)
+        await _followUnFollowFlow(dispatch, userID, usersAPI.follow.bind(usersAPI), actions.followSuccess)
     }
 }
 
