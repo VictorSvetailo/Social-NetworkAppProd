@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {InjectedFormProps, reduxForm} from 'redux-form';
-import {createField, Input} from '../common/FormsControls/FormsControls';
+import {createField, GetStringKeys, Input} from '../common/FormsControls/FormsControls';
 import {maxLengthCreator, required} from '../../utils/validaters/validators';
 import {connect} from 'react-redux';
 import {login} from '../../redux/auth-reducer';
@@ -12,7 +12,7 @@ import {AppStateType} from '../../redux/redux-store';
 
 
 
-type LoginFormOwnType = { captchaUrl: string | null }
+export type LoginFormOwnType = { captchaUrl: string | null }
 
 const maxLength5 = maxLengthCreator(30)
 
@@ -47,7 +47,9 @@ export type LoginFormDataType = {
     rememberMe: boolean
     captcha: string
 }
-type LoginFormPropertiesType =  Extract<keyof LoginFormDataType, string>    //'captcha' | 'rememberMe' | 'email' | 'password'
+
+export type LoginFormPropertiesType =  GetStringKeys<LoginFormDataType>    //'captcha' | 'rememberMe' | 'email' | 'password'
+
 
 type MapDispatchPropsType = {
     login: (email: string, password: string, rememberMe: boolean, captcha: string) => void

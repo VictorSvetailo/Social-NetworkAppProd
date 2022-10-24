@@ -1,4 +1,4 @@
-import React, {MouseEvent, FocusEvent, ChangeEvent, FC, useState, useEffect} from 'react';
+import React, {MouseEvent, FocusEvent, ChangeEvent, useState, useEffect} from 'react';
 
 
 type PropsStatusType = {
@@ -6,7 +6,7 @@ type PropsStatusType = {
     updateStatus: (status: string) => void
 }
 
-export const ProfileStatusWithHooks: FC<PropsStatusType> = (props) => {
+export const ProfileStatusWithHooks: React.FC<PropsStatusType> = (props) => {
 
     const [active, setActive] = useState(false)
     const [text, setText] = useState(props.status)
@@ -28,13 +28,12 @@ export const ProfileStatusWithHooks: FC<PropsStatusType> = (props) => {
 
     return (
         <div>
-            {!active &&
-                <div><b>Status: </b> <span onDoubleClick={activateEditMode}>{props.status || 'Введите статус'}</span></div>
+            {!active
+                && <div><b>Status: </b> <span onDoubleClick={activateEditMode}>{props.status || 'Введите статус'}</span></div>
             }
-            {active &&
-                <div><input autoFocus onChange={onStatusChange} onBlur={deactivateEditMode} value={text}/></div>
+            {active
+                && <div><input autoFocus onChange={onStatusChange} onBlur={deactivateEditMode} value={text}/></div>
             }
-
         </div>
     );
 }

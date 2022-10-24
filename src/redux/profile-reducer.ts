@@ -5,15 +5,12 @@ import {AppStateType, BaseThunkType, InferActionsTypes} from './redux-store';
 import {profileAPI} from '../api/profile-api';
 import {ResultCodeEnum} from '../api/api';
 
-
-
-
 export type PostsType = {
     id: string
     message: string
     likesCount: number
 }
-type ContactsType = {
+export type ContactsType = {
     github: string
     vk: string
     facebook: string
@@ -30,6 +27,7 @@ export type ProfileType = {
     fullName: string
     contacts: ContactsType
     photos: PhotosType
+    aboutMe: string
 }
 export const postID1 = v1()
 export const postID2 = v1()

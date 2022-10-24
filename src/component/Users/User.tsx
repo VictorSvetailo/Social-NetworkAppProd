@@ -5,7 +5,7 @@ import {FollowingInProgress} from '../../redux/users-reducer';
 import {UsersType} from '../../types/types';
 
 
-type PropsType = {
+type UserPropsType = {
     user: UsersType
     followingInProgress: Array<FollowingInProgress>
     follow: (userID: string) => void
@@ -13,7 +13,7 @@ type PropsType = {
 
 }
 
-export const User: React.FC<PropsType> = ( {user, followingInProgress, unFollow, follow, ...props}) => {
+export const User: React.FC<UserPropsType> = ( {user, followingInProgress, unFollow, follow, ...props}) => {
        const usersDataInter =  (
             <div key={user.id}>
                 <NavLink to={'/profile/' + user.id}>
@@ -21,11 +21,11 @@ export const User: React.FC<PropsType> = ( {user, followingInProgress, unFollow,
                 </NavLink>
                 {
                     user.followed
-                        ? <button disabled={followingInProgress.some((id: any) => id === user.id)}
+                        ? <button disabled={followingInProgress.some((id: FollowingInProgress | string) => id === user.id)}
                                   onClick={() => {
                                       unFollow(user.id)
                                   }}>Unfollow</button>
-                        : <button disabled={followingInProgress.some((id: any) => id === user.id)}
+                        : <button disabled={followingInProgress.some((id: FollowingInProgress | string) => id === user.id)}
                                   onClick={() => {
                                       follow(user.id)
                                   }}>Follow</button>
@@ -34,7 +34,6 @@ export const User: React.FC<PropsType> = ( {user, followingInProgress, unFollow,
                 <span>{user.status}</span>
             </div>
     )
-
 
     return (
         <div className={styles.container}>

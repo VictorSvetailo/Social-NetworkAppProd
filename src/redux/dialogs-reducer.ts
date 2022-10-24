@@ -44,7 +44,7 @@ export const dialogsReducer = (state = initialState, action: ActionsType): initi
 
 export type ActionsType = InferActionsTypes<typeof actions>
 export const actions = {
-    postTextCBAC: (newDialogMessageBody: string) => ({type: 'SN/DIALOGS/SEND-MESSAGE', newDialogMessageBody} as const)
+    sendMessage: (newDialogMessageBody: string) => ({type: 'SN/DIALOGS/SEND-MESSAGE', newDialogMessageBody} as const)
 }
 
 

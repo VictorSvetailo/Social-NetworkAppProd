@@ -2,20 +2,24 @@ import React from 'react';
 import styles from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {DialogsPropsType} from './MyPostsContainer';
-import {Field, reduxForm} from 'redux-form';
+import {InjectedFormProps, reduxForm} from 'redux-form';
 import {maxLengthCreator, required} from '../../../utils/validaters/validators';
-import {Textarea} from '../../common/FormsControls/FormsControls';
+import {createField, GetStringKeys, Input, Textarea} from '../../common/FormsControls/FormsControls';
 
 
 const maxLength10 = maxLengthCreator(10)
 
+type PropsType = {}
+type AddPostFormValuesType = {
+    newProfileMessageBody: string
+}
+export type AddPostFormValuesTypeKeys =  GetStringKeys<AddPostFormValuesType>
 
-export const MyPostForm = (props: any) => {
+export const MyPostForm: React.FC<InjectedFormProps<AddPostFormValuesType, PropsType> & PropsType>  = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field validate={[required, maxLength10]} placeholder="Enter your message"
-                       name={'newProfileMessageBody'} component={Textarea}/>
+                {createField<AddPostFormValuesTypeKeys>('Enter your message', 'newProfileMessageBody', [required, maxLength10], Textarea)}
             </div>
             <div>
                 <button>Add post</button>
@@ -24,16 +28,15 @@ export const MyPostForm = (props: any) => {
     );
 };
 
-const MyPostFormRedux = reduxForm({
+const MyPostFormRedux = reduxForm<AddPostFormValuesType, PropsType>({
     // a unique name for the form
     form: 'ProfileMessageForm'
 })(MyPostForm)
 
 
 export const MyPosts = React.memo((props: DialogsPropsType) => {
-    console.log('Render MyPosts YO')
-    const addNewMessage = (values: any) => {
-        props.onClickAddPost(values.newProfileMessageBody);
+    const addNewMessage = (values: AddPostFormValuesType) => {
+        props.addPost(values.newProfileMessageBody);
     }
 
     return (

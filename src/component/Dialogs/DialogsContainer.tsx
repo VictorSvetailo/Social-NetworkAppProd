@@ -8,14 +8,11 @@ import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 
 type MapStatePropsType = {
     dialogs: Array<DialogsType>
-    // newDialogMessageBody: string
     messages: Array<MessagesType>
 }
-
 type MapDispatchPropsType = {
-    onClickAddPostCB: (values: string) => void
+    sendMessage: (values: string) => void
 }
-
 export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
 
 
@@ -26,19 +23,19 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-    return {
-        onClickAddPostCB: (newDialogMessageBody: string) => {
-            dispatch(actions.postTextCBAC(newDialogMessageBody))
-        }
-    }
-}
 
-// let AuthRedirectComponent = WithAuthRedirect(Dialogs)
 
-export default compose<React.ComponentType>(
-    connect(mapStateToProps, mapDispatchToProps),
-    WithAuthRedirect
-)(Dialogs)
+// с помощью {...actions} я пробросил все MDTP одним махом
+export default compose(connect(mapStateToProps, {...actions}), WithAuthRedirect)(Dialogs) as React.ComponentType
 
-// export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
+
+
+// Варианты технологий
+
+// const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+//     return {
+//         sendMessage: (newDialogMessageBody: string) => {
+//             dispatch(actions.sendMessage(newDialogMessageBody))
+//         }
+//     }
+// }

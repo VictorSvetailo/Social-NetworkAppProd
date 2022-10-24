@@ -1,15 +1,15 @@
 import React from 'react';
-import {createField, Input, Textarea} from '../../common/FormsControls/FormsControls';
+import {createField, GetStringKeys, Input, Textarea} from '../../common/FormsControls/FormsControls';
 import {InjectedFormProps, reduxForm} from 'redux-form';
 import styles from '../../Login/Login.module.css';
+import {ProfileType} from '../../../redux/profile-reducer';
 
-// проблема с типизацией
-type ProfileDataType = {
-    profile: Array<string>
+type PropsType = {
+    profile: ProfileType
 }
+type ProfileTypeKeys = GetStringKeys<ProfileType>
 
-// @ts-ignore
-export const ProfileDataForm: React.FC<InjectedFormProps<ProfileDataType>> = ({handleSubmit, profile, error}) => {
+export const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & PropsType> = ({handleSubmit, profile, error}) => {
     return (
         <form onSubmit={handleSubmit}>
             <button>Save</button>
@@ -17,24 +17,27 @@ export const ProfileDataForm: React.FC<InjectedFormProps<ProfileDataType>> = ({h
                 {error && <div className={styles.formSummaryError}>{error}</div>}
             </div>
             <div>
-                <b>Full name:</b> {createField('Full name', 'fullName', [], Input)}
+                <b>Full name:</b> {createField<ProfileTypeKeys>('Full name', 'fullName', [], Input)}
             </div>
             <div>
-                <b>Looking for a job:</b>{createField('', 'lookingForAJob', [], Input, {type: 'checkbox'})}
+                <b>Looking for a job:</b>{createField<ProfileTypeKeys>('', 'lookingForAJob', [], Input, {type: 'checkbox'})}
             </div>
             <div>
                 <b>My professional skills:</b>
-                {createField('My professional skills', 'lookingForAJobDescription', [], Textarea)}
+                {createField<ProfileTypeKeys>('My professional skills', 'lookingForAJobDescription', [], Textarea)}
             </div>
             <div>
-                <b>About me:</b> {createField('About me', 'aboutMe', [], Textarea)}
+                <b>About me:</b> {createField<ProfileTypeKeys>('About me', 'aboutMe', [], Textarea)}
             </div>
             <div>
                 <b>Contacts:</b>
                 {
-                    Object.keys(profile.contacts).map(key => {
+                    Object
+                        .keys(profile.contacts)
+                        .map(key => {
                         return (
                             <div key={key}>
+                                {/*// todo: create some solution for embedded object*/}
                                 <b>{key} : {createField(key, 'contacts.' + key, [], Input)}</b>
                             </div>
                         )
@@ -44,6 +47,6 @@ export const ProfileDataForm: React.FC<InjectedFormProps<ProfileDataType>> = ({h
     );
 };
 
-// @ts-ignore
-const ProfileDataFormReduxForm = reduxForm({form: 'edit-profile'})(ProfileDataForm)
+
+const ProfileDataFormReduxForm = reduxForm<ProfileType, PropsType>({form: 'edit-profile'})(ProfileDataForm)
 export default ProfileDataFormReduxForm

@@ -5,9 +5,7 @@ import {Navigate, Route, Routes} from 'react-router-dom';
 import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
 import {Error} from './component/Error/Error';
-
 import UsersContainer from './component/Users/UsersContainer';
-
 import HeaderContainer from './component/Header/HeaderContainer';
 import Login from './component/Login/Login';
 import {WithNewsRedirect} from './component/News/News';
@@ -18,23 +16,20 @@ import {initializeApp} from './redux/app-reducer';
 import {Preloader} from './component/common/Preloader/Preloader';
 import {withSuspense} from './HOC/WithSuspense';
 
-// import DialogsContainer from './component/Dialogs/DialogsContainer';
 const DialogsContainer = React.lazy(() => import('./component/Dialogs/DialogsContainer'));
-// import ProfileContainer from './component/Profile/ProfileContainer';
 const ProfileContainer = React.lazy(() => import('./component/Profile/ProfileContainer'));
 
 
-// 26116
+const SuspendedDialogs = withSuspense(DialogsContainer)
+const SuspendedProfile = withSuspense(ProfileContainer)
 
-class App extends React.Component<AppPropsType, any> {
 
+class App extends React.Component<AppPropsType> {
     // перехват ошибки
     //reason: any, promise: any
-    catchAllUnhandledErrors = (promiseRejectionEvent: any) => {
+    catchAllUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
         alert('Some error occurred')
-        // console.error(promiseRejectionEvent)
     }
-
 
     componentDidMount() {
         this.props.initializeApp()
@@ -61,22 +56,20 @@ class App extends React.Component<AppPropsType, any> {
                     <Routes>
                         <Route path="/profile" element={
                             <Suspense fallback={<Preloader/>}>
-                                <ProfileContainer/>
+                                <SuspendedProfile/>
                             </Suspense>
                         }/>
                         <Route path="/profile/:id" element={
                             <Suspense fallback={<Preloader/>}>
-                                <ProfileContainer/>
+                                <SuspendedProfile/>
                             </Suspense>
                         }/>
 
                         <Route path="/dialogs/*" element={
                             <Suspense fallback={<Preloader/>}>
-                                <DialogsContainer/>
+                                <SuspendedDialogs/>
                             </Suspense>
                         }/>
-
-
                         {/*<Route path="/dialogs/*" element={<DialogsContainer/>}/>*/}
                         <Route path="/users" element={<UsersContainer/>}/>
                         <Route path="/news" element={<WithNewsRedirect/>}/>
@@ -93,7 +86,7 @@ class App extends React.Component<AppPropsType, any> {
 }
 
 type MapStatePropsType = {
-    initialized: any
+    initialized: boolean
 }
 
 type MapDispatchPropsType = {

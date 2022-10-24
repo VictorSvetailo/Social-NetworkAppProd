@@ -1,28 +1,31 @@
 import React, {ChangeEvent, MouseEvent} from 'react';
 import styles from '../Message/Message.module.css';
 import {MessagesType} from '../../../redux/dialogs-reducer';
-import {log} from 'util';
-import {Field, reduxForm} from 'redux-form';
-import {Textarea} from '../../common/FormsControls/FormsControls';
+import {InjectedFormProps, reduxForm} from 'redux-form';
+import {createField, Input, Textarea} from '../../common/FormsControls/FormsControls';
 import {maxLengthCreator, required} from '../../../utils/validaters/validators';
+import {NewMessageFormValuesType} from '../Dialogs';
 
 type MessagesPropsType = {
     messages: Array<MessagesType>
-    //addNewTextCB: (text: string) => void
-    //addPostCB: (postTextCB: string) => void
-    // dispatch: (action: ActionsTypes) => void
-    // onChangeAddTextCB: (value: string) => void
     onClickAddPostCB: (values: any) => void
 }
 
-
 const maxLength20 = maxLengthCreator(20)
 
-export const MyMessageForm = (props: any) => {
+
+type NewMessageFormValuesKeysType = Extract<keyof NewMessageFormValuesType, string>;    //'newDialogMessageBody'
+type PropsType = {}
+
+export const MyMessageForm: React.FC<InjectedFormProps<NewMessageFormValuesType, PropsType> & PropsType>  = (props) => {
 
     return (
         <form onSubmit={props.handleSubmit}>
-            <div><Field placeholder="Enter your message" name={'newDialogMessageBody'} component={Textarea} validate={[required, maxLength20]}/></div>
+            <div>
+
+                {createField<NewMessageFormValuesKeysType>('Enter your message', 'newDialogMessageBody', [required, maxLength20], Textarea)}
+
+            </div>
             <div>
                 <button>Send Message</button>
             </div>
@@ -30,7 +33,7 @@ export const MyMessageForm = (props: any) => {
     );
 };
 
-const MyMessageFormRedux = reduxForm({
+const MyMessageFormRedux = reduxForm<NewMessageFormValuesType, PropsType>({
     // a unique name for the form
     form: 'DialogMessageForm'
 })(MyMessageForm)
@@ -40,7 +43,6 @@ const MyMessageFormRedux = reduxForm({
 
 export function Message(props: MessagesPropsType) {
     const onClickAddPost = (values: any) => {
-        console.log(values)
      props.onClickAddPostCB(values.newDialogMessageBody)
     }
 

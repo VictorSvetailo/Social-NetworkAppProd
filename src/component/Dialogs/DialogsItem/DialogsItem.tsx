@@ -5,8 +5,6 @@ import {DialogsType} from '../../../redux/dialogs-reducer';
 type PropsType = {
     dialogs: Array<DialogsType>
 }
-
-
 export function DialogsItem(props: PropsType) {
     return (
         <div className={styles.names}>

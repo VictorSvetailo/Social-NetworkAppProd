@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './Post.module.css'
+import {PostsType} from '../../../../redux/profile-reducer';
 
 type PostsAllType = {
-    posts: Array<any>;
+    posts: Array<PostsType>;
 }
 
 export function Post(props: PostsAllType){

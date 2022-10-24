@@ -1,5 +1,4 @@
-import React, {ComponentType, Suspense} from 'react';
-import {Preloader} from '../component/common/Preloader/Preloader';
+import React from 'react';
 
 
 // let mapStateToPropsRedirect = (state: AppStateType) => ({
@@ -9,17 +8,14 @@ import {Preloader} from '../component/common/Preloader/Preloader';
 //     isAuth: boolean
 // }
 
-export function withSuspense <T>(Component: any) {
-    // const RedirectComponent = (props: MapStateToProps) => {
-    //     const {isAuth, ...restProps} = props
-    //     if (!props.isAuth) return <Navigate to={'/login'}/>
-    //     return <Component  {...restProps as any} />
-    // }
-    // let ConnectedAuthRedirectComponent = connect(mapStateToPropsRedirect)(RedirectComponent)
-    return (props: any) => {
-            // return <Suspense fallback={<Preloader/>}> <Component {...props}/></Suspense>
+export function withSuspense<WCP>(WrappedComponent: React.ComponentType<WCP>) {
+    return (props: WCP) => {
+        return <React.Suspense fallback={<div>loading...</div>}>
+        <WrappedComponent {...props as any}/>
+        </React.Suspense>
     }
-};
+}
+
 
 
 //!this.props.isAuth

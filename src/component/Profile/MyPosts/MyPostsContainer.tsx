@@ -1,19 +1,15 @@
 import React from 'react';
 import {actions, PostsType} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
-import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../../redux/redux-store';
-
 
 type MapStatePropsType = {
     posts: Array<PostsType>
 }
-
 type MapDispatchPropsType = {
-    onClickAddPost: (values: string) => void
+    addPost: (values: string) => void
 }
-
 export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
 
 
@@ -23,12 +19,16 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-    return {
-        onClickAddPost: (newProfileMessageBody: string) => {
-            dispatch(actions.addPostAC(newProfileMessageBody))
-        },
-    }
-}
+export const MyPostsContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>
+(mapStateToProps, {addPost: actions.addPostAC})(MyPosts);
 
-export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
+
+
+
+// const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+//     return {
+//         onClickAddPost: (newProfileMessageBody: string) => {
+//             dispatch(actions.addPostAC(newProfileMessageBody))
+//         },
+//     }
+// }

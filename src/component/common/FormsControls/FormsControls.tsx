@@ -44,6 +44,9 @@ export function createField<FormKeysType extends string>(placeholder: string | u
 }
 
 
+export type GetStringKeys<T> =  Extract<keyof T, string>    //'captcha' | 'rememberMe' | 'email' | 'password'
+
+
 
 
 

@@ -2,15 +2,20 @@ import React from 'react';
 import styles from '../Dialogs/Dialogs.module.css';
 import {DialogsItem} from './DialogsItem/DialogsItem';
 import {Message} from './Message/Message';
-
 import {DialogsPropsType} from './DialogsContainer';
 
 
-export function Dialogs(props: DialogsPropsType) {
 
-    let onClickAddPostCB = (newDialogMessageBody: string) => {
-        props.onClickAddPostCB(newDialogMessageBody)
+export type NewMessageFormValuesType = {
+    newDialogMessageBody: string
+}
+
+export const Dialogs: React.FC<DialogsPropsType> = (props) => {
+
+    let onClickAddPostCB = ( values: {NewMessageFormType: string}) => {
+        props.sendMessage(values.NewMessageFormType)
     }
+
     return (
         <div className={styles.dialogs}>
             <div className={styles.dialogs__items}>
