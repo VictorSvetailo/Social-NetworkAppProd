@@ -5,9 +5,9 @@ import {Navigate, Route, Routes} from 'react-router-dom';
 import {Sittings} from './component/Sittings/Sittings';
 import {Music} from './component/Music/Music';
 import {Error} from './component/Error/Error';
-import UsersContainer from './component/Users/UsersContainer';
+import {UsersPage} from './component/Users/UsersPage';
 import HeaderContainer from './component/Header/HeaderContainer';
-import Login from './component/Login/Login';
+import {LoginPage} from './component/Login/LoginPage';
 import {WithNewsRedirect} from './component/News/News';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
@@ -18,7 +18,6 @@ import {withSuspense} from './HOC/WithSuspense';
 
 const DialogsContainer = React.lazy(() => import('./component/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./component/Profile/ProfileContainer'));
-
 
 const SuspendedDialogs = withSuspense(DialogsContainer)
 const SuspendedProfile = withSuspense(ProfileContainer)
@@ -37,7 +36,7 @@ class App extends React.Component<AppPropsType> {
         // после того как компонента будет умирать этот мусор нужно убрать
         window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
-    // Это метод который срабатывает при демонтировании компоненты
+    // Это   который срабатывает при демонтировании компоненты
     componentWillUnmount() {
         window.removeEventListener('unhandledrejection', this.catchAllUnhandledErrors)
     }
@@ -71,11 +70,11 @@ class App extends React.Component<AppPropsType> {
                             </Suspense>
                         }/>
                         {/*<Route path="/dialogs/*" element={<DialogsContainer/>}/>*/}
-                        <Route path="/users" element={<UsersContainer/>}/>
+                        <Route path="/users" element={<UsersPage/>}/>
                         <Route path="/news" element={<WithNewsRedirect/>}/>
                         <Route path="/music" element={<Music/>}/>
                         <Route path="/sittings" element={<Sittings/>}/>
-                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/login" element={<LoginPage/>}/>
                         <Route path="*" element={<Error/>}/>
                         <Route path="/" element={<Navigate to="/profile"/>}/>
                     </Routes>
