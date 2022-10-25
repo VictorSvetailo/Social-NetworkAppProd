@@ -2,7 +2,7 @@ import React, {ChangeEvent, MouseEvent} from 'react';
 import styles from '../Message/Message.module.css';
 import {MessagesType} from '../../../redux/dialogs-reducer';
 import {InjectedFormProps, reduxForm} from 'redux-form';
-import {createField, Input, Textarea} from '../../common/FormsControls/FormsControls';
+import {createField, Textarea} from '../../common/FormsControls/FormsControls';
 import {maxLengthCreator, required} from '../../../utils/validaters/validators';
 import {NewMessageFormValuesType} from '../Dialogs';
 

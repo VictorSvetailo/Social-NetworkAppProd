@@ -3,7 +3,7 @@ import {Dialogs} from './Dialogs';
 import {AppStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
 import {actions, DialogsType, MessagesType} from '../../redux/dialogs-reducer';
-import {compose, Dispatch} from 'redux';
+import {compose} from 'redux';
 import {WithAuthRedirect} from '../../HOC/WithAuthRedirect';
 
 type MapStatePropsType = {
@@ -23,10 +23,16 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-
-
 // с помощью {...actions} я пробросил все MDTP одним махом
 export default compose(connect(mapStateToProps, {...actions}), WithAuthRedirect)(Dialogs) as React.ComponentType
+
+
+
+
+
+
+
+
 
 
 

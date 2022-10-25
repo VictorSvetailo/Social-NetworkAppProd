@@ -9,9 +9,6 @@ import styles from './Login.module.css'
 import {AppStateType, useAppDispatch} from '../../redux/redux-store';
 
 
-
-
-
 export type LoginFormOwnType = { captchaUrl: string | null }
 
 const maxLength5 = maxLengthCreator(30)
