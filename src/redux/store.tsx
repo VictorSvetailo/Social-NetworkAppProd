@@ -136,7 +136,7 @@ type CompanyEmployeesType = {
 //     ({type: SEND_MESSAGE, postTextCB: postTextCB}) as const
 
 
-const store = {
+export const store1 = {
     _state: {
         profilePage: {
             messageForNewPost: '',
@@ -306,7 +306,7 @@ const store = {
     }
 }
 
-export default store
+export default store1
 
 
 

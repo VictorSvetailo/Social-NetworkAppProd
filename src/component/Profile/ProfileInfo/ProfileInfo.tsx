@@ -6,6 +6,7 @@ import ProfileDataFormReduxForm, {ProfileDataForm} from './ProfileDataForm';
 import {ContactsType, ProfileType, saveProfile} from '../../../redux/profile-reducer';
 import {Simulate} from 'react-dom/test-utils';
 import error = Simulate.error;
+import {Button} from 'antd';
 
 type PropsType = {
     profile: ProfileType | null
@@ -75,7 +76,7 @@ type ProfileDataPropsType = {
 const ProfileData: React.FC<ProfileDataPropsType> = ({profile, isOwner, goToEditMode}) => {
     return (
         <div>
-            {isOwner && <button onClick={goToEditMode}>Edit</button>}
+            {isOwner && <Button type={'primary'} onClick={goToEditMode}>Edit</Button>}
             <div>
                 <b>Full name:</b> {profile.fullName}
             </div>

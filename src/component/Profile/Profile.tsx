@@ -3,6 +3,7 @@ import styles from './Profile.module.css'
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from './MyPosts/MyPostsContainer';
 import {ProfilePropsType} from './ProfileContainer';
+import {Button} from 'antd';
 
 
 

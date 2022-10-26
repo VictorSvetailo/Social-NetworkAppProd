@@ -1,29 +1,56 @@
 
 
 .wrapper{
-    background-color: pink;
-    z-index: 2;
-    position: relative;
+    /*background-color: pink;*/
+    /*z-index: 2;*/
+    /*position: relative;*/
+    height: 100%;
+    color: white;
 }
 
 .container{
-    max-width: 1000px;
+    /*align-items: center;*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*height: 100%;*/
+}
+
+
+
+.center{
     display: flex;
+    justify-content: center;
+}
+
+.block {
+    display: flex;
+    gap: 30px;
     align-items: center;
-    justify-content: space-between;
-    padding: 0px 10px;
 }
 
 .image{
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 .image img{
-    width: 100%;
+    display: block;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.image img:hover{
+    transition: 0.5s;
+    transform: rotate(360deg);
 }
 
 .loginBlock{
-    float: right;
+    display: flex;
+    justify-content: end;
+    gap: 30px;
+    align-items: center;
     font-weight: 900;
 }
