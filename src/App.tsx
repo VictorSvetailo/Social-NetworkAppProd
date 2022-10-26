@@ -1,8 +1,6 @@
 import React, {Suspense} from 'react';
 
-import {Avatar, Breadcrumb, Col, Layout, Menu, Row} from 'antd';
-import type { MenuProps } from 'antd';
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import {Breadcrumb, Layout, Menu, } from 'antd';
 
 
 import styles from './App.module.css';
@@ -21,16 +19,17 @@ import {initializeApp} from './redux/app-reducer';
 import {Preloader} from './component/common/Preloader/Preloader';
 import {withSuspense} from './HOC/WithSuspense';
 import 'antd/dist/antd.css'
-import {Button} from 'antd';
-import {SidebarType, store1} from './redux/store';
 import {v1} from 'uuid';
 import {Footer} from 'antd/es/layout/layout';
 
+
 const DialogsContainer = React.lazy(() => import('./component/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./component/Profile/ProfileContainer'));
+const ChatPage = React.lazy(() => import('./pages/Chat/ChatPage'))
 
 const SuspendedDialogs = withSuspense(DialogsContainer)
 const SuspendedProfile = withSuspense(ProfileContainer)
+const SuspendedChatPage = withSuspense(ChatPage)
 
 
 
@@ -133,7 +132,7 @@ class App extends React.Component<AppPropsType> {
                         <Sider width={200} className="site-layout-background">
                             <Menu mode="inline"
                                 defaultSelectedKeys={['1']}
-                                // defaultOpenKeys={['sub1']}
+                                defaultOpenKeys={['sub1']}
                                 style={{height: '100%', borderRight: 0}}
                                 items={items2}/>
                             {/*<Sidebar sidebar={sidebar}/>*/}
@@ -177,10 +176,14 @@ class App extends React.Component<AppPropsType> {
                                             <Route path="/music" element={<Music/>}/>
                                             <Route path="/sittings" element={<Sittings/>}/>
                                             <Route path="/login" element={<LoginPage/>}/>
-
-                                            <Route path="*" element={<Error/>}/>
+                                            <Route path="/chat/" element={
+                                                <Suspense fallback={<Preloader/>}>
+                                                    <SuspendedChatPage/>
+                                                </Suspense>
+                                            }/>
 
                                             <Route path="/" element={<Navigate to="/profile"/>}/>
+                                            <Route path="*" element={<Error/>}/>
                                         </Routes>
                                     </div>
                                 </div>

@@ -3,11 +3,11 @@
 
 
 .App {
-  position: relative;
+  /*position: relative;*/
 }
 
 
 .items{
   padding-top: 10px;
-  display: flex;
+  /*display: flex;*/
 }
