@@ -62,7 +62,7 @@ const items2: any = menu.map((el, index) => {
                 const subKey = index * 4 + j + 1;
                 return {
                     key: subKey,
-                    label: <div key={subKey}> <Link key={subKey} to={_.url} > {_.title}</Link></div> ,
+                    label: <div key={subKey}> <Link to={_.url} > {_.title}</Link></div> ,
                 };
             }),
         };
