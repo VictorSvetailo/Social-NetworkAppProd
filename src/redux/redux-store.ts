@@ -8,6 +8,7 @@ import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {reducer as formReducer} from 'redux-form'
 import {appReducer} from './app-reducer';
 import { useDispatch } from 'react-redux';
+import {chatReducer} from './chat-reducer';
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     form: formReducer,
     app: appReducer,
+    chat: chatReducer
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
