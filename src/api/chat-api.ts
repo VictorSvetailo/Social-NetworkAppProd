@@ -26,6 +26,7 @@ function createChannel() {
     ws.addEventListener('message', messageHandler)
 }
 
+// hello
 
 export const chatAPI = {
     start(){
