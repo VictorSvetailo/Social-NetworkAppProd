@@ -1,4 +1,4 @@
-import React, {useEffect, useState, MouseEvent} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 
 
 import {Button, Col, Row} from 'antd';
@@ -39,6 +39,7 @@ const ChatPage: React.FC = () => {
 export const Chat: React.FC = () => {
 
         const dispatch = useAppDispatch()
+        const status = useSelector((state: AppStateType) => state.chat.status)
 
         useEffect(() => {
             // @ts-ignore
@@ -50,9 +51,10 @@ export const Chat: React.FC = () => {
         }, [])
 
         return <>
+            {status === 'error' && <div>Some error occurred. Please refresh the page</div>}
             <Row>
                 <Col span={14}>
-                    <div style={{height: '600px', overflow: 'auto'}}>
+                    <div>
                         <Messages/>
                         <AddMessageForm/>
                     </div>
@@ -61,6 +63,7 @@ export const Chat: React.FC = () => {
                     test
                 </Col>
             </Row>
+
         </>
     }
 ;
@@ -68,19 +71,40 @@ export const Chat: React.FC = () => {
 export const Messages: React.FC = () => {
 
     const messages = useSelector((state: AppStateType) => state.chat.messages)
+    const messageAnchorRef = useRef<HTMLDivElement>(null)
+    const [isAutoScroll, setIsAutoScroll] = useState(true)
 
 
-    const message = messages.map((m, index) => <Message key={index} message={m}/>)
+    const scrollHand = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        let element = e.currentTarget;
+        if (Math.abs((element.scrollHeight - element.scrollTop) - element.clientHeight) < 500)
+        {
+            !isAutoScroll && setIsAutoScroll(true)
+         }else {
+            isAutoScroll && setIsAutoScroll(false)
+        }
+    }
+
+    useEffect(() => {
+        if (isAutoScroll) {
+            messageAnchorRef.current?.scrollIntoView({behavior: 'smooth'})
+        }
+    }, [messages])
+
+
+    const message = messages.map((m) => <Message key={m.id} message={m}/>)
     return <>
-        <div>
+        <div style={{height: '600px', overflow: 'auto'}} onScroll={scrollHand}>
             {message}
+            <div ref={messageAnchorRef}></div>
         </div>
+
     </>
 };
 
 
-export const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
-
+export const Message: React.FC<{ message: ChatMessageType }> =  React.memo(({message}) => {
+    console.log('message')
     return <>
         <img width={'40px'} height={'40px'} src={message.photo} alt="Message"/>
         <br/>
@@ -89,22 +113,14 @@ export const Message: React.FC<{ message: ChatMessageType }> = ({message}) => {
         <div>{message.message}</div>
         <hr/>
     </>
-};
+})
 
 
 export const AddMessageForm: React.FC = () => {
 
-    const dispatch = useAppDispatch()
-
-
-
     const [message, setMessage] = useState('')
-    const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending')
-    //
-    // useEffect(() => {
-    //
-    // }, [wsChannel])
-
+    const dispatch = useAppDispatch()
+    const status = useSelector((state: AppStateType) => state.chat.status)
 
     const sendMessageHandler = () => {
         if (!message) {
@@ -117,7 +133,7 @@ export const AddMessageForm: React.FC = () => {
     return <>
         <TextArea onChange={(e) => setMessage(e.currentTarget.value)} value={message} style={{width: '300px'}} showCount
                   maxLength={100}/>
-        <Button disabled={false} onClick={sendMessageHandler}>Add Message</Button>
+        <Button disabled={status !== 'ready'} onClick={sendMessageHandler}>Add Message</Button>
     </>
 };
 

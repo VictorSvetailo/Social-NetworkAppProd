@@ -23,6 +23,11 @@ import {Provider} from 'react-redux';
         document.getElementById('root')
     )
 
+// удалить StrictMode
+//     <React.StrictMode>
+//
+// </React.StrictMode>,
+
 // renderTree(state)
 // renderTree();
 // store.subscribe(renderTree);
