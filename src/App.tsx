@@ -35,12 +35,6 @@ const SuspendedChatPage = withSuspense(ChatPage)
 
 const {Content, Sider } = Layout;
 
-// const items1: MenuProps['items'] = ['1', '2', '3'].map(key => ({
-//     key,
-//     label: `nav ${key}`,
-// }));
-
-
 const menu = [
     {id: v1(), url: '/profile', title: 'Social', status: true},
     {id: v1(), url: '/dialogs', title: 'Personal account', status: true},
@@ -70,33 +64,6 @@ const items2: any = menu.map((el, index) => {
     },
 );
 
-// <div key={m.id} className={`${styles.link}`}>
-//     <Link to={m.url}
-//         //    className={navData => navData.isActive ? styles.active : styles.link}
-//     >
-//         {m.title}
-//     </Link>
-// </div>
-
-// const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-//     (icon, index) => {
-//         const key = String(index + 1);
-//
-//         return {
-//             key: `sub${key}`,
-//             icon: React.createElement(icon),
-//             label: `subnav ${key}`,
-//
-//             children: new Array(4).fill(null).map((_, j) => {
-//                 const subKey = index * 4 + j + 1;
-//                 return {
-//                     key: subKey,
-//                     label: `option${subKey}`,
-//                 };
-//             }),
-//         };
-//     },
-// );
 
 
 class App extends React.Component<AppPropsType> {
