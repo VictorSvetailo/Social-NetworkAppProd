@@ -9,16 +9,14 @@ import styles from './Login.module.css'
 import {AppStateType, useAppDispatch} from '../../redux/redux-store';
 
 
-export type LoginFormOwnType = { captchaUrl: string | null }
-
-const maxLength5 = maxLengthCreator(30)
+const maxLength = maxLengthCreator(30)
 
 // InjectedFormProps это типизация для redux-form придет именно из InjectedFormProps
 const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, LoginFormOwnType> & LoginFormOwnType>  = ({handleSubmit, error, captchaUrl}) => {
     return (
         <form onSubmit={handleSubmit}>
-            {createField<LoginFormPropertiesType>('Email', 'email', [required, maxLength5], Input)}
-            {createField<LoginFormPropertiesType>('Password', 'password', [required, maxLength5], Input, {type: 'password'})}
+            {createField<LoginFormPropertiesType>('Email', 'email', [required, maxLength], Input)}
+            {createField<LoginFormPropertiesType>('Password', 'password', [required, maxLength], Input, {type: 'password'})}
             {createField<LoginFormPropertiesType>(undefined, 'rememberMe', [], Input, {type: 'checkbox'}, 'remember me')}
 
             {captchaUrl && <img src={captchaUrl} alt={"captcha"}/>}
@@ -34,7 +32,6 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormDataType, LoginFormOwnType>
 };
 
 const LoginReduxForm = reduxForm<LoginFormDataType, LoginFormOwnType>({
-    // a unique name for the form
     form: 'login'
 })(LoginForm)
 
@@ -76,3 +73,5 @@ export const LoginPage: React.FC = (props) => {
 
 
 
+
+export type LoginFormOwnType = { captchaUrl: string | null }
